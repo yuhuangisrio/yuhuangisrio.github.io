@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喻黄同人文目录</title>
+    <link rel="shortcut icon" href="./icons/favicon_2_sm.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/index-style.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./js/main.js"></script>
+</head>
+<script>
+    $("document").ready(function() {
+        // 按下按钮，更改字体
+        // 只能通过修改内联样式（attr()）来更改字体
+        // $("button").click(function() {
+        //     $(".header").attr("style", "font-family: font-muyao-softbrush, 'Times New Roman', Times, serif");
+        // });
+    });
+</script>
+<body class="day">
+    <div class="header"><span class="yu">喻</span><span class="huang">黄</span>同人文目录</div>
+    <br>
+    <ul class="columns">
+        <li><a href="./sort-by/length.html">按篇幅分类</a></li>
+        <li><a href="./sort-by/author.html">按作者分类</a></li>
+        <li><a href="./sort-by/tag.html">按题材分类</a></li>
+    </ul>
+    <div class="blank"></div>
+    <p class="footer"><a href="./others/contact.html">联系</a> | <a href="javascript:void(0)" onclick="Global.closeWindow()">退出</a></p>
+    <div class="blank footer-bottom"></div>
+    <a href="javascript::" class="switch-theme"><i class="fa fa-sun-o"></i></a>
+</body>
+</html>
