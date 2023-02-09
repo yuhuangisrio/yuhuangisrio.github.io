@@ -199,6 +199,50 @@ body.day a.to-top:hover{
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.2);
 }
 
+body.day .mature-warning{
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    background-color: white; 
+    width: 100vw; 
+    height:100vh; 
+    visibility: hidden;
+}
+
+body.day .warning-texts{
+    color: black;
+    width: 60%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.warning{
+    font-size: 18px;
+}
+
+.accessible{
+    margin-top: 10px;
+}
+
+.accessible:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.unaccessible{
+    margin-top: 5px;
+}
+
+.unaccessible:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
 
 
 
@@ -295,7 +339,7 @@ body.night ul.toolcase-list{
     padding: 0 3px;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.2);
 	display: none;
-    background-color: rgba(170, 170, 170, 0.2);
+    background-color: rgba(41, 41, 56, 0.5);
 }
 
 body.night ul.toolcase-list li{
@@ -310,7 +354,7 @@ body.night ul.toolcase-list li a{
     display: block;
     position: relative;
     width: 100%;
-    color: rgb(132, 132, 132);
+    color: rgb(165, 165, 165);
     font-size: 18px;
     list-style: none;
     text-align: center;
@@ -354,4 +398,85 @@ body.night a.to-top:hover{
     opacity: 1;
     color: #999999;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.night a.to-top:active{
+    opacity: 1;
+    color: rgb(41, 41, 41);
+    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.night .mature-warning{
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    background-color: rgb(41, 41, 56); 
+    width: 100vw; 
+    height:100vh; 
+    visibility: hidden;
+}
+
+body.night .warning-texts{
+    color: rgb(197, 202, 207);
+    width: 60%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+/* 移动端 */
+@media only screen and (orientation:portrait) {
+    #txt{
+        margin:auto;
+        margin-top: 30px;
+        width: 90%;
+        font-size: 18px;
+        margin-bottom: 12px;
+        line-height: 24px;
+        /* color:rgb(170, 170, 170); */
+        color:inherit;
+    }
+
+    body.day div.blank.line{
+        margin: auto;
+        margin-top: 100px;
+        width: 90%;
+    }
+
+    body.night div.blank.line{
+        margin: auto;
+        margin-top: 100px;
+        width: 90%;
+    }
+
+    .chapter{
+        width: 90%;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        text-indent: 0;
+        margin: auto;
+        margin-bottom: 15px;
+        line-height: 30px;
+    }
+
+    body.day .title-and-author{
+        width: 90%;
+        text-align: center;
+        color: gray;
+        text-indent: 0;
+        line-height: 27px;
+        margin: auto;
+    }
+
+    body.night .title-and-author{
+        width: 90%;
+        text-align: center;
+        color: gray;
+        text-indent: 0;
+        line-height: 27px;
+        margin: auto;
+    }
 }

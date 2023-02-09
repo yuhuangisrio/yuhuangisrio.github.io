@@ -1,6 +1,12 @@
 var Global = {};
 
 Global.encoded_cur_password = "e286f1f186225ea42a23c35a8db0e230";
+Global.fonts = {
+    "霞鹜文楷":"font-xiawuwenkai",   // 默认
+    "霞鹜新晰黑":"font-xiawuxinxihei",
+    "昭源宋体":"font-zhaoyuansongti",
+    "极影毁片和圆体":"font-jiyinghuipianheyuanti"
+}
 
 function closeWindow() {
     window.history.back();
@@ -22,7 +28,7 @@ Global.setCookie = function(cname, cvalue, exdays) {
         expires = "expires="+d.toGMTString();
     }
     if(expires) expires = expires + "; ";
-    document.cookie = cname + "=" + cvalue + "; " + expires + "path=/";
+    document.cookie = cname + "=" + cvalue + "; " + expires + "path=/; SameSite=None; Secure";
 };
 
 /**
@@ -46,6 +52,50 @@ Global.getCookie = function(cname) {
  */
 Global.deleteCookie = function(cname) {
     document.cookie = cname + "=; " + "expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+};
+
+/**
+ * 设置书签
+ * @param {string} url_title 文章的url标题
+ * @param {string} url_name 章节的url名称
+ * @param {number} p_id 书签所在的段落id
+ */
+Global.setBookmark = function(url_title, url_name, p_id){
+    var obj = {};
+    var temp_str = window.localStorage.getItem("bookmark-list");
+    if(temp_str) obj = JSON.parse(temp_str);
+    obj[url_title] = obj[url_title] || {};
+    obj[url_title][url_name] = p_id;
+    window.localStorage.setItem("bookmark-list", JSON.stringify(obj));
+};
+
+/**
+ * 获取书签所在的段落id
+ * @param {string} url_title 文章的url标题
+ * @param {string} url_name 章节的url名称
+ * @returns 书签所在的段落id。如果没有书签，则返回-1。
+ */
+Global.getBookmark = function(url_title, url_name) {
+    var obj = {};
+    var temp_str = window.localStorage.getItem("bookmark-list") || "";
+    if(!temp_str) return -1;
+    temp_str = window.localStorage.getItem("bookmark-list");
+    obj = JSON.parse(temp_str);
+    if(!JSON.stringify(obj[url_title])) return -1;
+    var id = obj[url_title][url_name];
+    return id!==undefined ? +id : -1;
+};
+
+/**
+ * 收藏文章
+ * @param {string} url_title 当前文章的url标题
+ */
+Global.setStar = function(url_title){
+    var arr = [];
+    var temp_str = window.localStorage.getItem("starred-book-list");
+    if(temp_str) arr = JSON.parse(temp_str);
+    arr.push(url_title);
+    window.localStorage.setItem("starred-book-list", JSON.stringify(arr));
 };
 
 $(document).ready(()=>{
