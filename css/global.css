@@ -3,6 +3,7 @@
  * 浏览器可读取的字体文件总大小是有限的，超出范围的话布局会乱
  */
 
+@media only screen and (orientation:landscape){
 /* 霞鹜文楷 */
 @font-face {
     font-family: font-xiawuwenkai;
@@ -25,6 +26,7 @@
 @font-face {
     font-family: font-jiyinghuipianheyuanti;
     src: url(../fonts/JiYingHuiPianHeYuan1.01.ttf);
+}
 }
 
 /* =============================================== */
