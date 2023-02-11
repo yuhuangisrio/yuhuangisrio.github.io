@@ -198,7 +198,7 @@ $(document).ready(()=>{
     // 更换字体
     $("a.font-style").click(()=>{
         // var curStyle = $("#txt").css("font-family").split(",")[0].replace(/\'\"/,"").trim();
-        var style = prompt("可选字体：\n霞鹜文楷，霞鹜新晰黑，昭源宋体，极影毁片和圆体。\n对于电脑端，安装过的所有字体都可以使用，如宋体(默认)，黑体，楷体，微软雅黑等。如果不知道自己电脑上安装了什么字体，可以打开Word查看。");
+        var style = prompt("可选字体：\n霞鹜文楷，霞鹜新晰黑，昭源宋体，极影毁片和圆体。\n注意，手机端不适用。\n对于电脑端，安装过的所有字体都可以使用，如宋体(默认)，黑体，楷体，微软雅黑等。如果不知道自己电脑上安装了什么字体，可以打开Word查看。");
         if(!style) return;
         style = Global.fonts[style] || style;
         style = style.contains("font-") ? style : "\'" + style + "\'";
