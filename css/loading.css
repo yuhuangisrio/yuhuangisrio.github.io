@@ -1,0 +1,80 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.box{
+    width: 70%;
+    /* box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.2); */
+    border-radius: 5px;
+}
+
+body.day h2.loading{
+    display: block;
+    width: 384px;
+    position: relative;
+    margin: auto;
+    font-size: 64px;
+    color: rgb(230, 239, 248);
+    /* -webkit-text-stroke: 0.3vw; */
+    /* text-transform: uppercase; */
+}
+
+h2.loading::before{
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    -webkit-text-stroke: 0vw;
+    /* border-right: 2px solid; */
+    overflow: hidden;
+    animation: animate 3s linear infinite;
+}
+
+@keyframes animate {
+    0%, 5%, 49%{
+        color: #2f80dc;
+        width: 0%;
+    }
+    30%, 45%{
+        color: #2f80dc;
+        width: 100%;
+    }
+    50%, 55%, 100% {
+        color: #f5df15;
+        width: 0%;
+    }
+    80%, 95%{
+        color: #f5df15;
+        width: 100%;
+    }
+}
+
+p.jumping{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+    color: rgb(175, 175, 175);
+}
+
+
+
+
+
+/* 夜晚模式 */
+
+body.night h2.loading{
+    display: block;
+    width: 384px;
+    position: relative;
+    margin: auto;
+    font-size: 64px;
+    color: gray;
+    /* -webkit-text-stroke: 0.3vw; */
+    /* text-transform: uppercase; */
+}
