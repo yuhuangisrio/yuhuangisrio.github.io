@@ -67,8 +67,8 @@ $(document).ready(()=>{
         var title_and_author = "《"+curArticleRealName+"》 by "+curArticleAuthor;
         var web_title = curChapterShortName + " - " + "《" + curArticleRealName + "》";
         $("title").html(web_title);
-        $("div.header p.title-and-author").html(title_and_author);
-        $("div.header p.chapter").html(curChapterRealName);
+        $("div.header-title p.title-and-author").html(title_and_author);
+        $("div.header-title p.chapter").html(curChapterRealName);
         if(curLevel == "18+") $(".mature-warning").show();
         else $(".mature-warning").hide();
     });

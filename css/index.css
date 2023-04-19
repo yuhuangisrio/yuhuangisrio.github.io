@@ -4,80 +4,9 @@
     list-style: none;
 }
 
-input, select{
-    outline-style: none;
-}
-
-div.header{
-    width: 100%;
-    height: 35px;
-    position: fixed;
-    top: 0;
-    background-color: rgb(45, 45, 45);
-    z-index: 999;
-}
-
-div.header-logo img{
-    height: 17px;
-    margin: 9px;
-    float: left;
-}
-
-div.header-logo a{
-    float: left;
-    margin-left: 5px;
-    line-height: 35px;
-    color: rgb(235, 235, 235);
-    text-decoration: none;
-}
-
-div.menu-icon{
-    float: right;
-    line-height: 35px;
-    color: rgb(235, 235, 235);
-    margin-right: 9px;
-    cursor: pointer;
-}
-
-ul.menu-columns{
-    display: none;
-    padding: 10px;
-    position: fixed;
-    top: 35px;
-    z-index: 999;
-    width: 100%;
-    background-color: rgb(45, 45, 45);
-    border-top: 1px solid rgb(235, 235, 235);
-}
-
-ul.menu-columns li{
-    width: 100%;
-    color: rgb(235, 235, 235);
-    font-size: 14px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-ul.menu-columns li:last-of-type{
-    margin-bottom: 0;
-}
-
-ul.menu-columns li:hover{
-    font-weight: bold;
-}
-
-ul.menu-columns li:hover::before{
-    content: "> ";
-}
-
-ul.menu-columns li:hover::after{
-    content: " <";
-}
-
 div.content{
     position: relative;
-    margin-top: 80px;
+    margin-top: 50px;
     margin-bottom: 30px;
     width: 100%;
 }
@@ -85,7 +14,7 @@ div.content{
 div.main-logo{
     width: 100%;
     text-align: center;
-    font-size: 32px;
+    font-size: 50px;
     font-weight: bold;
 }
 
@@ -139,22 +68,19 @@ div.advanced-settings div.row{
     cursor: pointer;
 }
 
-div.advanced-settings div.row span{
-    float: left;
-}
-
 div.advanced-settings div.row i.arrow-down{
     float: right;
+    margin-right: 5px;
 }
 
 ul.settings-columns{
-    font-size: 12px;
+    display: none;
+    font-size: 14px;
     padding-top: 5px;
     margin-left: 6px;
     padding-left: 5px;
     padding-right: 11px;
     border-left: 1px solid gray;
-    display: none;
 }
 
 ul.settings-columns::before{
@@ -165,11 +91,16 @@ ul.settings-columns::before{
 
 ul.settings-columns input,
 ul.settings-columns select{
-    font-size: 12px;
-    height: 14px;
+    font-size: 14px;
+    height: 16px;
     width: 6rem;
     border: none;
     border-bottom: 1px solid gray;
+    text-align: center;
+}
+
+ul.settings-columns input:focus{
+    border-bottom: 1px solid #05c0f8;
 }
 
 ul.settings-columns li{
@@ -235,43 +166,47 @@ div.no-result{
     margin-left: 5px;
 }
 
-div.footer{
-    position: relative;
-}
-
-ul.footer-columns {
-    background-color: rgb(45, 45, 45);
-    padding: 10px;
-}
-
-ul.footer-columns li{
-    width: 100%;
-    text-align: center;
-    color: rgb(235, 235, 235);
-    margin-bottom: 5px;
-    cursor: pointer;
-}
-
-ul.footer-columns li:first-of-type{
-    margin-top: 10px;
-}
-
-ul.footer-columns li:last-of-type{
-    margin-bottom: 10px;
-}
-
-ul.footer-columns li:hover{
-    font-weight: bold;
-}
-
 /* 移动端适配 */
 @media only screen and (max-width: 768px) {
+    div.main-logo{
+        width: 100%;
+        text-align: center;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    div.search-box{
+        width: 100%;
+        text-align: center;
+        margin-top: 25px;
+    }
+
     div.search-input{
         width: 80%;
+        height: 40px;
         margin: auto;
-        border-radius: 15px;
+        border-radius: 20px;
         box-shadow: 0 0 5px 0 rgb(190, 190, 190);
     }
+
+    input.search-area{
+        font-size: 14px;
+        width: calc(100% - 50px);
+        line-height: 30px;
+        border: none;
+        margin: 0;
+        margin-left: 6px;
+        padding: 5px;
+    }
+
+    span.search-executor{
+        font-size: 18px;
+        color: rgb(190, 190, 190);
+        cursor: pointer;
+        vertical-align: middle;
+        transition: 0.2s;
+    }
+
     div.advanced-settings{
         width: 80%;
         margin: auto;
@@ -285,9 +220,17 @@ ul.footer-columns li:hover{
         margin: auto;
         margin-top: 10px;
         position: relative;
-        font-size: 14px;
+        font-size: 16px;
         border: 1px solid rgb(190, 190, 190);
         padding: 10px 5px;
         border-radius: 5px;
+    }
+
+    div.initial-result{
+        color: gray;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 5px;
     }
 }

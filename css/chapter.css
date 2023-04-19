@@ -9,7 +9,7 @@ body.day{
     background-color: rgb(85, 85, 102);
 }
 
-.header{
+.header-title{
     margin-top: 60px;
 }
 
@@ -87,11 +87,11 @@ body.day #txt p i.fa.fa-bookmark{
     color: #2f80dc;
 }
 
-.header div.blank.line{
+.header-title div.blank.line{
     margin-bottom: 40px;
 }
 
-body.day>.header>div.blank.line{
+body.day>.header-title>div.blank.line{
     width: 60%;
     margin: auto;
     position: relative;
@@ -316,7 +316,7 @@ body.night>div.blank.line{
     width: 80%;
 }
 
-body.night>.header>div.blank.line{
+body.night>.header-title>div.blank.line{
     width: 60%;
     margin: auto;
     /* position: relative;

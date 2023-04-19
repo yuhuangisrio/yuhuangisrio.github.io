@@ -99,7 +99,7 @@ body.day div.list-header:hover span.icon{
 
 /* 夜晚模式 */
 
-body.night div.header{
+/* body.night div.header{
     width: 80%;
     margin: auto;
     margin-top: 50px;
@@ -119,7 +119,6 @@ body.night ul.list li{
     border-color: rgb(110, 110, 110);
     border-bottom-style: dotted;
     text-indent: 1.5rem;
-    /* transition-duration: 150ms; */
 }
 
 body.night ul.list li a{
@@ -161,4 +160,4 @@ body.night div.list-header:first-of-type{
 
 body.night div.list-header:hover span.icon{
     color: #2f80dc;
-}
+} */

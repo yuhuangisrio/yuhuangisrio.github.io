@@ -200,6 +200,13 @@ $(document).ready(()=>{
     // if(isAdmitted != Global.encoded_cur_password && window.location.pathname != "/others/password.html") {
     //     window.location.replace("/others/password.html");
     // }
+    
+    // 头部菜单栏
+    $("div.menu-icon").click(function() {
+        $("ul.menu-columns").slideToggle();
+        $("div.menu-icon i").toggleClass("fa-bars")
+        $("div.menu-icon i").toggleClass("fa-close")
+    })
 });
 
 Array.prototype.remove = function(val) {
