@@ -1,8 +1,3 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-
 body {
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -357,9 +352,6 @@ body.night div.chapter-list.blocks ul li a:hover{
 /* 移动端 */
 
 @media only screen and (max-width:768px) {
-    body {
-        padding: 5px;
-    }
     body>div.content {
         width: 95%;
         padding: 30px 40px 15px 30px !important;
@@ -371,9 +363,7 @@ body.night div.chapter-list.blocks ul li a:hover{
     div.chapter-list.blocks ul li{
         width: 31.3%;
     }
-    /* body.night {
-        padding: 5px;
-    }
+    /* 
     body.night>div.content {
         width: 95%;
         padding: 30px 40px 15px 30px !important;
