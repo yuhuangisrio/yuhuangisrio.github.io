@@ -5,9 +5,9 @@ body.day{
     user-select: none;
 }
 
-::selection{
+/* ::selection{
     background-color: rgb(85, 85, 102);
-}
+} */
 
 .header-title{
     margin-top: 60px;
@@ -25,7 +25,6 @@ body.day{
 }
 
 img{
-    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
@@ -55,7 +54,7 @@ body.day .title-and-author{
 #txt p{
     font-size: inherit;
     white-space: pre-wrap;
-    text-indent: 2em;
+    /* text-indent: 2em; */
     margin-bottom: inherit;
     line-height: inherit;
     vertical-align: middle;
@@ -89,6 +88,13 @@ body.day #txt p i.fa.fa-bookmark{
 
 .header-title div.blank.line{
     margin-bottom: 40px;
+}
+
+body.day div.prev-next-chapter{
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 body.day>.header-title>div.blank.line{
@@ -249,6 +255,81 @@ body.day .warning-texts{
     cursor: pointer;
 }
 
+/* 上/下一章按钮 */
+body.day div.prev-chapter {
+    display: inline-block;
+    border-radius: 4px;
+    /* background-color: #3d405b; */
+    border: none;
+    color: gray;
+    text-align: center;
+    font-size: 17px;
+    padding: 8px 16px;
+    width: 130px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+body.day div.next-chapter {
+    float: right;
+    border-radius: 4px;
+    /* background-color: #3d405b; */
+    border: none;
+    color: gray;
+    text-align: center;
+    font-size: 17px;
+    padding: 8px;
+    width: 130px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+   
+body.day div.prev-chapter span,
+body.day div.next-chapter span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+   
+body.day div.next-chapter span:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -15px;
+    transition: 0.5s;
+}
+
+body.day div.prev-chapter span::before{
+    content: '«';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -15px;
+    transition: 0.5s;
+}
+   
+body.day div.next-chapter:hover span {
+    padding-right: 15px;
+}
+
+body.day div.prev-chapter:hover span{
+    padding-left: 15px;
+}
+   
+body.day div.next-chapter:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+body.day div.prev-chapter:hover span::before{
+    opacity: 1;
+    left: 0;
+}
+
 body.day a.switch-theme{
     display: block;
     position: fixed;
@@ -314,6 +395,13 @@ body.night>div.blank.line{
     margin: auto;
     margin-top: 100px;
     width: 80%;
+}
+
+body.night div.prev-next-chapter{
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 body.night>.header-title>div.blank.line{
@@ -421,6 +509,81 @@ body.night ul.toolcase-list li a span.tooltip-left{
     padding: 4px;
     border-radius: 5px;
     background-color: rgb(66, 61, 8);
+}
+
+/* 上/下一章按钮 */
+body.night div.prev-chapter {
+    display: inline-block;
+    border-radius: 4px;
+    /* background-color: #3d405b; */
+    border: none;
+    color: rgb(210, 210, 210);
+    text-align: center;
+    font-size: 17px;
+    padding: 8px 16px;
+    width: 130px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+body.night div.next-chapter {
+    float: right;
+    border-radius: 4px;
+    /* background-color: #3d405b; */
+    border: none;
+    color: rgb(210, 210, 210);
+    text-align: center;
+    font-size: 17px;
+    padding: 8px;
+    width: 130px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+   
+body.night div.prev-chapter span,
+body.night div.next-chapter span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+   
+body.night div.next-chapter span:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -15px;
+    transition: 0.5s;
+}
+
+body.night div.prev-chapter span::before{
+    content: '«';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -15px;
+    transition: 0.5s;
+}
+   
+body.night div.next-chapter:hover span {
+    padding-right: 15px;
+}
+
+body.night div.prev-chapter:hover span{
+    padding-left: 15px;
+}
+   
+body.night div.next-chapter:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+body.night div.prev-chapter:hover span::before{
+    opacity: 1;
+    left: 0;
 }
 
 body.night a.to-top{
@@ -601,6 +764,20 @@ body.night a.switch-theme:hover{
         margin: auto;
         margin-top: 100px;
         width: 90%;
+    }
+
+    body.day div.prev-next-chapter{
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    body.night div.prev-next-chapter{
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .chapter{

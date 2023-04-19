@@ -52,8 +52,9 @@ Global.deleteCookie = function(cname) {
  * localStorage:
   {
     settings:{
-        theme: "day",
+        "theme": "day",
         "font-size": 16,
+        "banned-tags": ["tag1","tag2"]
         ...
     },
     starred_book_list: [
@@ -78,13 +79,13 @@ Global.setPreference = function(name, value) {
 /**
  * 获取偏好设置内容
  * @param {string} name 偏好设置名称，如theme, fontSize等
- * @returns 偏好设置内容
+ * @returns 偏好设置内容。
  */
 Global.getPreference = function(name) {
     var obj = {};
     var temp_str = window.localStorage.getItem("settings");
     if(temp_str) var obj = JSON.parse(temp_str);
-    return obj[name] || null;
+    return obj[name] || "";
 }
 
 /**

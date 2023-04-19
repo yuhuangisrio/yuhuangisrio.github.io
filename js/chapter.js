@@ -31,12 +31,13 @@ $(document).ready(()=>{
     // 将文本输入div并格式化文本
     var paragraph_list = [];
     paragraph_list = data.split(/[(\r\n)\r\n]+/);
+    var indent = "　　";
     for(var i = 0; i < paragraph_list.length; i++) {
         if(paragraph_list[i] == ''){
             paragraph_list.remove(paragraph_list[i]);
             i -= 1;
         } else {
-            $("#txt").append("<p id=\"p"+i+"\">"+paragraph_list[i]+"</p>");
+            $("#txt").append("<p id=\"p"+i+"\">"+indent+paragraph_list[i].trim()+"</p>");
         }
     };
 
@@ -392,6 +393,8 @@ $(document).ready(()=>{
             }
         });
     });
+
+    // 缩进调整
 
     // 返回至文章主页
     $("a.return-mainpage").click(()=>{
