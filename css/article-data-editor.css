@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    outline-style: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+span.true{
+    color: rgb(0, 178, 118);
+}
+
+span.false{
+    color: rgb(182, 0, 0);
+}
+
+span.cross{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: gray;
+    padding: 3px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+span.cross:hover{
+    color: black;
+}
+
+div.open-up-configure{
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: gray;
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+div.open-up-configure:hover{
+    color: black;
+    background-color: rgb(244, 244, 244);
+}
+
+table, th, tr, td{
+    border: 1px solid rgb(190, 190, 190);
+    border-collapse: collapse;
+}
+
+table{
+    margin: auto;
+    margin-top: 50px;
+}
+
+td{
+    padding: 5px 10px;
+}
+
+tr.initial{
+    color: gray;
+}
+
+div.configureing-area{
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    width: 100%;
+    min-height: 40%;
+    overflow: auto;
+    background-color: rgb(232, 232, 232, 0.7);
+}
+
+div.process-1{
+    margin: 10px;
+}
+
+div.upload-text{
+    margin-bottom: 5px;
+}
+
+/* div.json-importing-area{
+    margin: 10px;
+} */
+
+div.start-from-scratch{
+    margin-top: 10px;
+}
+
+div.start-from-scratch a{
+    text-decoration: none;
+    color: rgb(0, 101, 196);
+}
+
+div.start-from-scratch a:hover{
+    text-decoration: underline;
+}

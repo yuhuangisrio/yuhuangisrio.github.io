@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章数据可视化编辑器</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/article-data-editor.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/article-data-editor.js"></script>
+</head>
+<body>
+    <table class="editing-area">
+        <th class="header">
+            <td>文章url</td>
+            <td>作者</td>
+            <td>作者链接</td>
+            <td>篇幅</td>
+            <td>标签</td>
+            <td>简介</td>
+            <td>文章链接</td>
+            <td>能否下载</td>
+        </th>
+        <tr class="initial">
+            <td class="title">文章名</td>
+            <td class="url">template-title</td>
+            <td class="author">作者</td>
+            <td class="author-link">https://xxxxx.com</td>
+            <td class="type">长篇/中篇/短篇</td>
+            <td class="tags">一系列,的,标签</td>
+            <td class="summary">该文章的简介。</td>
+            <td class="accessable-links">["https://xxxxx1.com","https://xxxxx2.com"]</td>
+            <td class="is-redistributable"><span class="true">T</span> / <span class="false">F</span></td>
+        </tr>
+        <!-- <tr class="template-title">
+            <td class="title"><input type="text" value="文章名"></td>
+            <td class="url"><input type="text" value="template-title"></td>
+            <td class="author">作者</td>
+            <td class="author-link">https://xxxxx.com</td>
+            <td class="type">长篇/中篇/短篇</td>
+            <td class="tags">一系列,的,标签</td>
+            <td class="summary">该文章的简介。</td>
+            <td class="accessable-links">["https://xxxxx1.com","https://xxxxx2.com"]</td>
+            <td class="is-redistributable"><span class="true">T</span> / <span class="false">F</span></td>
+        </tr> -->
+    </table>
+    <div class="open-up-configure"><i class="fa fa-edit"></i></div>
+    <div class="configureing-area">
+        <span class="cross"><i class="fa fa-close"></i></span>
+        <div class="process-1">
+            <div class="json-importing-area">
+                <div class="upload-text">请上传文章JSON数据文件：</div>
+                <input type="file" name="json" id="json-import">
+            </div>
+            <div class="start-from-scratch">或者 <a href="javascript::">点此新建数据</a></div>
+        </div>
+        <div class="process-2"></div>
+    </div>
+</body>
+</html>

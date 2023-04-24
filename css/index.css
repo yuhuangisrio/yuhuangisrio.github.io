@@ -26,21 +26,21 @@ div.search-box{
 
 div.search-input{
     width: 50%;
+    height: 40px;
     margin: auto;
-    border-radius: 15px;
+    border-radius: 20px;
     box-shadow: 0 0 5px 0 rgb(190, 190, 190);
 }
 
 input.search-area{
     font-size: 12px;
-    width: calc(100% - 40px);
-    line-height: 20px;
+    width: calc(100% - 50px);
+    line-height: 30px;
     border: none;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     margin: 0;
-    padding: 5px;
-    padding-right: 0;
+    padding: 5px 0;
 }
 
 span.search-executor{
