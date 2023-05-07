@@ -672,7 +672,7 @@ body.night .confirm-box:hover {
 
 /* 照搬 global.css */
 body.night{
-    font-family: '宋体', 'Times New Roman', Times, serif;
+    font-family: '宋体',sans-serif, 'Times New Roman', Times, serif;
     letter-spacing: 1px;
     background-color: rgb(41, 41, 56);
     color: rgb(197, 202, 207);
