@@ -344,8 +344,9 @@ $(document).ready(()=>{
                         else if (lang == '繁体' || lang == '繁體') {type = 'traditional';}
                         else if (lang == '台灣繁體' || lang == '台湾繁体') {type = "traditional"; locale = "zh_TW";}
                         else if (lang == '初始化') {
+                            var indent = '　　';
                             for(var i = 0; i < paragraph_list.length; i++) {
-                                $("p#p"+i).html(paragraph_list[i]);
+                                $("p#p"+i).html(indent + paragraph_list[i]);
                             };
                             if(bookmark_p_id > -1) {
                                 var str = "p#p"+bookmark_p_id;
