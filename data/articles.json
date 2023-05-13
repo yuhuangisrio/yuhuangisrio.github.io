@@ -10,6 +10,6 @@
         "tags": "清水,原著向,HE",
         "summary": "这是这篇文章的简介。简介可以帮助读者快速了解该文章的题材、内容，帮助读者进行筛选，极大地节约了时间成本。",
         "accessable_links": ["可看到全部文章的网址1","可看到全部文章的网址2"],
-        "isRedistributable": true
+        "is_redistributable": true
     }
 ]

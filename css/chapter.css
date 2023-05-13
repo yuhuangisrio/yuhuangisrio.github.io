@@ -34,23 +34,14 @@ body.day .title-and-author{
 }
 
 #txt{
-    position: relative;
+    margin: auto;
     margin-top: 30px;
-    transform: translateX(-50%)
     width: 80%;
     font-size: 18px;
     margin-bottom: 12px;
     line-height: 24px;
     /* color:rgb(170, 170, 170); */
     color:inherit;
-}
-
-#txt .txt-mask{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display:none;
 }
 
 #txt p{
@@ -365,7 +356,8 @@ body.day .confirm-box {
     transition: 100ms;
 }
 
-body.day .confirm-box:hover {
+body.day .confirm-box:hover,
+body.day .confirm-box:focus {
     border: 1px solid #2f80dc;
     box-shadow: 0 0 3px 0 #2f80dcc6;
 }
@@ -674,7 +666,8 @@ body.night .confirm-box {
     transition: 100ms;
 }
 
-body.night .confirm-box:hover {
+body.night .confirm-box:hover,
+body.night .confirm-box:focus {
     border: 1px solid #f5df15;
     box-shadow: 0 0 3px 0 #f5df15c6;
 }

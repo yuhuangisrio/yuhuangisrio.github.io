@@ -22,7 +22,7 @@ $(document).ready(()=>{
     var link = window.location.href.replace(window.location.pathname,""); // 主站网址
     var curLocation = window.location.href;   // 当前网址
     var temp_arr = curLocation.split("/");   // 将当前路径以/分割
-    var curChapter = temp_arr[temp_arr.length-1].trim().replace(".html",""); // 返回字符串 当前章节html文件的名称 即 url_name
+    var curChapter = temp_arr[temp_arr.length-2].trim(); // 返回字符串 当前章节html文件的名称 即 url_name
     var encodedName = $.md5(curChapter);
     var curArticle = temp_arr[temp_arr.length-3];   // 返回当前文章名称
     var temp_str = RSSD.txtActs.getTxt(encodedName, "../../../../data/contents/"+curArticle+"/");   // 获取文本 (当前章节html文件的名称.txt)
@@ -399,7 +399,7 @@ $(document).ready(()=>{
 
     // 返回至文章主页
     $("a.return-mainpage").click(()=>{
-        window.location.href = curLocation.split("&/")[0].trim()/*+"mainpage.html"*/;
+        window.location.href = (link + '/article/' + curArticle + '/')/*+"mainpage.html"*/;
     });
 
     // (已弃用)双击段落，实现标签功能。再次双击注册有标签的段落时，标签会取消。

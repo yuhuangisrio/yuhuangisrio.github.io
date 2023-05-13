@@ -1,6 +1,19 @@
 var Global = {};
 
 Global.encoded_cur_password = "e286f1f186225ea42a23c35a8db0e230";
+Global.articles_default_settings = {
+    title: "文章标题",
+    url_title: "template-title",
+    summary: "(无)",
+    type: "短篇",
+    is_redistributable: true,
+    is_yuhuang_only: true,
+    is_yuhuangyu: false
+}
+Global.chapters_default_settings = {
+    name: "章节的主标题",
+    url_name: "短标题"
+}
 
 function closeWindow() {
     window.history.back();
@@ -194,6 +207,89 @@ Global.getLastReadBook = function() {
     var temp_str = window.localStorage.getItem("last_read_book");
     return temp_str || '';
 };
+
+/**
+ * 加载CSV文件
+ * @param {string} name CSV名称
+ * @param {string} path CSV所在路径
+ * @param {function} callback 回调函数。参数为返回的CSV字符串 
+ */
+Global.loadCSV = function(name, path='/', callback) {
+    // csv必须是utf-8格式
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+            var csv = xhr.responseText;
+            if(callback) callback(csv);
+        }
+    };
+    xhr.open('GET',path+name+'.csv',true);
+    xhr.send();
+}
+
+/**
+ * 加载文章数据
+ * @param {function} callback 回调函数。参数是文章数组。
+ */
+Global.getArticles = function(callback) {
+    Global.loadCSV('articles','/data/',function(csv){
+        var temp_arr = csv.split(/\r/);
+        var articles = [];
+        for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
+            if(!temp_arr[i]) continue;
+            var article = temp_arr[i].split(',');
+            if(article.length < 16) continue;
+            var ds = Global.articles_default_settings;
+            articles.push({
+                title: article[0] || ds.title,
+                url_title: article[1] || ds.url_title,
+                author: article[2] || ds.author || '',
+                author_link: article[3] || ds.author_link || './',
+                summary: article[4] || ds.summary,
+                type: article[5] || ds.type || '-',
+                number_of_chapters: article[6] || ds.number_of_chapters,
+                tags: article[7].replace('&',',') || ds.tags,
+                subject: article[8] || ds.subject,
+                roles: article[9] || ds.roles,
+                status: article[10] || ds.status || '-',
+                ending: article[11] || ds.ending || '-',
+                is_yuhuang_only: !article[12] ? ds.is_yuhuang_only : (article[12] == 'T' ? true : false),
+                is_yuhuangyu: !article[13] ? ds.is_yuhuangyu : (article[13] == 'T' ? true : false),
+                accessable_links: article[14] || ds.accessable_links || '',
+                is_redistributable: !article[15] ? ds.is_redistributable : (article[15] == 'T' ? true : false)
+            })
+        }
+        if(callback) callback(articles);
+    });
+}
+
+/**
+ * 加载章节数据
+ * @param {string} url_title 文章url标题
+ * @param {function} callback 回调函数。参数是章节数组。
+ */
+Global.getChapters = function(url_title, callback) {
+    Global.loadCSV('chapters','/data/'+url_title+'/',function(csv){
+        var temp_arr = csv.split(/\r/);
+        var chapters = [];
+        for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
+            if(!temp_arr[i]) continue;
+            var chapter = temp_arr[i].split(',');
+            if(chapter.length < 16) continue;
+            var ds = Global.chapters_default_settings;
+            chapters.push({
+                name: chapter[0] || ds.name,
+                short_name: chapter[1] || ds.short_name,
+                url_name: chapter[2] || ds.url_name,
+                links: chapter[3] || ds.links || '',
+                is_original_post_invalid: chapter[4] || ds.is_original_post_invalid || false,
+                level: chapter[5] || ds.level || '0+',
+                warning: chapter[6] || ds.warning || ''
+            })
+        }
+        if(callback) callback(chapters);
+    });
+}
 
 $(document).ready(()=>{
     // Global.deleteCookie("is-admitted")
