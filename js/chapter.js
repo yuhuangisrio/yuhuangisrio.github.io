@@ -25,25 +25,24 @@ $(document).ready(()=>{
     var curChapter = temp_arr[temp_arr.length-2].trim(); // 返回字符串 当前章节html文件的名称 即 url_name
     var encodedName = $.md5(curChapter);
     var curArticle = temp_arr[temp_arr.length-3];   // 返回当前文章名称
-    var temp_str = RSSD.txtActs.getTxt(encodedName, "../../../../data/contents/"+curArticle+"/");   // 获取文本 (当前章节html文件的名称.txt)
+    var temp_str = RSSD.txtActs.getTxt(encodedName, "/data/contents/"+curArticle+"/");   // 获取文本 (当前章节html文件的名称.txt)
     var data = Base64.decode(temp_str);
 
     // 将文本输入div并格式化文本
     var paragraph_list = [];
     paragraph_list = data.split(/[(\r\n)\r\n]+/);
-    var indent = "　　";
     for(var i = 0; i < paragraph_list.length; i++) {
         if(paragraph_list[i] == ''){
             paragraph_list.remove(paragraph_list[i]);
             i -= 1;
         } else {
-            $("#txt").append("<p id=\"p"+i+"\">"+indent+paragraph_list[i].trim()+"</p>");
+            $("#txt").append("<p id=\"p"+i+"\">"+paragraph_list[i].trim()+"</p>");
         }
     };
 
     // 获取当前文章名与作者
     RSSD.articleData = [];
-    $.getJSON("/data/articles.json", function(data){
+    Global.getArticles(function(data){
         data.forEach((item, index)=>{
             if(item.url_title = curArticle) {
                 RSSD.articleData[0] = item.title;
@@ -55,7 +54,7 @@ $(document).ready(()=>{
     // 获取并使用章节信息数据 (章节名、作者、级别)
     var curArticleRealName, curArticleAuthor, curChapterRealName, curChapterShortName;
     var curLevel;
-    $.getJSON("/data/contents/"+curArticle+"/"+"chapters.json", function(data){
+    Global.getChapters(curArticle, function(data){
         curArticleRealName = RSSD.articleData[0];
         curArticleAuthor = RSSD.articleData[1];
         data.forEach((item, index)=>{
@@ -114,14 +113,14 @@ $(document).ready(()=>{
         if(data_font_language == '简体' || data_font_language == '簡體') {type = 'simplified';}
         else if (data_font_language == '繁体' || data_font_language == '繁體') {type = 'traditional';}
         else if (data_font_language == '台灣繁體' || data_font_language == '台湾繁体') {type = "traditional"; locale = "zh_TW";}
-        var temp_paragraph_list = [], transtr = '', indent = '　　';
+        var temp_paragraph_list = [], transtr = '';
         paragraph_list.forEach((item, index)=>{
             transtr = transverter({
                 type:type,
                 str:item,
                 language:locale
             });
-            temp_paragraph_list.push(indent + transtr);
+            temp_paragraph_list.push(transtr);
         });
         temp_paragraph_list.forEach((item, index)=>{
             $("p#p"+index).html(item);
@@ -344,9 +343,8 @@ $(document).ready(()=>{
                         else if (lang == '繁体' || lang == '繁體') {type = 'traditional';}
                         else if (lang == '台灣繁體' || lang == '台湾繁体') {type = "traditional"; locale = "zh_TW";}
                         else if (lang == '初始化') {
-                            var indent = '　　';
                             for(var i = 0; i < paragraph_list.length; i++) {
-                                $("p#p"+i).html(indent + paragraph_list[i]);
+                                $("p#p"+i).html(paragraph_list[i]);
                             };
                             if(bookmark_p_id > -1) {
                                 var str = "p#p"+bookmark_p_id;
@@ -358,14 +356,14 @@ $(document).ready(()=>{
                             return;
                         }
                         else {return;}
-                        var temp_paragraph_list = [], transtr = '', indent = '　　';
+                        var temp_paragraph_list = [], transtr = '';
                         paragraph_list.forEach((item, index)=>{
                             transtr = transverter({
                                 type:type,
                                 str:item,
                                 language:locale
                             });
-                            temp_paragraph_list.push(indent + transtr);
+                            temp_paragraph_list.push(transtr);
                         });
                         temp_paragraph_list.forEach((item, index)=>{
                             $("p#p"+index).html(item);
@@ -454,7 +452,7 @@ $(document).ready(()=>{
 
     $(".unaccessible").click(function(){
         var next_chapter_url_name;
-        $.getJSON("/data/contents/"+curArticle+"/chapters.json", function(data){
+        Global.getChapters(curArticle, function(data){
             data.forEach((item, index)=>{
                 if(item.url_name == curChapter) {
                     next_chapter_url_name = data[index+1].url_name || "";

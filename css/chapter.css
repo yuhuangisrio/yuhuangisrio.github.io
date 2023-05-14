@@ -47,10 +47,13 @@ body.day .title-and-author{
 #txt p{
     font-size: inherit;
     white-space: pre-wrap;
-    /* text-indent: 2em; */
     margin-bottom: inherit;
     line-height: inherit;
     vertical-align: middle;
+}
+
+#txt p::before{
+    content: '　　';
 }
 
 /* #txt p:first-of-type{
@@ -192,7 +195,7 @@ body.day a.to-top{
     width: 38px;
     height: 38px;
     color: rgb(90, 90, 90);
-    font-size: 30px;
+    font-size: 32px;
     text-align: center;
     border-radius: 3px;
     /* border: 1px solid rgb(170, 170, 170); */
@@ -328,8 +331,8 @@ body.day a.switch-theme{
     position: fixed;
     bottom: 50px;
     right: 20px;
-    width: 38px;
-    height: 38px;
+    /* width: 38px;
+    height: 38px; */
     color: rgb(90, 90, 90);
     font-size: 32px;
     text-align: center;

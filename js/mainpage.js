@@ -15,9 +15,12 @@ $(document).ready(()=>{
     var temp_arr = window.location.href.split("/");
     var url_title = temp_arr[temp_arr.length-2];
     var link = window.location.href.replace(window.location.pathname,"");
+    Global.getChapters(url_title,(chapters)=>{
+        window.number_of_chapters = chapters.length;
+    })
 
     // 将信息注入主页html中
-    $.getJSON("../../../data/articles.json", function(data){
+    Global.getArticles(function(data){
         data.forEach((item, index)=>{
             if(item.url_title == url_title) {
                 var article = item;
@@ -26,7 +29,7 @@ $(document).ready(()=>{
                 var author_link = article.author_link;
                 var summary = article.summary;
                 var number_of_characters = article.number_of_characters;
-                var number_of_chapters = article.number_of_chapters;
+                var number_of_chapters = window.number_of_chapters;
                 var tags_list = article.tags.split(",").map((item, index)=>{return item.trim()});
 
                 $("title").html(title + " by " + author);
@@ -38,6 +41,15 @@ $(document).ready(()=>{
                 $(".statistics .character-number").html(number_of_characters);
                 tags_list.forEach((item)=>{
                     $(".tags-list").append('<a href="#"><i class="fa fa-tag"></i>'+item+'</a>');
+                })
+                if(article.accessable_links){
+                    var a_links = article.accessable_links.split('$$','');
+                    $("div.chapter-list ul").append('<li><a href="javascript:">'+"全文"+'</a></li>')
+                }
+                Global.getChapters(url_title, (chapters)=>{
+                    chapters.forEach((item)=>{
+                        $("div.chapter-list ul").append('<li><a href="./'+item.url_name+'/">'+item.short_name+'</a></li>')
+                    })
                 })
             }
         })

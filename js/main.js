@@ -6,6 +6,7 @@ Global.articles_default_settings = {
     url_title: "template-title",
     summary: "(无)",
     type: "短篇",
+    number_of_characters: "-",
     is_redistributable: true,
     is_yuhuang_only: true,
     is_yuhuangyu: false
@@ -238,25 +239,37 @@ Global.getArticles = function(callback) {
         for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
             if(!temp_arr[i]) continue;
             var article = temp_arr[i].split(',');
-            if(article.length < 16) continue;
+            // if(article.length < 16) continue;
+            if(!article[0].replace(/\n/,'')) continue;
             var ds = Global.articles_default_settings;
             articles.push({
-                title: article[0] || ds.title,
+                title: article[0].replace(/\n/,'') || ds.title,
                 url_title: article[1] || ds.url_title,
                 author: article[2] || ds.author || '',
                 author_link: article[3] || ds.author_link || './',
                 summary: article[4] || ds.summary,
                 type: article[5] || ds.type || '-',
-                number_of_chapters: article[6] || ds.number_of_chapters,
-                tags: article[7].replace('&',',') || ds.tags,
-                subject: article[8] || ds.subject,
-                roles: article[9] || ds.roles,
-                status: article[10] || ds.status || '-',
-                ending: article[11] || ds.ending || '-',
-                is_yuhuang_only: !article[12] ? ds.is_yuhuang_only : (article[12] == 'T' ? true : false),
-                is_yuhuangyu: !article[13] ? ds.is_yuhuangyu : (article[13] == 'T' ? true : false),
-                accessable_links: article[14] || ds.accessable_links || '',
-                is_redistributable: !article[15] ? ds.is_redistributable : (article[15] == 'T' ? true : false)
+                number_of_characters: (function(){
+                    switch(article[5] || ds.type || '-') {
+                        case '长篇': 
+                            return '6w+';
+                        case '中篇':
+                            return '2w~6w';
+                        case '短篇':
+                            return '2w以下';
+                        default: 
+                            return ds.number_of_characters;
+                    }
+                })(),
+                tags: article[6].replace('&',',') || ds.tags,
+                subject: article[7] || ds.subject,
+                roles: article[8] || ds.roles,
+                status: article[9] || ds.status || '-',
+                ending: article[10] || ds.ending || '-',
+                is_yuhuang_only: !article[11] ? ds.is_yuhuang_only : (article[12] == 'T' ? true : false),
+                is_yuhuangyu: !article[12] ? ds.is_yuhuangyu : (article[13] == 'T' ? true : false),
+                accessable_links: article[13] || ds.accessable_links || '',
+                is_redistributable: !article[14] ? ds.is_redistributable : (article[15] == 'T' ? true : false)
             })
         }
         if(callback) callback(articles);
@@ -269,20 +282,21 @@ Global.getArticles = function(callback) {
  * @param {function} callback 回调函数。参数是章节数组。
  */
 Global.getChapters = function(url_title, callback) {
-    Global.loadCSV('chapters','/data/'+url_title+'/',function(csv){
+    Global.loadCSV('chapters','/data/contents/'+url_title+'/',function(csv){
         var temp_arr = csv.split(/\r/);
         var chapters = [];
         for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
             if(!temp_arr[i]) continue;
             var chapter = temp_arr[i].split(',');
-            if(chapter.length < 16) continue;
+            // if(chapter.length < 16) continue;
+            if(!chapter[0].replace(/\n/,'')) continue;
             var ds = Global.chapters_default_settings;
             chapters.push({
-                name: chapter[0] || ds.name,
+                name: chapter[0].replace(/\n/,'') || ds.name,
                 short_name: chapter[1] || ds.short_name,
                 url_name: chapter[2] || ds.url_name,
                 links: chapter[3] || ds.links || '',
-                is_original_post_invalid: chapter[4] || ds.is_original_post_invalid || false,
+                is_original_post_invalid: !chapter[4] ? ds.is_original_post_invalid : (chapter[4] == 'T' ? true : false),
                 level: chapter[5] || ds.level || '0+',
                 warning: chapter[6] || ds.warning || ''
             })
