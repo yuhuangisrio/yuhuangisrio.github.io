@@ -245,7 +245,7 @@ Global.getArticles = function(callback) {
             articles.push({
                 title: article[0].replace(/\n/,'') || ds.title,
                 url_title: article[1] || ds.url_title,
-                author: article[2] || ds.author || '',
+                author: article[2].includes('/') ? (article[2].split('/')[0] || ds.author || '') : (article[2] || ds.author || ''),
                 author_link: article[3] || ds.author_link || './',
                 summary: article[4] || ds.summary,
                 type: article[5] || ds.type || '-',
@@ -294,7 +294,7 @@ Global.getChapters = function(url_title, callback) {
             chapters.push({
                 name: chapter[0].replace(/\n/,'') || ds.name,
                 short_name: chapter[1] || ds.short_name,
-                url_name: chapter[2] || ds.url_name,
+                url_name: chapter[2] || ds.url_name || i, // 如果不写则默认是1,2,3,4...按照顺序排列。
                 links: chapter[3] || ds.links || '',
                 is_original_post_invalid: !chapter[4] ? ds.is_original_post_invalid : (chapter[4] == 'T' ? true : false),
                 level: chapter[5] || ds.level || '0+',

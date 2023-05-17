@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>您似乎来到了一个未知的领域...</title>
+    <link rel="shortcut icon" href="./icons/favicon_2_sm.png" type="image/x-icon">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<style>
+    div.contents{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 50%;
+        text-align: center;
+    }
+    img{
+        width: 4rem;
+        border-radius: 10px;
+    }
+</style>
+<body>
+    <div class="contents">
+        <img class="img" src="/icons/favicon_2_sm.png">
+        <div class="texts">您似乎来到了一个未知的领域呢...<br>点击 <a href="/">这里</a> 返回主页吧。</div>
+    </div>
+</body>
+<script>
+    var link = window.location.href;
+    if(link.includes('article/')){
+        $("title").html('该文章不存在')
+        $("div.texts").html('该文章不存在。<br>点击 <a href="/">这里</a> 返回主页吧。');
+    }
+</script>
+</html>

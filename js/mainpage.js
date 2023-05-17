@@ -17,7 +17,7 @@ $(document).ready(()=>{
     var link = window.location.href.replace(window.location.pathname,"");
     Global.getChapters(url_title,(chapters)=>{
         window.number_of_chapters = chapters.length;
-    })
+    });
 
     // 将信息注入主页html中
     Global.getArticles(function(data){
@@ -43,8 +43,35 @@ $(document).ready(()=>{
                     $(".tags-list").append('<a href="#"><i class="fa fa-tag"></i>'+item+'</a>');
                 })
                 if(article.accessable_links){
-                    var a_links = article.accessable_links.split('$$','');
-                    $("div.chapter-list ul").append('<li><a href="javascript:">'+"全文"+'</a></li>')
+                    var a_links = article.accessable_links.split('$$');
+                    var temp_str = '';
+                    a_links.forEach((item2)=>{
+                        var type = '', a_link = item2;
+                        a_link.replace('https://archiveofourown.org/','');
+                        if(a_link.includes('lofter.com')) type = 'LOFTER';
+                        else if(a_link.includes('works/')) type = 'AO3';
+                        else if(a_link.includes('bbs.yuhuangonly.com') || a_link.includes('bbs3.yuhuangonly.cn')) type = '喻黄ONLY论坛';
+                        else if(a_link.includes('yuhuangonly.com') || a_link.includes('yuhuangonly.cn')) type = '喻黄个站';
+                        else if(a_link.includes('weibo')) type = 'weibo';
+                        else {type = '未知网站';}
+                        var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').substr(-1) == '/' ? Global.getPreference('mirror-ao3-link').slice(0, -1) : Global.getPreference('mirror-ao3-link')) || 'https://1.ao3-cn.top';
+                        if(type == 'AO3') a_link = Global.getPreference('use-mirror-website') ? def_web + '/' + a_link : 'https://archiveofourown.org/' + a_link;
+                        temp_str += '<a class="accessable-link" href="'+a_link+'">'+type+'</a>'+'<br>';
+                    })
+                    $("a.whole-article").click(()=>{
+                        $.confirm({
+                            title: '全文链接',
+                            content: temp_str+"若以上链接全部失效，请联系站长邮箱 ilikepotatoes@163.com 以补档。",
+                            boxWidth: '80%',
+                            type: 'blue',
+                            theme: 'light',
+                            useBootstrap: false,
+                        })
+                    })
+                } else {
+                    $("a.whole-article").click(()=>{
+                        window.location.assign('./whole')
+                    })
                 }
                 Global.getChapters(url_title, (chapters)=>{
                     chapters.forEach((item)=>{
