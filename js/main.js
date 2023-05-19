@@ -327,6 +327,16 @@ Array.prototype.remove = function(val) {
     }
 };
 
+Array.prototype.clearRepetition = function() {
+    var temp_arr = [];
+    for(var i = 0; i < this.length; i++) {
+        if(temp_arr.indexOf(this[i]) == -1) {
+            temp_arr.push(this[i]);
+        }
+    };
+    return temp_arr;
+};
+
 Array.prototype.contains = function(val) {
     return this.indexOf(val) > -1;
 };
