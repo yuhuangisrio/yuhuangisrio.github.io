@@ -41,7 +41,7 @@ $(document).ready(()=> {
                     submit: {
                         text: '确认',
                         action: function () {
-                            if(Global.__temp_tags && JSON.stringify(Global.__temp_tags) != '[]') {
+                            if(Global.__temp_tags) {
                                 Global._search_tags = Global._search_tags || [];
                                 Global._search_tags = Global.__temp_tags.clearRepetition();
                                 $('span.tags-input-area').html('');
