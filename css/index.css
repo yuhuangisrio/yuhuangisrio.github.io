@@ -34,13 +34,22 @@ div.search-input{
 
 input.search-area{
     font-size: 12px;
-    width: calc(100% - 50px);
+    width: calc(100% - 75px);
     line-height: 30px;
     border: none;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    margin: 0;
+    margin: 0 5px;
     padding: 5px 0;
+}
+
+span.clear-text{
+    font-size: 12px;
+    color: rgb(190, 190, 190);
+    vertical-align: middle;
+    cursor: pointer;
+    visibility: hidden;
+    margin-right: 3px;
 }
 
 span.search-executor{
@@ -48,6 +57,8 @@ span.search-executor{
     cursor: pointer;
     vertical-align: middle;
     transition: 0.2s;
+    border-left: 1px solid rgb(190, 190, 190);
+    padding-left: 8px;
 }
 
 span.search-executor:hover{
@@ -166,6 +177,63 @@ div.no-result{
     margin-left: 5px;
 }
 
+div.searching-symbol{
+    display: none;
+    margin: auto;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+span.selectable-tag{
+    display: inline-block;
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 5px;
+    background-color: rgb(245, 245, 245);
+    padding: 1px 3px;
+    margin: 3px 3px;
+    cursor: pointer;
+}
+
+span.selectable-tag.selected{
+    display: inline-block;
+    border: 1px solid rgb(255, 196, 0);
+    border-radius: 5px;
+    background-color: #fffacd;
+    padding: 1px 3px;
+    margin: 3px 3px;
+    cursor: pointer;
+}
+
+span.selectable-tag:hover{
+    border: 1px solid rgb(220, 220, 220);
+    background-color: rgb(236, 236, 236);
+}
+
+span.selectable-tag.selected:hover{
+    border: 1px solid rgb(255, 196, 0);
+    background-color: #fffacd;
+}
+
+span.selectable-tag i{
+    color: rgb(190, 190, 190);
+    margin-right: 2px;
+}
+
+span.selectable-tag.selected i{
+    color: rgb(255, 196, 0);
+    margin-right: 2px;
+}
+
+span.shown-tag{
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+span.shown-tag:hover i{
+    color: #05c0f8;
+}
+
 /* 移动端适配 */
 @media only screen and (max-width: 768px) {
     div.main-logo{
@@ -191,11 +259,10 @@ div.no-result{
 
     input.search-area{
         font-size: 14px;
-        width: calc(100% - 50px);
+        width: calc(100% - 75px);
         line-height: 30px;
         border: none;
-        margin: 0;
-        margin-left: 6px;
+        margin: 0 5px;
         padding: 5px;
     }
 

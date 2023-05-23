@@ -229,6 +229,30 @@ Global.loadCSV = function(name, path='/', callback) {
 }
 
 /**
+ * 解析一行CSV字符串并返回数据数组 (允许英文逗号)
+ * @param {string} str 一行CSV字符串
+ * @returns {array} 数据数组
+ */
+Global.parseCSVString = function(str) {
+  var arr = str.split(',');
+  for(var i = 0; i < arr.length; i++){
+    var s = arr[i];
+    if(s.charAt(0) == '"') {
+      var temp_arr = [];
+      for(var j = i; j < arr.length; j++){
+        var s2 = arr[j];
+        var l = s2.length;
+        temp_arr.push(s2);
+        if (s2.charAt(l-1) == '"') break;
+      }
+      var new_str = temp_arr.join(',').replace(/"/gi,'');
+      arr.splice(i,temp_arr.length,new_str);
+    }
+  }
+  return arr;
+}
+
+/**
  * 加载文章数据
  * @param {function} callback 回调函数。参数是文章数组。
  */
@@ -238,7 +262,7 @@ Global.getArticles = function(callback) {
         var articles = [];
         for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
             if(!temp_arr[i]) continue;
-            var article = temp_arr[i].split(',');
+            var article = Global.parseCSVString(temp_arr[i]);
             // if(article.length < 16) continue;
             if(!article[0].replace(/\n/,'')) continue;
             var ds = Global.articles_default_settings;
@@ -287,7 +311,7 @@ Global.getChapters = function(url_title, callback) {
         var chapters = [];
         for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
             if(!temp_arr[i]) continue;
-            var chapter = temp_arr[i].split(',');
+            var chapter = Global.parseCSVString(temp_arr[i]);
             // if(chapter.length < 16) continue;
             if(!chapter[0].replace(/\n/,'')) continue;
             var ds = Global.chapters_default_settings;
@@ -303,6 +327,16 @@ Global.getChapters = function(url_title, callback) {
         }
         if(callback) callback(chapters);
     });
+};
+
+/**
+ * 加载TAG原始数据
+ * @param {function} callback 回调函数。参数是获取到的原始未转换的tag对象。
+ */
+Global.getTags = function(callback){
+    $.getJSON('/data/tags.json', (data)=>{
+        if(callback) callback(data);
+    })
 }
 
 $(document).ready(()=>{
@@ -336,6 +370,22 @@ Array.prototype.clearRepetition = function() {
     };
     return temp_arr;
 };
+
+Array.prototype.getDuplication = function() {
+    var arr = this;
+    var temp_arr1 = [], temp_arr2 = [];
+    for(var i = 0; i < arr.length; i++){
+        var item = arr[i];
+        if(temp_arr1.indexOf(item) == -1) {
+            temp_arr1.push(item);
+        } else {
+            if(temp_arr2.indexOf(item) == -1) {
+                temp_arr2.push(item);
+            }
+        }
+    }
+    return temp_arr2;
+}
 
 Array.prototype.contains = function(val) {
     return this.indexOf(val) > -1;
