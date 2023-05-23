@@ -43,19 +43,19 @@ $(document).ready(()=> {
                         action: function () {
                             if(Global.__temp_tags && JSON.stringify(Global.__temp_tags) != '[]') {
                                 Global._search_tags = Global._search_tags || [];
-                                Global._search_tags = Global._search_tags.concat(Global.__temp_tags).clearRepetition();
+                                Global._search_tags = Global.__temp_tags.clearRepetition();
                                 $('span.tags-input-area').html('');
                                 Global._search_tags.forEach((item)=>{
                                     $('span.tags-input-area').append('<span class="shown-tag"><i class="fa fa-tag"></i><span>'+item+'</span></span>')
                                 });
-                                Global.__temp_tags = [];
+                                Global.__temp_tags = Global._search_tags;
                             }
                         }
                     },
                     cancel: {
                         text: '关闭',
                         action: function () {
-                            Global.__temp_tags = [];
+                            Global.__temp_tags = Global._search_tags;
                         }
                     }
                 },
