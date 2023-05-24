@@ -66,7 +66,7 @@ span.search-executor:hover{
 }
 
 div.advanced-settings{
-    width: 50%;
+    width: 48%;
     margin: auto;
     margin-top: 10px;
     position: relative;
@@ -88,8 +88,8 @@ ul.settings-columns{
     display: none;
     font-size: 14px;
     padding-top: 5px;
-    margin-left: 6px;
-    padding-left: 5px;
+    margin-left: -9px;
+    padding-left: 10px;
     padding-right: 11px;
     border-left: 1px solid gray;
 }
@@ -184,6 +184,10 @@ div.searching-symbol{
     margin-bottom: 10px;
 }
 
+ul.pagination{
+    display: none;
+}
+
 span.selectable-tag{
     display: inline-block;
     border: 1px solid rgb(225, 225, 225);
@@ -275,7 +279,7 @@ span.shown-tag:hover i{
     }
 
     div.advanced-settings{
-        width: 80%;
+        width: 78%;
         margin: auto;
         margin-top: 10px;
         position: relative;

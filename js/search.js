@@ -1,5 +1,7 @@
 var Global = Global || {};
 
+// 待优化，实际执行时候感觉很慢，网页有几率崩溃
+
 Global.search = function(){
     this._onSearchStart();
     this._processSearch();
@@ -16,7 +18,34 @@ Global._onSearchStart = function() {
 };
 
 Global._processSearch = function() {
-
+    var that = this;
+    this.getTags((tags)=>{
+        var tag_list = that.convertTagStruct(tags); // tag
+        var target_tags = that.getTagsForSearch(that._search_tags, tag_list);
+        var target_keywords = that._search_keywords.split(' ') || [];
+        that.getArticles((articles)=>{
+            for(var i = 0; i < articles.length; i++){
+                var a = articles[i];
+                var fitness = true;
+                target_keywords.forEach((k)=>{
+                    if(a.title.includes(k)) fitness = true;
+                    if(a.tags.includes(k)) fitness = true;
+                    if(a.summary.includes(k)) fitness = true;
+                });
+                target_tags.forEach((tag)=>{
+                    if(!a.tags.includes(tag)) fitness = false;
+                });
+                if(that._search_author && !a.author.includes(that._search_author)) fitness = false;
+                if(that._search_role.length > 0 && (!a.roles.split('x')[0].includes(that._search_role[0]) || !a.roles.split('x')[1].includes(that._search_role[1]))) fitness = false;
+                if(that._search_type != '*' && a.type != that._search_type) fitness = false;
+                if(that._search_status != '*' && a.status != that._search_status) fitness = false;
+                if(that._search_ending != '*' && a.ending != that._search_ending) fitness = false;
+                if(that._search_is_yuhuang_only != '*' && a.is_yuhuang_only != that._search_is_yuhuang_only) fitness = false;
+                if(!that._search_is_yuhuangyu && a.is_yuhuangyu == !that._search_is_yuhuangyu) fitness = false;
+                if(fitness) this._search_target_url.push(a.url_title);
+            }
+        })
+    });
 };
 
 Global._onSearchEnd = function() {
@@ -46,7 +75,19 @@ Global._loadClientSearchConditions = function(){
     this._search_author = $('li.author input').val();
     // this._search_subject = $('li.type input').val();
     this._search_role = [$('li.role input.role-yu').val(),$('li.role input.role-huang').val()];
-    this._search_type = $('#settings-length').find("option:selected").val();
+    var type = $('#settings-length').find("option:selected").val();
+    this._search_type = (function(){
+        switch(type) {
+            case 'long':
+                return '长篇';
+            case 'medium':
+                return '中篇';
+            case 'short':
+                return '短篇';
+            default:
+                return '*';
+        }
+    })()
     var status = $('#settings-status').find("option:selected").val();
     this._search_status = (function(){
         switch(status) {
@@ -73,6 +114,7 @@ Global._hideSearchNotice = function() {
 Global._clearPrevResult = function() {
     $('div.result-pages').html('');
     $('ul.pagination').html('');
+    $('ul.pagination').css('display','none');
 };
 
 Global._showVisualSearchSymbol = function() {
@@ -102,13 +144,14 @@ Global._appendResult = function() {
 };
 
 Global._generatePagination = function(page_num) {
+    $('ul.pagination').css('display','block');
     this._curPage = 1;
-    $('ul.pagination').append('<li><a href="javascript:Global.__prevPage('+page_num+')">«</a></li>');
+    $('ul.pagination').append('<li><a href="javascript:Global.__prevPage('+page_num+')">&laquo;</a></li>');
     for(var i = 0; i < page_num; i++) {
         var page = i + 1;
         $('ul.pagination').append('<li><a href="javascript:Global.__pageTo('+page+')">'+page+'</a></li>');
     }
-    $('ul.pagination').append('<li><a href="javascript:Global.__nextPage('+page_num+')">»</a></li>');
+    $('ul.pagination').append('<li><a href="javascript:Global.__nextPage('+page_num+')">&raquo;</a></li>');
 };
 
 Global.__pageTo = function(page) {

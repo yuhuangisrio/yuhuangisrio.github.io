@@ -16,6 +16,13 @@ $(document).ready(()=> {
             $("span.clear-text").css("visibility",'hidden');
         }
     });
+    $("a.random-article").click(()=>{
+        Global.getArticles((articles)=>{
+            var index = Math.floor(Math.random() * articles.length);
+            var article = articles[index];
+            window.open('/article/'+article.url_title+'/');
+        })
+    });
     $('span.tags-list-btn').click(()=>{
         Global.getTags((tags)=>{
             tags = Global.convertTagStruct(tags);

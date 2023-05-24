@@ -39,9 +39,9 @@ Global.convertTagStruct = function(obj) {
         }
         returns:
         temp_obj = {
-            '*':['modern','original']
+            '*':['modern','original'],
             'modern':['scholl/collage','business','killer'],
-            'business':['it','finance'],
+            'business':['it','finance']
         }
         Note that the max depth of each branch is 3.
     */
@@ -55,7 +55,7 @@ Global.convertTagStruct = function(obj) {
  * @returns 按照树状结构生成的用于搜索文章的TAG数组。
  */
 Global.getTagsForSearch = function(s, obj) {
-    var temp_arr = s || null;
+    var temp_arr = s || [];
     var temp_arr2 = [];
     var t_tags = temp_arr;
     var keys = Object.keys(obj);
@@ -76,9 +76,16 @@ Global.getTagsForSearch = function(s, obj) {
         }
     };
     var target_tags = t_tags.clearRepetition();
-    // 注意以下两行代码的顺序
     target_tags = this._seperateMultiNamedTags(target_tags);
     target_tags = this._removeBannedTags(target_tags);
+    var parent_tags = this._getAllParentsOfTag(target_tags, obj, true);
+    var dup_tags = target_tags.concat(parent_tags).getDuplication();
+    // 若数组不为空，则说明用户的搜索TAG中有TAG存在父TAG和子TAG的关系，此时必须去除父TAG以达到精准搜索的目的
+    if(dup_tags.length > 0) {
+        dup_tags.forEach((tag)=>{
+            target_tags.remove(tag);
+        })
+    };
     return target_tags;
 }
 
@@ -86,9 +93,10 @@ Global.getTagsForSearch = function(s, obj) {
  * 获取用于用户端选择的TAG数组。
  * @param {array} s 用户端输入的TAG数组
  * @param {object} obj 用 convertTagStruct 方法转换过的对象
+ * @param {boolean} is_banned_tags_selection 是否用于选择屏蔽TAG
  * @returns 列在TAG数据文件中用于用户端选择的所有TAG的数组
  */
-Global.getTagsForSelection = function(s, obj) {
+Global.getTagsForSelection = function(s, obj, is_banned_tags_selection) {
     var temp_arr = s || null;
     var temp_arr2 = [];
     var t_tags = temp_arr;
@@ -110,9 +118,8 @@ Global.getTagsForSelection = function(s, obj) {
         }
     };
     var target_tags = t_tags.clearRepetition();
-    // 注意以下两行代码的顺序
     target_tags = this._convertMultiNamedTagsToSingle(target_tags);
-    target_tags = this._removeBannedTags(target_tags);
+    if(!is_banned_tags_selection) target_tags = this._removeBannedTags(target_tags);
     target_tags = target_tags.clearRepetition();
     return target_tags;
 }
@@ -190,6 +197,38 @@ Global._getKeyOfAlias = function(alias, obj) {
     });
     return target_key;
 }
+
+/**
+ * 获取TAG或TAG数组中所有TAG的全部父TAG
+ * @param {string|array} tags 一个TAG字符串或TAG数组
+ * @param {object} obj 用 convertTagStruct 方法转换过的TAG对象
+ * @param {boolean} is_to_single 是否将所有有别名的TAG转换为单个TAG (首个TAG)
+ * @returns {array} TAG的所有父TAG数组
+ */
+Global._getAllParentsOfTag = function(tags, obj, is_to_single){
+    var arr = typeof tags == 'array' ? tags : [tags];
+    var temp_arr = [];
+    var parents = [];
+    var keys = Object.keys(obj);
+    while(arr && arr.length > 0) {
+        temp_arr = [];
+        for(var i = 0; i < arr.length; i++) {
+            var t = arr[i];
+            keys.forEach((k)=>{
+                var item = obj[k];
+                item.forEach((tag)=>{
+                    if(tag.includes(t)) {
+                        temp_arr.push(k);
+                        parents.push(k);
+                    };
+                })
+            });
+        }
+        arr = temp_arr;
+    }
+    if(is_to_single) parents = this._convertMultiNamedTagsToSingle(parents);
+    return parents;
+};
 
 /**
  * 获取所有有别名的TAG的对象。

@@ -7,7 +7,7 @@
 }
 
 body{
-    font-family: '宋体',sans-serif,'Times New Roman', Times, serif;
+    font-family: sans-serif,'Times New Roman';
     letter-spacing: 1px;
 }
 
@@ -27,6 +27,7 @@ div.background{
 
 .huang{
     color: #f5df15;
+    /* color: #ffbf49; */
 }
 
 .blue-rain{

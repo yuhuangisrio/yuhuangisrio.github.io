@@ -99,8 +99,8 @@ $(document).ready(()=>{
     // 获取当前文章信息
     RSSD.downloadChapters.downloadable_chapters_index_list = [];
     RSSD.downloadChapters.articleData = []
-    $.getJSON("/data/articles.json", function(data){
-        data.forEach((item, index)=>{
+    Global.getArticles((data)=>{
+        data.forEach((item)=>{
             if(item.url_title == url_title) {
                 RSSD.downloadChapters.articleData[0] = item.title;
                 RSSD.downloadChapters.articleData[1] = item.author;
@@ -113,7 +113,7 @@ $(document).ready(()=>{
     $("a.download").click(function(){
         var zip = new JSZip();
         var txt = zip.folder("txt");
-        $.getJSON("/data/contents/"+url_title+"/chapters.json", function(data){
+        Global.getChapters(url_title, (data)=>{
             var curArticleName = RSSD.downloadChapters.articleData[0]
             var curArticleAuthor = RSSD.downloadChapters.articleData[1]
             var curArticleAuthorLink = RSSD.downloadChapters.articleData[2]
@@ -122,16 +122,16 @@ $(document).ready(()=>{
                     RSSD.downloadChapters.downloadable_chapters_index_list.push(index);
                     var temp_str = RSSD.downloadChapters.getTxt($.md5(item.url_name),"/data/contents/"+url_title+"/");
                     var texts = Base64.decode(temp_str);
-                    texts = item.name + "\n《" + curArticleName + "》 by " + curArticleAuthor + "\n\n" + texts;
+                    texts = item.name + "\r\n《" + curArticleName + "》 by " + curArticleAuthor + "\r\n\r\n" + texts;
                     txt.file(item.short_name+".txt", texts);
                 }
             });
-            var list = "[标题]："+curArticleName +"\n[作者]："+curArticleAuthor+" ("+curArticleAuthorLink+")\n\n原文缺失章节列表：\n";
+            var list = "[标题]："+curArticleName +"\r\n[作者]："+curArticleAuthor+" ("+curArticleAuthorLink+")\r\n\r\n原文缺失章节列表：\r\n";
             RSSD.downloadChapters.downloadable_chapters_index_list.forEach((chapter_index, index)=>{
-                list += data[chapter_index].name + "\n";
+                list += data[chapter_index].name + "\r\n";
             });
-            if(!RSSD.downloadChapters.downloadable_chapters_index_list) list += "(无)\n";
-            list += "\n\n\n# 来自网站 "+link.replace("#","")+" 的非官方补档，仅供同好之间相互交流，切勿违反原文作者的条款。\n# 致作者：倘若侵犯了您的权益，请联系站长邮箱 ilikepotatoes@163.com 。"
+            if(!RSSD.downloadChapters.downloadable_chapters_index_list) list += "(无)\r\n";
+            list += "\r\n\r\n\r\n# 来自网站 "+link.replace("#","")+" 的非官方补档，仅供同好之间相互交流，切勿违反原文作者的条款。\r\n# 致作者：倘若侵犯了您的权益，请联系站长邮箱 ilikepotatoes@163.com 。"
             zip.file("Info.txt", list);
             zip.generateAsync({type:"blob"}).then(function(content) {
                 // see FileSaver.js

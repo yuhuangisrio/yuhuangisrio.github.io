@@ -251,6 +251,41 @@ body.day .warning-texts{
     cursor: pointer;
 }
 
+/* .chapter-list-area{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+} */
+
+.dark-back{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0;
+}
+
+body.day .chapter-list{
+    background-color: rgb(250,250,250);
+    max-width: 50%;
+    width: 0px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 16px 0 rgb(140,140,140);
+}
+
+.chapter-list div{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 /* 上/下一章按钮 */
 body.day div.prev-chapter {
     display: inline-block;
@@ -506,6 +541,17 @@ body.night ul.toolcase-list li a span.tooltip-left{
     padding: 4px;
     border-radius: 5px;
     background-color: rgb(66, 61, 8);
+}
+
+body.night .chapter-list{
+    background-color: rgb(41, 41, 56);
+    max-width: 50%;
+    width: 0px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 16px 0 rgb(80, 80, 80);
 }
 
 /* 上/下一章按钮 */
@@ -805,15 +851,5 @@ body.night a.switch-theme:hover{
         text-indent: 0;
         line-height: 27px;
         margin: auto;
-    }
-
-    body.day .toolcase-list li:first-of-type{
-        height: 0;
-        visibility: hidden;
-    }
-
-    body.night .toolcase-list li:first-of-type{
-        height: 0;
-        visibility: hidden;
     }
 }

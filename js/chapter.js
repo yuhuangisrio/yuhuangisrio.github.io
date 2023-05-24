@@ -393,7 +393,33 @@ $(document).ready(()=>{
         });
     });
 
-    // 缩进调整
+    //章节选择
+    $("a.jump-to-chapter").click(()=>{
+        if($('div.chapter-list').css('width') == '0px') {
+            $('div.chapter-list').animate({
+                'width': '50%'
+                });
+            $('div.dark-back').animate({
+                'opacity':'0.15'
+            })
+        } else {
+            $('div.chapter-list').animate({
+                'width':'0px'
+            })
+            $('div.dark-back').animate({
+                'opacity':'0'
+            })
+        }
+    });
+
+    $('div.dark-back').click(()=>{
+       $('div.chapter-list').animate({
+            'width':'0px'
+        })
+        $('div.dark-back').animate({
+            'opacity':'0'
+        })
+    })
 
     // 返回至文章主页
     $("a.return-mainpage").click(()=>{
