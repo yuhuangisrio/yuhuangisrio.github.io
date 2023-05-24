@@ -351,7 +351,9 @@ $(document).ready(()=>{
         $("ul.menu-columns").slideToggle();
         $("div.menu-icon i").toggleClass("fa-bars")
         $("div.menu-icon i").toggleClass("fa-close")
-    })
+    });
+
+    $("div.no-js-warning").css('display','none');
 });
 
 Array.prototype.remove = function(val) {

@@ -66,6 +66,14 @@ $(document).ready(()=>{
                             type: 'blue',
                             theme: 'light',
                             useBootstrap: false,
+                            buttons: {
+                                submit: {
+                                    'text': '确定'
+                                },
+                                cancel: {
+                                    'text': '取消'
+                                }
+                            }
                         })
                     })
                 } else {

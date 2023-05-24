@@ -376,6 +376,31 @@ div.blank.line{
     border-top: 1px solid rgba(155, 155, 155, 0.542);
 }
 
+div.no-js-warning{
+    background-color: #ffeeb1;
+    width: 100%;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+div.no-js-warning div.warnings{
+    color: #693d00;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+div.no-js-warning div.warnings i{
+    color: #693d00;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
 /* body.day a.switch-theme{
     display: block;
     position: fixed;
