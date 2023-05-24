@@ -1,7 +1,7 @@
 $(document).ready(() => {
     var banned_tags_list = Global.getPreference("banned-tags") || [];
     var preferred_reading_website = Global.getPreference("preferred-reading-website") || "lofter";
-    var use_mirror_ao3_website = Global.getPreference("use-mirror-website") ? JSON.parse(Global.getPreference("use-mirror-website")) : true;
+    var use_mirror_ao3_website = Global.getPreference("use-mirror-website") ? (Global.getPreference("use-mirror-website") == 'checked' ? true : JSON.parse(Global.getPreference("use-mirror-website"))) : true;
     var mirror_ao3_link = Global.getPreference("mirror-ao3-link") || "https://1.ao3-cn.top";
     if(banned_tags_list && JSON.stringify(banned_tags_list) != "[]") {
         banned_tags_list.forEach((item)=>{
