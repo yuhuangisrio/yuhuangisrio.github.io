@@ -18,10 +18,22 @@ $(document).ready(()=> {
     });
     $("a.random-article").click(()=>{
         Global.getArticles((articles)=>{
-            var index = Math.floor(Math.random() * articles.length);
-            var article = articles[index];
+            var fitness = false;
+            while (!fitness) {
+                var index = Math.floor(Math.random() * articles.length);
+                var article = articles[index];
+                var banned_tags = Global.getPreference('banned-tags') || [];
+                var is_banned = false;
+                banned_tags.forEach((item)=>{
+                    if(article.tags.toLowerCase().includes(item) is_banned = true;
+                })
+                if(!is_banned) fitness = true;
+            }
             window.open('/article/'+article.url_title+'/');
         })
+    });
+    $('.search-executor').click(()=>{
+        Global.search();
     });
     $('span.tags-list-btn').click(()=>{
         Global.getTags((tags)=>{

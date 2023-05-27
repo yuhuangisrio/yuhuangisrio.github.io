@@ -28,13 +28,14 @@ Global._processSearch = function() {
                 var a = articles[i];
                 var fitness = true;
                 target_keywords.forEach((k)=>{
-                    if(a.title.includes(k)) fitness = true;
-                    if(a.tags.includes(k)) fitness = true;
-                    if(a.summary.includes(k)) fitness = true;
+                    if(a.title.toLowerCase().includes(k.toLowerCase())) fitness = true;
+                    if(a.tags.toLowerCase().includes(k.toLowerCase())) fitness = true;
+                    if(a.summary.toLowerCase().includes(k.toLowerCase())) fitness = true;
                 });
                 target_tags.forEach((tag)=>{
-                    if(!a.tags.includes(tag)) fitness = false;
+                    if(!a.tags.toLowerCase().includes(tag.toLowerCase())) fitness = false;
                 });
+                /*
                 if(that._search_author && !a.author.includes(that._search_author)) fitness = false;
                 if(that._search_role.length > 0 && (!a.roles.split('x')[0].includes(that._search_role[0]) || !a.roles.split('x')[1].includes(that._search_role[1]))) fitness = false;
                 if(that._search_type != '*' && a.type != that._search_type) fitness = false;
@@ -42,7 +43,8 @@ Global._processSearch = function() {
                 if(that._search_ending != '*' && a.ending != that._search_ending) fitness = false;
                 if(that._search_is_yuhuang_only != '*' && a.is_yuhuang_only != that._search_is_yuhuang_only) fitness = false;
                 if(!that._search_is_yuhuangyu && a.is_yuhuangyu == !that._search_is_yuhuangyu) fitness = false;
-                if(fitness) this._search_target_url.push(a.url_title);
+                */
+                if(fitness) that._search_target_url.push(a.url_title);
             }
         })
     });
@@ -137,7 +139,7 @@ Global._appendResult = function() {
             var p = Math.floor(index / columns_in_one_page) + 1;
             $('div#pg'+p).append('<div class="article-item"></div>')
         })
-        this._generatePagination(page_num);
+        if(page_num > 1) this._generatePagination(page_num);
     } else {
         $('div.no-result').css('display','block');
     }
