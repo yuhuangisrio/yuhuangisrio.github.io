@@ -78,14 +78,14 @@ Global.getTagsForSearch = function(s, obj) {
     var target_tags = t_tags.clearRepetition();
     target_tags = this._seperateMultiNamedTags(target_tags);
     target_tags = this._removeBannedTags(target_tags);
-    var parent_tags = this._getAllParentsOfTag(target_tags, obj, true);
-    var dup_tags = target_tags.concat(parent_tags).getDuplication();
-    // 若数组不为空，则说明用户的搜索TAG中有TAG存在父TAG和子TAG的关系，此时必须去除父TAG以达到精准搜索的目的
-    if(dup_tags.length > 0) {
-        dup_tags.forEach((tag)=>{
-            target_tags.remove(tag);
-        })
-    };
+    // var parent_tags = this._getAllParentsOfTag(target_tags, obj, true);
+    // var dup_tags = target_tags.concat(parent_tags).getDuplication();
+    // // 若数组不为空，则说明用户的搜索TAG中有TAG存在父TAG和子TAG的关系，此时必须去除父TAG以达到精准搜索的目的
+    // if(dup_tags.length > 0) {
+    //     dup_tags.forEach((tag)=>{
+    //         target_tags.remove(tag);
+    //     })
+    // };
     return target_tags;
 }
 

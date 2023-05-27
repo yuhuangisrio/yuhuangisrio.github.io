@@ -25,7 +25,7 @@ $(document).ready(()=> {
                 var banned_tags = Global.getPreference('banned-tags') || [];
                 var is_banned = false;
                 banned_tags.forEach((item)=>{
-                    if(article.tags.toLowerCase().includes(item) is_banned = true;
+                    if(article.tags.toLowerCase().includes(item)) is_banned = true;
                 })
                 if(!is_banned) fitness = true;
             }

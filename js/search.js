@@ -1,11 +1,12 @@
 var Global = Global || {};
 
-// 待优化，实际执行时候感觉很慢，网页有几率崩溃
+// 优化了 tag-handler.js，现在不卡了
 
 Global.search = function(){
     this._onSearchStart();
     this._processSearch();
     this._onSearchEnd();
+    console.log(JSON.stringify(this._search_target_url))
 }
 
 Global._onSearchStart = function() {
@@ -19,10 +20,11 @@ Global._onSearchStart = function() {
 
 Global._processSearch = function() {
     var that = this;
+    // 必须异步处理，否则接收不到 this._search_target_url，但暂时不知道该怎么办
     this.getTags((tags)=>{
         var tag_list = that.convertTagStruct(tags); // tag
         var target_tags = that.getTagsForSearch(that._search_tags, tag_list);
-        var target_keywords = that._search_keywords.split(' ') || [];
+        var target_keywords = that._search_keywords || [];
         that.getArticles((articles)=>{
             for(var i = 0; i < articles.length; i++){
                 var a = articles[i];
@@ -35,7 +37,7 @@ Global._processSearch = function() {
                 target_tags.forEach((tag)=>{
                     if(!a.tags.toLowerCase().includes(tag.toLowerCase())) fitness = false;
                 });
-                /*
+                
                 if(that._search_author && !a.author.includes(that._search_author)) fitness = false;
                 if(that._search_role.length > 0 && (!a.roles.split('x')[0].includes(that._search_role[0]) || !a.roles.split('x')[1].includes(that._search_role[1]))) fitness = false;
                 if(that._search_type != '*' && a.type != that._search_type) fitness = false;
@@ -43,7 +45,7 @@ Global._processSearch = function() {
                 if(that._search_ending != '*' && a.ending != that._search_ending) fitness = false;
                 if(that._search_is_yuhuang_only != '*' && a.is_yuhuang_only != that._search_is_yuhuang_only) fitness = false;
                 if(!that._search_is_yuhuangyu && a.is_yuhuangyu == !that._search_is_yuhuangyu) fitness = false;
-                */
+                
                 if(fitness) that._search_target_url.push(a.url_title);
             }
         })
@@ -73,7 +75,7 @@ Global._initializeDataForSearch = function() {
 
 Global._loadClientSearchConditions = function(){
     var search_text = $('input.search-area').val();
-    this._search_keywords = search_text.split(' ');
+    this._search_keywords = search_text.includes(' ') ? search_text.split(' ') : (search_text ? [search_text] : []);
     this._search_author = $('li.author input').val();
     // this._search_subject = $('li.type input').val();
     this._search_role = [$('li.role input.role-yu').val(),$('li.role input.role-huang').val()];
@@ -177,7 +179,7 @@ Global.__nextPage = function(page_num) {
 };
 
 Global._existsSearchResult = function(){
-    return JSON.stringify(this._search_target_url) != '[]';
+    return this._search_target_url.length > 0;
 };
 
 Global.isSearching = function() {
