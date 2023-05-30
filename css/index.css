@@ -104,7 +104,7 @@ ul.settings-columns input,
 ul.settings-columns select{
     font-size: 14px;
     height: 16px;
-    width: 6rem;
+    width: 10rem;
     border: none;
     border-bottom: 1px solid gray;
     text-align: center;
@@ -137,7 +137,8 @@ div.search-result-box{
     width: 50%;
     margin: auto;
     margin-top: 10px;
-    position: relative;
+    margin-bottom: 150px;
+    /* position: relative; */
     font-size: 14px;
     border: 1px solid rgb(190, 190, 190);
     padding: 10px 5px;
@@ -184,8 +185,25 @@ div.searching-symbol{
     margin-bottom: 10px;
 }
 
+div.result-pages>div{
+    display: none;
+}
+
+div.result-pages>div:first-of-type{
+    display: block;
+}
+
+.search-result-area{
+    position: relative;
+    width: 100%;
+    /* margin-bottom: 60px; */
+}
+
 ul.pagination{
     display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 span.selectable-tag{
@@ -236,6 +254,31 @@ span.shown-tag{
 
 span.shown-tag:hover i{
     color: #05c0f8;
+}
+
+div.snippets-showcase{
+    width: 50%;
+    margin: auto;
+    padding: 20px 15px;
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 5px;
+}
+
+div.snippets-showcase a{
+    display: none;
+    color: #2f80dc;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div.snippets-showcase a:hover{
+    color: #f5df15;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+div.snippets-showcase span i{
+    background-color: #e1e4e8aa;
 }
 
 /* 移动端适配 */
@@ -290,6 +333,7 @@ span.shown-tag:hover i{
         width: 80%;
         margin: auto;
         margin-top: 10px;
+        margin-bottom: 150px;
         position: relative;
         font-size: 16px;
         border: 1px solid rgb(190, 190, 190);
@@ -303,5 +347,14 @@ span.shown-tag:hover i{
         text-align: center;
         margin-top: 10px;
         margin-left: 5px;
+    }
+
+    div.snippets-showcase{
+        width: 80%;
+        margin: auto;
+        padding: 20px 15px;
+        border: 1px solid rgb(225, 225, 225);
+        border-radius: 5px;
+        margin-bottom: 30px;
     }
 }

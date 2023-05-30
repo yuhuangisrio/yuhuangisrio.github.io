@@ -396,6 +396,7 @@ $(document).ready(()=>{
     //章节选择
     $("a.jump-to-chapter").click(()=>{
         if($('div.chapter-list').css('width') == '0px') {
+            $("div.chapter-list-area").css("display",'block');
             $('div.chapter-list').animate({
                 'width': '50%'
                 });
@@ -408,22 +409,26 @@ $(document).ready(()=>{
             })
             $('div.dark-back').animate({
                 'opacity':'0'
+            }).then(()=>{
+               $("div.chapter-list-area").css("display",'none');
             })
         }
     });
 
     $('div.dark-back').click(()=>{
-       $('div.chapter-list').animate({
+        $('div.chapter-list').animate({
             'width':'0px'
         })
         $('div.dark-back').animate({
             'opacity':'0'
-        })
+        }).then(()=>{
+            $("div.chapter-list-area").css("display",'none');
+         })
     })
 
     // 返回至文章主页
     $("a.return-mainpage").click(()=>{
-        window.location.href = (link + '/article/' + curArticle + '/')/*+"mainpage.html"*/;
+        Global.goToArticle(curArticle);
     });
 
     // (已弃用)双击段落，实现标签功能。再次双击注册有标签的段落时，标签会取消。
@@ -483,9 +488,37 @@ $(document).ready(()=>{
                 if(item.url_name == curChapter) {
                     next_chapter_url_name = data[index+1].url_name || "";
                 }
-                if(next_chapter_url_name) window.location.href = curLocation.replace(curChapter+".html","")+next_chapter_url_name+".html";
-                else window.location.href = curLocation.replace(curChapter+".html","")/*+"mainpage.html"*/;
+                if(next_chapter_url_name) Global.goToChapter(curArticle, next_chapter_url_name);
+                else Global.goToArticle(curChapter);
             })
         })
+    });
+    
+    // 上下章
+    Global.getChapters(curArticle, (chapters)=>{
+        var index = 0;
+        chapters.forEach((item, i)=>{
+            if(item.url_name == curChapter) index = i;
+        })
+        if(index == 0) {
+            $('div.prev-chapter span').html('返回主页');
+            $('div.prev-chapter').click(()=>{
+                Global.goToArticle(curArticle);
+            });
+        } else {
+            $('div.prev-chapter').click(()=>{
+                Global.goToChapter(curArticle, chapters[index-1].url_name);
+            });
+        }
+        if(index == chapters.length) {
+            $('div.next-chapter span').html('返回主页');
+            $('div.next-chapter').click(()=>{
+                Global.goToArticle(curArticle);
+            });
+        } else {
+            $('div.next-chapter').click(()=>{
+                Global.goToChapter(curArticle, chapters[index+1].url_name);
+            });
+        }
     })
 });

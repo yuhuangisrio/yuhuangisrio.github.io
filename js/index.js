@@ -29,7 +29,7 @@ $(document).ready(()=> {
                 })
                 if(!is_banned) fitness = true;
             }
-            window.open('/article/'+article.url_title+'/');
+            Global.goToArticle(article.url_title);
         })
     });
     $('.search-executor').click(()=>{
@@ -99,4 +99,69 @@ $(document).ready(()=> {
             });
         })
     });
+    var random_index = Math.floor(Math.random() * window.original_snippets.length);
+    var snippet = window.original_snippets[random_index].substring(5);
+    var chapter = window.original_snippets[random_index].substring(0, 4);
+    if(snippet.length > Global.max_snippet_length) {
+        $("div.snippets-showcase a").css('display','inline');
+        snippet = snippet.substring(0, Global.max_snippet_length + 1);
+        if(snippet.split('').reverse().join('').indexOf('<') < 3) {
+            var r_i = snippet.length - snippet.split('').reverse().join('').indexOf('<') - 1;
+            var snippet = snippet.substring(0, r_i);
+        }
+        snippet += '...'
+    } else {
+        var prefix = chapter.indexOf('f-') == -1 ? '' : '番外'
+        var chapter_num = chapter.indexOf('f-') == -1 ? chapter : chapter.substring(2, 4);
+        snippet += '——' + prefix + '第' + chapter_num + '章';
+    }
+    var para_list = snippet.split('<br>');
+    var temp_str = '', indent = '　　';
+    para_list.forEach((item, index)=>{
+        var br = index == para_list.length - 1 ? '' : '<br>';
+        temp_str += indent + item + br;
+    })
+    $('div.snippets-showcase div.snippets span.snippets-area').html(temp_str);
+    $("div.snippets-showcase div.snippets a").click(()=>{
+        if(!$("span.snippets-area").hasClass('unfolded')) {
+            $('div.snippets-showcase div.snippets span.snippets-area').html('');
+            snippet = window.original_snippets[random_index].substring(5);
+            var prefix = chapter.indexOf('f-') == -1 ? '' : '番外'
+            var chapter_num = chapter.indexOf('f-') == -1 ? chapter : chapter.substring(2, 4);
+            snippet += '——' + prefix + '第' + chapter_num + '章';
+            var para_list = snippet.split('<br>');
+            var temp_str = '', indent = '　　';
+            para_list.forEach((item, index)=>{
+                var br = index == para_list.length - 1 ? '' : '<br>';
+                temp_str += indent + item + br;
+            })
+            $('div.snippets-showcase div.snippets span.snippets-area').html(temp_str);
+            $("div.snippets-showcase div.snippets a").html('折叠');
+            $("span.snippets-area").addClass('unfolded')
+        } else {
+            snippet = window.original_snippets[random_index].substring(5);
+            if(snippet.length > Global.max_snippet_length) {
+                $("div.snippets-showcase a").css('display','inline');
+                snippet = snippet.substring(0, Global.max_snippet_length + 1);
+                if(snippet.split('').reverse().join('').indexOf('<') < 3) {
+                    var r_i = snippet.length - snippet.split('').reverse().join('').indexOf('<') - 1;
+                    var snippet = snippet.substring(0, r_i);
+                }
+                snippet += '...'
+            } else {
+                var prefix = chapter.indexOf('f-') == -1 ? '' : '番外'
+                var chapter_num = chapter.indexOf('f-') == -1 ? chapter : chapter.substring(2, 4);
+                snippet += '——' + prefix + '第' + chapter_num + '章';
+            }
+            var para_list = snippet.split('<br>');
+            var temp_str = '', indent = '　　';
+            para_list.forEach((item, index)=>{
+                var br = index == para_list.length - 1 ? '' : '<br>';
+                temp_str += indent + item + br;
+            })
+            $('div.snippets-showcase div.snippets span.snippets-area').html(temp_str);
+            $("div.snippets-showcase div.snippets a").html('展开更多');
+            $("span.snippets-area").removeClass('unfolded')
+        }
+    })
 })

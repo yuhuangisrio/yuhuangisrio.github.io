@@ -78,7 +78,7 @@ $(document).ready(()=>{
                     })
                 } else {
                     $("a.whole-article").click(()=>{
-                        window.location.assign('./whole')
+                        Global.goToWholeChapter(url_title);
                     })
                 }
                 Global.getChapters(url_title, (chapters)=>{

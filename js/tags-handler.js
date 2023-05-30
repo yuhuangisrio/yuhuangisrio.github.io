@@ -51,41 +51,24 @@ Global.convertTagStruct = function(obj) {
 /**
  * 获取用于搜索的TAG数组。
  * @param {array} s 用户端输入的TAG数组
- * @param {object} obj 用 convertTagStruct 方法转换过的对象
+ * @param {object} obj TAG 原始对象
  * @returns 按照树状结构生成的用于搜索文章的TAG数组。
  */
 Global.getTagsForSearch = function(s, obj) {
     var temp_arr = s || [];
-    var temp_arr2 = [];
-    var t_tags = temp_arr;
-    var keys = Object.keys(obj);
-    while(temp_arr && JSON.stringify(temp_arr) != '[]') {
-        temp_arr2 = [];
-        for(var i = 0; i < temp_arr.length; i++) {
-            keys.forEach((item)=>{
-                if(item == temp_arr[i]) {
-                    temp_arr2 = temp_arr2.concat(obj[item]);
-                    t_tags = t_tags.concat(obj[item]);
-                }
-            });
-        }
-        if(JSON.stringify(temp_arr2) != '[]'){
-            temp_arr = temp_arr2;
+    var t_tags = [];
+    for(var i = 0; i < temp_arr.length; i++) {
+        var cur_tag = temp_arr[i];
+        var children = this._getAllChildrenOfTag(cur_tag, obj, true);
+        if(children && children.length > 0) {
+            t_tags.push(''+cur_tag+':'+children.join(','))
         } else {
-            temp_arr = [];
+            t_tags.push(cur_tag);
         }
-    };
+    }
     var target_tags = t_tags.clearRepetition();
     target_tags = this._seperateMultiNamedTags(target_tags);
     target_tags = this._removeBannedTags(target_tags);
-    // var parent_tags = this._getAllParentsOfTag(target_tags, obj, true);
-    // var dup_tags = target_tags.concat(parent_tags).getDuplication();
-    // // 若数组不为空，则说明用户的搜索TAG中有TAG存在父TAG和子TAG的关系，此时必须去除父TAG以达到精准搜索的目的
-    // if(dup_tags.length > 0) {
-    //     dup_tags.forEach((tag)=>{
-    //         target_tags.remove(tag);
-    //     })
-    // };
     return target_tags;
 }
 
@@ -196,6 +179,37 @@ Global._getKeyOfAlias = function(alias, obj) {
         if(temp_arr.contains(alias)) target_key = key;
     });
     return target_key;
+}
+
+Global._getAllChildrenOfTag = function(tag0, obj, is_to_single) {
+    var obj2 = this.convertTagStruct(obj);
+    var keys = Object.keys(obj2);
+    var tag = this._getKeyOfAlias(tag0, this.getMultiNamedTags(obj));
+    if(keys.indexOf(tag) != -1) {
+        var t_tags = obj2[tag];
+        var temp_arr = obj2[tag];
+        var temp_arr2 = []
+        while(temp_arr && temp_arr.length > 0) {
+            temp_arr2 = [];
+            for(var i = 0; i < temp_arr.length; i++) {
+                keys.forEach((item)=>{
+                    if(item == temp_arr[i]) {
+                        temp_arr2 = temp_arr2.concat(obj2[item]);
+                        t_tags = t_tags.concat(obj2[item]);
+                    }
+                });
+            }
+            if(temp_arr2.length > 0) {
+                temp_arr = temp_arr2;
+            } else {
+                temp_arr = [];
+            }
+        }
+        if(is_to_single) t_tags = this._convertMultiNamedTagsToSingle(t_tags);
+        return t_tags;
+    } else {
+        return [];
+    }
 }
 
 /**

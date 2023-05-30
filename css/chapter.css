@@ -251,6 +251,10 @@ body.day .warning-texts{
     cursor: pointer;
 }
 
+.chapter-list-area{
+    display: none;
+}
+
 .dark-back{
     width: 100%;
     height: 100%;

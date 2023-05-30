@@ -149,13 +149,13 @@ div.summary p::before{
 
 /* 标签列表 */
 
-div.tags-list{
+span.tags-list{
     width: 80%;
     margin-top: 10px;
     margin-left: 20px;
 }
 
-div.tags-list a{
+span.tags-list a{
     float: left;
     display: block;
     text-decoration: none;
@@ -171,8 +171,26 @@ div.tags-list a{
     /* transition-duration: 150ms; */
 }
 
-div.tags-list a:hover i{
+span.tags-list a:hover i{
     color: #05c0f8;
+}
+
+span.folder{
+    font-size: 14px;
+    font-weight: bold;
+    color: gray;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 5px 0;
+    text-align: center;
+}
+
+span.folder::before{
+    content: '[';
+}
+
+span.folder::after{
+    content: ']';
 }
 
 /* 统计 */
