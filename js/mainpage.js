@@ -98,7 +98,7 @@ $(document).ready(()=>{
                 })
             }
 
-            // 信息注入索引目录
+            // 注入索引目录
             var a_title = '';
             data.forEach((a)=>{
                 if(a.url_title == url_title) a_title = a.title;

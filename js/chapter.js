@@ -541,9 +541,9 @@ $(document).ready(()=>{
                 chapters.forEach((c)=>{
                     if(c.url_name == curChapter) c_name = c.name;
                 })
-                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="/article/'+curArticle+'/"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+c_name)
+                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="javascript:;" onclick="'+'Global.goToArticle(\''+curArticle+'\')'+'"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+c_name)
             } else {
-                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="/article/'+curArticle+'/"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+'全文')
+                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="javascript:;" onclick="'+'Global.goToArticle(\''+curArticle+'\')'+'"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+'全文')
             }
         })
     })
