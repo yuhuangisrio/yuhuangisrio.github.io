@@ -290,7 +290,9 @@ Global.getArticles = function(callback) {
                 roles: article[7] || ds.roles,
                 status: article[8] || ds.status || '-',
                 ending: article[9] || ds.ending || '-',
-                is_yuhuang_only: !article[10] ? ds.is_yuhuang_only : (article[10] == 'T' ? true : false),
+                // is_yuhuang_only: !article[10] ? ds.is_yuhuang_only : (article[10] == 'T' ? true : false),
+                is_yuhuang_only: !article[10] ? true : false,
+                extra_cp: article[10].replace('&',',') || ds.extra_cp,
                 is_yuhuangyu: !article[11] ? ds.is_yuhuangyu : (article[11] == 'T' ? true : false),
                 accessable_links: article[12] || ds.accessable_links || '',
                 is_redistributable: !article[13] ? ds.is_redistributable : (article[13] == 'T' ? true : false)

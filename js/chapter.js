@@ -404,26 +404,33 @@ $(document).ready(()=>{
                 'opacity':'0.15'
             })
         } else {
-            $('div.chapter-list').animate({
+            $('div.chapter-list').css({
                 'width':'0px'
             })
-            $('div.dark-back').animate({
+            $('div.dark-back').css({
                 'opacity':'0'
-            }).then(()=>{
-               $("div.chapter-list-area").css("display",'none');
             })
+            $("div.chapter-list-area").css("display",'none');
         }
     });
 
     $('div.dark-back').click(()=>{
-        $('div.chapter-list').animate({
+        $('div.chapter-list').css({
             'width':'0px'
         })
-        $('div.dark-back').animate({
+        $('div.dark-back').css({
             'opacity':'0'
-        }).then(()=>{
-            $("div.chapter-list-area").css("display",'none');
-         })
+        })
+        $("div.chapter-list-area").css("display",'none');
+    })
+
+    Global.getChapters(curArticle, (chapters)=>{
+        chapters.forEach((chapter, index)=>{
+            var url = chapter.url_name;
+            var name = chapter.name;
+            $("div.chapter-list ul.list").append('<li><a href="/article/'+curArticle+'/'+url+'/">'+name+'</a></li>');
+            if(url == curChapter) $("div.chapter-list ul.list li").eq(-1).addClass('current-chapter');
+        })
     })
 
     // 返回至文章主页
@@ -510,7 +517,7 @@ $(document).ready(()=>{
                 Global.goToChapter(curArticle, chapters[index-1].url_name);
             });
         }
-        if(index == chapters.length) {
+        if(index == chapters.length - 1) {
             $('div.next-chapter span').html('返回主页');
             $('div.next-chapter').click(()=>{
                 Global.goToArticle(curArticle);
@@ -520,5 +527,24 @@ $(document).ready(()=>{
                 Global.goToChapter(curArticle, chapters[index+1].url_name);
             });
         }
+    })
+
+    // 注入索引目录
+    Global.getArticles((articles)=>{
+        var a_title = '';
+        articles.forEach((a)=>{
+            if(a.url_title == curArticle) a_title = a.title;
+        })
+        Global.getChapters(curArticle, (chapters)=>{
+            var c_name = '';
+            if(curChapter != 'whole') {
+                chapters.forEach((c)=>{
+                    if(c.url_name == curChapter) c_name = c.name;
+                })
+                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="/article/'+curArticle+'/"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+c_name)
+            } else {
+                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="/article/'+curArticle+'/"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+'全文')
+            }
+        })
     })
 });

@@ -9,8 +9,23 @@ body.day{
     background-color: rgb(85, 85, 102);
 } */
 
+.index-struct{
+    margin: 15px calc(20% / 2);
+    font-size: 14px;
+    color: gray;
+}
+
+.index-struct a{
+    color: gray;
+    text-decoration: none;
+}
+
+.index-struct a:hover{
+    text-decoration: underline;
+}
+
 .header-title{
-    margin-top: 60px;
+    margin-top: 50px;
 }
 
 .chapter{
@@ -253,6 +268,8 @@ body.day .warning-texts{
 
 .chapter-list-area{
     display: none;
+    position: relative;
+    z-index: 1000;
 }
 
 .dark-back{
@@ -267,19 +284,37 @@ body.day .warning-texts{
 
 body.day .chapter-list{
     background-color: rgb(250,250,250);
-    max-width: 50%;
+    max-width: 25%;
     width: 0px;
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
     box-shadow: 0 0 16px 0 rgb(140,140,140);
+    overflow-y: auto;
+    padding: 10px 5px;
 }
 
-.chapter-list div{
+.chapter-list ul.list li{
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px 2px;
+    cursor: pointer;
+}
+
+.chapter-list ul.list li a{
+    color: inherit;
+    text-decoration: none;
+}
+
+body.day .chapter-list ul.list li.current-chapter a{
+    color: #2f80dc;
+    font-weight: bold;
+}
+
+body.day .chapter-list ul.list li:hover{
+    background-color: rgb(240, 240, 240);
 }
 
 /* 上/下一章按钮 */
@@ -541,13 +576,24 @@ body.night ul.toolcase-list li a span.tooltip-left{
 
 body.night .chapter-list{
     background-color: rgb(41, 41, 56);
-    max-width: 50%;
+    max-width: 25%;
     width: 0px;
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
     box-shadow: 0 0 16px 0 rgb(80, 80, 80);
+    overflow-y: auto;
+    padding: 10px 5px;
+}
+
+body.night .chapter-list ul.list li.current-chapter a{
+    color: #f5df15;
+    font-weight: bold;
+}
+
+body.night .chapter-list ul.list li:hover{
+    background-color: rgb(52, 52, 67);
 }
 
 /* 上/下一章按钮 */
@@ -783,6 +829,12 @@ body.night a.switch-theme:hover{
 
 /* 移动端 */
 @media only screen and (max-width:768px) {
+    .index-struct{
+        margin: 15px calc(10% / 2);
+        font-size: 14px;
+        color: gray;
+    }
+
     #txt{
         margin:auto;
         margin-top: 30px;
@@ -847,5 +899,13 @@ body.night a.switch-theme:hover{
         text-indent: 0;
         line-height: 27px;
         margin: auto;
+    }
+
+    body.day .chapter-list{
+        max-width: 50%;
+    }
+
+    body.night .chapter-list{
+        max-width: 50%;
     }
 }

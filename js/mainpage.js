@@ -30,6 +30,11 @@ $(document).ready(()=>{
                 var summary = article.summary;
                 var number_of_characters = article.number_of_characters;
                 var number_of_chapters = window.number_of_chapters;
+                var roles = article.roles;
+                var status = article.status;
+                var ending = article.ending;
+                var is_yuhuangyu = article.is_yuhuangyu ? '是' : '否';
+                var extra_cp = article.extra_cp || '-无-';
                 var tags_list = article.tags.split(",").map((item, index)=>{return item.trim()});
 
                 $("title").html(title + " by " + author);
@@ -39,6 +44,11 @@ $(document).ready(()=>{
                 $(".summary p").html(summary);
                 $(".statistics .chapter-number").html(number_of_chapters);
                 $(".statistics .character-number").html(number_of_characters);
+                $(".is-yuhuangyu").html(is_yuhuangyu);
+                $(".extra-cp").html(extra_cp);
+                $(".article-role").html(roles);
+                $(".statistics .article-status").html(status);
+                $(".statistics .article-ending").html(ending);
                 tags_list.forEach((item)=>{
                     $(".tags-list").append('<a href="#"><i class="fa fa-tag"></i>'+item+'</a>');
                 })
@@ -87,6 +97,13 @@ $(document).ready(()=>{
                     })
                 })
             }
+
+            // 信息注入索引目录
+            var a_title = '';
+            data.forEach((a)=>{
+                if(a.url_title == url_title) a_title = a.title;
+            })
+            $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <i class="fa fa-book"></i> '+a_title)
         })
     });
 

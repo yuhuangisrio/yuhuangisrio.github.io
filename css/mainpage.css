@@ -12,9 +12,24 @@ body>div.content {
     border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 60px;
+    margin-top: 50px;
     margin-bottom: 30px;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.index-struct{
+    margin: 15px calc(20% / 2);
+    font-size: 14px;
+    color: gray;
+}
+
+.index-struct a{
+    color: gray;
+    text-decoration: none;
+}
+
+.index-struct a:hover{
+    text-decoration: underline;
 }
 
 /* 题头 （标题+作者+按钮） */
@@ -195,12 +210,37 @@ span.folder::after{
 
 /* 统计 */
 
+ul.statistics-board{
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+ul.statistics-board li{
+    margin-bottom: 5px;
+    padding: 2px 10px;
+    border-left: 5px solid #05c0f8;
+    color: rgb(155, 155, 155);
+    /* background: linear-gradient(to right, rgba(255, 235, 183, 0.949), white); */
+}
+
+ul.statistics-board li:last-of-type{
+    margin-bottom: 0;
+}
+
+ul.statistics-board li span{
+    color: black;
+}
+
 div.statistics{
     width: 100%;
     text-align: center;
     margin-top: 35px;
     font-size: 14px;
     color: rgb(155, 155, 155);
+}
+
+div.statistics span{
+    color: black;
 }
 
 /* 章节列表 */
@@ -393,6 +433,9 @@ body.night div.chapter-list.blocks ul li a:hover{
         width: 95%;
         padding: 30px 40px 15px 30px !important;
         margin-top: 40px;
+    }
+    .index-struct{
+        margin: 15px calc(5% / 2);
     }
     div.article-name span.title{
         font-size: 28px;
