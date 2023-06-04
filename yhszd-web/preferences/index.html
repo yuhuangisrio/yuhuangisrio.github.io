@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>偏好设置</title>
+    <link rel="shortcut icon" href="/icons/favicon_2_sm.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/preferences.css">
+    <link rel="stylesheet" href="/css/jquery.toast.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/jquery-confirm.min.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/jquery-confirm.min.js"></script>
+    <script src="/js/jquery.toast.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/tags-handler.js"></script>
+    <script src="/js/preferences.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-logo">
+            <img src="/icons/favicon_2_sm.png">
+            <a href="/"><span class="yu">喻</span><span class="huang">黄</span>同人文目录</a>
+        </div>
+        <div class="menu-icon"><i class="fa fa-bars"></i></div>
+    </div>
+    <ul class="menu-columns">
+        <li class="stars"><a href="/stars/">我的收藏</a></li>
+        <li class="last-read-book">最后看过的文章</li>
+        <li class="preferences current-page"><a href="/preferences/">偏好设置</a></li>
+        <li class="about"><a href="/about/">关于该网站</a></li>
+        <li class="contact"><a href="/contact/">联系</a></li>
+    </ul>
+    <div class="contents">
+        <div class="preferences-text">偏好设置</div>
+        <ul class="preferences-columns">
+            <li class="banned-tags">屏蔽TAG: <span class="banned-tags-input-area"></span><span class="banned-tags-list-btn">点我选择</span></li>
+            <li class="preferred-reading-website">首选阅读地址: 
+                <select name="webiste" id="preferences-website">
+                    <option value="lofter">LOFTER</option> <!-- 默认选项 -->
+                    <option value="ao3">AO3</option>
+                    <option value="yuhuangonly-forum">喻黄ONLY论坛</option>
+                </select>
+            </li>
+            <li class="use-mirror-ao3-link">是否使用AO3镜像网站: 
+                <label class="container">
+                    <input type="checkbox" name="use-ao3-mirror" id="preferences-use-ao3-mirror">
+                    <div class="checkmark"></div>
+                </label>
+            </li>
+            <li class="mirror-ao3-link">AO3镜像主站网址: <input type="text" id="preferences-ao3-link"></li>
+        </ul>
+        <!-- <div class="submit">保存</div> -->
+    </div>
+    <div class="footer">
+        <div class="random-line">—— <span style="color: rgb(112, 20, 143); text-shadow: 0 0 2px rgb(112, 20, 143)">✡</span> - <span style="color: rgb(93, 179, 255); text-shadow: 0 0 2px rgb(93, 179, 255)">🗡</span> ——</div>
+    </div>
+    <div class="no-js-warning">
+        <div class="warnings"><i class="fa fa-warning"></i><br>本网站高度依赖 Javascript 运行。<br>请启用 JavaScript 。</div>
+    </div>
+</body>
+</html>

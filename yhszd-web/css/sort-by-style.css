@@ -1,0 +1,163 @@
+body.day div.header-title{
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 30px 20px;
+    background-color: white;
+    border-left: 8px solid #05c0f8;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+ul.list{
+    width: 80%;
+    margin: auto;
+    list-style: none;
+    display: none;
+    border-radius: 5px;
+    padding: 0;
+    box-shadow: 3px 3px 16px 0 rgba(0, 0, 0, 0.199);
+}
+
+body.day ul.list li{
+    font-size: 18px;
+    border-color: rgb(180, 180, 180);
+    border-bottom-style: dotted;
+    text-indent: 1.5rem;
+    /* transition-duration: 150ms; */
+}
+
+ul.list li:hover{
+    border-bottom-color: #f5df15;
+    background: -webkit-linear-gradient(to right, #f5df1552, transparent);
+    background: -moz-linear-gradient(to right, #f5df1552, transparent);
+    background: -o-linear-gradient(to right, #f5df1552, transparent);
+    background: linear-gradient(to right, #f5df1552, transparent);
+    font-weight: bold;
+}
+
+ul.list li:last-of-type{
+    border-bottom-style: solid;
+}
+
+body.day ul.list li a{
+    text-decoration: none;
+    color: black;
+    line-height: 30px;
+    display: block;
+    width: 100%;
+}
+
+body.day ul.list span.authors-name{
+    font-size: 16px;
+    color: rgb(123, 123, 123);
+    display: block;
+    float: right;
+    margin-right: 1.5rem;
+    line-height: 30px;
+}
+
+body.day div.list-header{
+    width: 80%;
+    margin: auto;
+    margin-top: 30px;
+    text-align: left;
+    font-size: 22px;
+    font-weight: bold;
+    color: aliceblue;
+    background-color: rgb(57, 57, 57);
+    line-height: 48px;
+    border-bottom-style: none;
+    text-indent: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+body.day div.list-header:first-of-type{
+    margin-top: 50px;
+}
+
+div.list-header span.icon{
+    display: block;
+    float: right;
+    font-size: 24px;
+    margin-right: 1rem;
+    /* transition-duration: 200ms; */
+}
+
+body.day div.list-header:hover span.icon{
+    color: #05bff8;
+}
+
+
+
+
+
+/* 夜晚模式 */
+
+/* body.night div.header{
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    color: aliceblue;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 30px 20px;
+    background-color: rgba(170, 170, 170, 0.3);
+    border-left: 8px solid #05c0f8;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+body.night ul.list li{
+    font-size: 18px;
+    border-color: rgb(110, 110, 110);
+    border-bottom-style: dotted;
+    text-indent: 1.5rem;
+}
+
+body.night ul.list li a{
+    text-decoration: none;
+    color: inherit;
+    line-height: 30px;
+    display: block;
+    width: 100%;
+}
+
+body.night ul.list span.authors-name{
+    font-size: 16px;
+    color: rgb(157, 157, 157);
+    display: block;
+    float: right;
+    margin-right: 1.5rem;
+    line-height: 30px;
+}
+
+body.night div.list-header{
+    width: 80%;
+    margin: auto;
+    margin-top: 30px;
+    text-align: left;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(42, 42, 42);
+    background-color: rgba(240, 248, 255, 0.402);
+    line-height: 48px;
+    border-bottom-style: none;
+    text-indent: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+body.night div.list-header:first-of-type{
+    margin-top: 50px;
+}
+
+body.night div.list-header:hover span.icon{
+    color: #2f80dc;
+} */

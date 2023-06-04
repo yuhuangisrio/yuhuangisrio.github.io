@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章/章节url查重工具</title>
+    <link rel="shortcut icon" href="/icons/favicon_2_sm.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+</head>
+<style>
+    textarea{
+        width: 100%;
+    }
+</style>
+<body>
+    <div class="content">
+        <textarea rows="20" placeholder="请将CSV字符串数据粘贴到此处"></textarea>
+        <button>查重</button>
+        <div class="result"></div>
+    </div>
+    <div class="no-js-warning">
+        <div class="warnings"><i class="fa fa-warning"></i><br>本网站高度依赖 Javascript 运行。<br>请启用 JavaScript 。</div>
+    </div>
+</body>
+<script>
+    $('button').click(()=>{
+        console.log('a')
+        if(!$('textarea').val().trim()) {
+            $('div.result').html('请先输入数据。');
+        } else {
+            var str = $('textarea').val().trim();
+            var csv = str.split('\r');
+            var url_list = [];
+            csv.forEach((item, index)=>{
+                if(index != 0) {
+                    var arr = Global.parseCSVString(item);
+                    var url = arr[1];
+                    url_list.push(url);
+                }
+            });
+            var dup = url_list.getDuplication();
+            if(dup && dup.length > 0) {
+                $('div.result').html('重复url：'+dup.join(', '));
+            } else {
+                $('div.result').html('无重复url标题。')
+            }
+        }
+    })
+</script>
+</html>
