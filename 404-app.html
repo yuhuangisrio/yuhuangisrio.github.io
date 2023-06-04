@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>您似乎来到了一个未知的领域...</title>
-    <link rel="shortcut icon" href="./icons/favicon_2_sm.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/font-awesome.min.css">
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/main.js"></script>
+    <link rel="shortcut icon" href="file:///android_asset/icons/favicon_2_sm.png" type="image/x-icon">
+    <link rel="stylesheet" href="file:///android_asset/css/font-awesome.min.css">
+    <script src="file:///android_asset/js/jquery.min.js"></script>
+    <script src="file:///android_asset/js/main.js"></script>
 </head>
 <style>
     div.contents{
@@ -26,8 +26,8 @@
 </style>
 <body>
     <div class="contents">
-        <img class="img" src="./icons/favicon_2_sm.png">
-        <div class="texts">您似乎来到了一个未知的领域呢...<br>点击 <a href="./index.html">这里</a> 返回主页吧。</div>
+        <img class="img" src="file:///android_asset/icons/favicon_2_sm.png">
+        <div class="texts">您似乎来到了一个未知的领域呢...<br>点击 <a href="file:///android_asset/index.html">这里</a> 返回主页吧。</div>
     </div>
     <div class="no-js-warning">
         <div class="warnings"><i class="fa fa-warning"></i><br>本网站高度依赖 Javascript 运行。<br>请启用 JavaScript 。</div>
@@ -37,7 +37,7 @@
     var link = window.location.href;
     if(link.includes('article/')){
         $("title").html('该文章不存在')
-        $("div.texts").html('该文章不存在。<br>点击 <a href="./index.html">这里</a> 返回主页吧。');
+        $("div.texts").html('该文章不存在。<br>点击 <a href="file:///android_asset/index.html">这里</a> 返回主页吧。');
     }
 </script>
 </html>

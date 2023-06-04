@@ -1,20 +1,11 @@
 var RSSD = RSSD || {};
 RSSD.downloadChapters = {};
 
-RSSD.downloadChapters.getTxt = function(filename, src="./", code='utf-8') {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET',src+filename+'.txt', false);
-    xhr.overrideMimeType("text/html;charset="+code);
-    xhr.send(null);
-    // 获取文件信息 (String)
-    // console.log(xhr.responseText);
-    return xhr.responseText;
-};
-
 $(document).ready(()=>{
     var temp_arr = window.location.href.split("/");
     var url_title = temp_arr[temp_arr.length-2];
     var link = window.location.href.replace(window.location.pathname,"");
+    var home_link = Global._convertPathForApp('/');
     Global.getChapters(url_title,(chapters)=>{
         window.number_of_chapters = chapters.length;
     });
@@ -66,7 +57,7 @@ $(document).ready(()=>{
                         else {type = '未知网站';}
                         var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').substr(-1) == '/' ? Global.getPreference('mirror-ao3-link').slice(0, -1) : Global.getPreference('mirror-ao3-link')) || 'https://1.ao3-cn.top';
                         if(type == 'AO3') a_link = Global.getPreference('use-mirror-website') ? def_web + '/' + a_link : 'https://archiveofourown.org/' + a_link;
-                        temp_str += '<a class="accessable-link" href="'+a_link+'">'+type+'</a>'+'<br>';
+                        temp_str += '<a class="accessable-link" href="'+a_link+'" target="_blank">'+type+'</a>'+'<br>';
                     })
                     $("a.whole-article").click(()=>{
                         $.confirm({
@@ -93,7 +84,8 @@ $(document).ready(()=>{
                 }
                 Global.getChapters(url_title, (chapters)=>{
                     chapters.forEach((item)=>{
-                        $("div.chapter-list ul").append('<li><a href="./'+item.url_name+'/">'+item.short_name+'</a></li>')
+                        var temp_url = Global._convertPathForApp('/article/' + url_title + '/');
+                        $("div.chapter-list ul").append('<li><a href="'+ temp_url + item.url_name + '/index.html">'+item.short_name+'</a></li>')
                     })
                 })
             }
@@ -103,7 +95,7 @@ $(document).ready(()=>{
             data.forEach((a)=>{
                 if(a.url_title == url_title) a_title = a.title;
             })
-            $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <i class="fa fa-book"></i> '+a_title)
+            $("div.index-struct").html('<a href="'+home_link+'"><i class="fa fa-home"></i> 首页</a> &raquo; <i class="fa fa-book"></i> '+a_title)
         })
     });
 
@@ -145,7 +137,7 @@ $(document).ready(()=>{
             data.forEach((item, index)=>{
                 if(item.is_original_post_invalid) {
                     RSSD.downloadChapters.downloadable_chapters_index_list.push(index);
-                    var temp_str = RSSD.downloadChapters.getTxt($.md5(item.url_name),"/data/contents/"+url_title+"/");
+                    var temp_str = Global.getTxt($.md5(item.url_name),"/data/contents/"+url_title+"/");
                     var texts = Base64.decode(temp_str);
                     texts = item.name + "\r\n《" + curArticleName + "》 by " + curArticleAuthor + "\r\n\r\n" + texts;
                     txt.file(item.short_name+".txt", texts);
@@ -169,18 +161,46 @@ $(document).ready(()=>{
     $("a.star").click(function() {
         if(!Global.isStarred(url_title)) {
             Global.setStar(url_title);
-            $("a.star i").removeClass("fa-star-o");
-            $("a.star i").addClass("fa-star");
-            $("a.star").css("color", "#f5df15");
-            $("a.star:hover").css("color", "#f5df15");
+            $("a.star i").toggleClass("fa-star-o");
+            $("a.star i").toggleClass("fa-star");
+            $("a.star").addClass("starred")
+            // $("a.star").css("color", "#f5df15");
+            // $("a.star:hover").css("color", "#f5df15");
             $("a.star span.tooltip-down").html("取消收藏该作品");
         } else {
             Global.removeStar(url_title);
-            $("a.star i").removeClass("fa-star");
-            $("a.star i").addClass("fa-star-o");
-            $("a.star").css("color", "rgb(132, 132, 132)");
-            $("a.star:hover").css("color", "#05c0f8");
+            $("a.star i").toggleClass("fa-star-o");
+            $("a.star i").toggleClass("fa-star");
+            $("a.star").removeClass("starred")
+            // $("a.star").css("color", "rgb(132, 132, 132)");
+            // $("a.star:hover").css("color", "#05c0f8");
             $("a.star span.tooltip-down").html("收藏该作品");
         }
     });
+
+    // 分享
+    $('a.share').click(()=>{
+        Global.getArticles((articles)=>{
+            var a = {};
+            articles.forEach((article)=>{
+                if(article.url_title == url_title) a = article;
+            })
+            $.dialog({
+                title: '分享该文章',
+                content: '<div>标题：' + a.title + '</div>' +
+                        '<div style="margin-bottom: 30px;">作者：'+ a.author +'</div>' +
+                        '<div class="social-media-share social-share"></div>',
+                boxWidth: "80%",
+                boxHeight: "50%",
+                useBootstrap: false,
+                type: 'blue',
+                theme: 'light',
+                onOpen: function() {
+                    this.$content.find('.social-media-share').share({
+                        sites: ['weibo','qq','tencent','douban','qzone','linkedin','diandian','facebook','twitter','google']
+                    });
+                }
+            })
+        })
+    })
 })

@@ -15,7 +15,10 @@ Global.chapters_default_settings = {
     name: "章节的主标题",
     url_name: "短标题"
 }
-Global.max_snippet_length = 300;
+
+Global.max_snippet_length = 300;  // 原著片段可见字数
+
+Global.is_app = false;  // 用于适配 Android APK打包
 
 function closeWindow() {
     window.history.back();
@@ -211,12 +214,54 @@ Global.getLastReadBook = function() {
 };
 
 /**
+ * 转换路径用于APP
+ * @param {string} path 待转换的路径
+ * @returns 转换后的路径
+ */
+Global._convertPathForApp = function(path) {
+    if(this.is_app) {
+        var new_path = '', temp_str = path;
+        var prefix = 'file:///android_asset/';
+        if(path.charAt(0) == '/') {
+            if(path.length > 1) {
+                temp_str = path.substring(1);
+            } else {
+                temp_str = 'index.html';
+            } 
+        }
+        new_path = prefix + temp_str;
+        return new_path;
+    } else {
+        return path;
+    }
+}
+
+/**
+ * 获取 TXT 内容
+ * @param {string} name TXT文件名
+ * @param {string} path 文件所在文件夹路径
+ * @returns TXT 内容
+ */
+Global.getTxt = function(name, path='/') {
+    path = this._convertPathForApp(path);
+    var a = $.ajax({
+        async: false,
+        url: path + name + '.txt',
+        type: 'GET',
+        dataType: 'text'
+    });
+    var res = a.responseText;
+    return res;
+}
+
+/**
  * 加载CSV文件
  * @param {string} name CSV名称
  * @param {string} path CSV所在路径
  * @param {function} callback 回调函数。参数为返回的CSV字符串 
  */
 Global.loadCSV = function(name, path='/', callback) {
+    path = this._convertPathForApp(path);
     // csv必须是utf-8格式
     var a = $.ajax({
         async: false,
@@ -234,22 +279,22 @@ Global.loadCSV = function(name, path='/', callback) {
  * @returns {array} 数据数组
  */
 Global.parseCSVString = function(str) {
-  var arr = str.split(',');
-  for(var i = 0; i < arr.length; i++){
-    var s = arr[i];
-    if(s.charAt(0) == '"') {
-      var temp_arr = [];
-      for(var j = i; j < arr.length; j++){
-        var s2 = arr[j];
-        var l = s2.length;
-        temp_arr.push(s2);
-        if (s2.charAt(l-1) == '"') break;
-      }
-      var new_str = temp_arr.join(',').replace(/"/gi,'');
-      arr.splice(i,temp_arr.length,new_str);
+    var arr = str.split(',');
+    for(var i = 0; i < arr.length; i++){
+        var s = arr[i];
+        if(s.charAt(0) == '"') {
+        var temp_arr = [];
+        for(var j = i; j < arr.length; j++){
+            var s2 = arr[j];
+            var l = s2.length;
+            temp_arr.push(s2);
+            if (s2.charAt(l-1) == '"') break;
+        }
+        var new_str = temp_arr.join(',').replace(/"/gi,'');
+        arr.splice(i,temp_arr.length,new_str);
+        }
     }
-  }
-  return arr;
+    return arr;
 }
 
 /**
@@ -338,7 +383,7 @@ Global.getChapters = function(url_title, callback) {
 Global.getTags = function(callback){
     var a = $.ajax({
         async: false,
-        url: '/data/tags.json',
+        url: Global._convertPathForApp('/data/tags.json'),
         type: 'GET',
         dataType: 'json'
     })
@@ -351,7 +396,8 @@ Global.getTags = function(callback){
  * @param {string} url_title 文章的 url 标题
  */
 Global.goToArticle = function(url_title){
-    window.location.assign('/article/'+url_title+'/');
+    var target_url = this._convertPathForApp('/article/'+url_title+'/index.html');
+    window.location.assign(target_url);
     Global.setLastReadBook(url_title);
 }
 
@@ -360,7 +406,8 @@ Global.goToArticle = function(url_title){
  * @param {string} url_title 文章的 url 标题
  */
 Global.goToWholeChapter = function(url_title){
-    window.location.assign('/article/'+url_title+'/whole/');
+    var target_url = this._convertPathForApp('/article/'+url_title+'/whole/index.html');
+    window.location.assign(target_url);
     Global.setLastReadBook(url_title);
 }
 
@@ -370,7 +417,8 @@ Global.goToWholeChapter = function(url_title){
  * @param {string} url_name 章节的 url 标题
  */
 Global.goToChapter = function(url_title, url_name){
-    window.location.assign('/article/'+url_title+'/'+url_name+'/');
+    var target_url = this._convertPathForApp('/article/'+url_title+'/'+url_name+'/index.html');
+    window.location.assign(target_url);
     Global.setLastReadBook(url_title);
 }
 
@@ -434,6 +482,15 @@ Array.prototype.getDuplication = function() {
 Array.prototype.contains = function(val) {
     return this.indexOf(val) > -1;
 };
+
+Array.prototype.removeBlank = function() {
+    var temp_arr = [];
+    for(var i = 0; i < this.length; i++) {
+        if(this[i] === undefined || this[i] === null) continue;
+        temp_arr.push(this[i]);
+    };
+    return temp_arr;
+}
 
 String.prototype.contains = function(val) {
     return this.indexOf(val) > -1;

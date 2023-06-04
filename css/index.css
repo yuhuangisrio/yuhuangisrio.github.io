@@ -281,6 +281,15 @@ div.snippets-showcase span i{
     background-color: #e1e4e8aa;
 }
 
+div.refresh{
+    width: 100%;
+    text-align: center;
+    color: gray;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
 /* 移动端适配 */
 @media only screen and (max-width: 768px) {
     div.main-logo{

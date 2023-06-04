@@ -16,6 +16,8 @@ $(document).ready(()=> {
             $("span.clear-text").css("visibility",'hidden');
         }
     });
+
+    // 随机抽取文章
     $("a.random-article").click(()=>{
         Global.getArticles((articles)=>{
             var fitness = false;
@@ -32,9 +34,13 @@ $(document).ready(()=> {
             Global.goToArticle(article.url_title);
         })
     });
+
+    // 执行搜索
     $('.search-executor').click(()=>{
         Global.search();
     });
+
+    // TAG 选择
     $('span.tags-list-btn').click(()=>{
         Global.getTags((tags)=>{
             tags = Global.convertTagStruct(tags);
@@ -99,33 +105,43 @@ $(document).ready(()=> {
             });
         })
     });
-    var random_index = Math.floor(Math.random() * window.original_snippets.length);
-    var snippet = window.original_snippets[random_index].substring(5);
-    var chapter = window.original_snippets[random_index].substring(0, 4);
-    if(snippet.length > Global.max_snippet_length) {
-        $("div.snippets-showcase a").css('display','inline');
-        snippet = snippet.substring(0, Global.max_snippet_length + 1);
-        if(snippet.split('').reverse().join('').indexOf('<') < 3) {
-            var r_i = snippet.length - snippet.split('').reverse().join('').indexOf('<') - 1;
-            var snippet = snippet.substring(0, r_i);
+
+    // 随机选取原著片段
+    Global.refreshSnippet = function() {
+        var random_index = Math.floor(Math.random() * window.original_snippets.length);
+        var snippet = window.original_snippets[random_index].substring(5);
+        var chapter = window.original_snippets[random_index].substring(0, 4);
+        Global._snippet = snippet;
+        Global._snippet_chapter = chapter;
+        $("div.snippets-showcase a").css('display','none');
+        if(snippet.length > Global.max_snippet_length) {
+            $("div.snippets-showcase a").css('display','inline');
+            snippet = snippet.substring(0, Global.max_snippet_length + 1);
+            if(snippet.split('').reverse().join('').indexOf('<') < 3) {
+                var r_i = snippet.length - snippet.split('').reverse().join('').indexOf('<') - 1;
+                var snippet = snippet.substring(0, r_i);
+            }
+            snippet += '...'
+        } else {
+            var prefix = chapter.indexOf('f-') == -1 ? '' : '番外'
+            var chapter_num = chapter.indexOf('f-') == -1 ? chapter : chapter.substring(2, 4);
+            snippet += '——' + prefix + '第' + chapter_num + '章';
         }
-        snippet += '...'
-    } else {
-        var prefix = chapter.indexOf('f-') == -1 ? '' : '番外'
-        var chapter_num = chapter.indexOf('f-') == -1 ? chapter : chapter.substring(2, 4);
-        snippet += '——' + prefix + '第' + chapter_num + '章';
-    }
-    var para_list = snippet.split('<br>');
-    var temp_str = '', indent = '　　';
-    para_list.forEach((item, index)=>{
-        var br = index == para_list.length - 1 ? '' : '<br>';
-        temp_str += indent + item + br;
-    })
-    $('div.snippets-showcase div.snippets span.snippets-area').html(temp_str);
+        var para_list = snippet.split('<br>');
+        var temp_str = '', indent = '　　';
+        para_list.forEach((item, index)=>{
+            var br = index == para_list.length - 1 ? '' : '<br>';
+            temp_str += indent + item + br;
+        });
+        $('div.snippets-showcase div.snippets span.snippets-area').html(temp_str);
+    };
+    Global.refreshSnippet();
+    $("div.refresh").click(Global.refreshSnippet);
     $("div.snippets-showcase div.snippets a").click(()=>{
         if(!$("span.snippets-area").hasClass('unfolded')) {
             $('div.snippets-showcase div.snippets span.snippets-area').html('');
-            snippet = window.original_snippets[random_index].substring(5);
+            var snippet = Global._snippet;
+            var chapter = Global._snippet_chapter;
             var prefix = chapter.indexOf('f-') == -1 ? '' : '番外'
             var chapter_num = chapter.indexOf('f-') == -1 ? chapter : chapter.substring(2, 4);
             snippet += '——' + prefix + '第' + chapter_num + '章';
@@ -139,7 +155,8 @@ $(document).ready(()=> {
             $("div.snippets-showcase div.snippets a").html('折叠');
             $("span.snippets-area").addClass('unfolded')
         } else {
-            snippet = window.original_snippets[random_index].substring(5);
+            var snippet = Global._snippet;
+            var chapter = Global._snippet_chapter;
             if(snippet.length > Global.max_snippet_length) {
                 $("div.snippets-showcase a").css('display','inline');
                 snippet = snippet.substring(0, Global.max_snippet_length + 1);

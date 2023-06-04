@@ -1,31 +1,15 @@
 var RSSD = RSSD || {};
-RSSD.txtActs = {};
-
-/** 获取txt文本
- * @param filename 文件名，后缀txt
- * @param src 图片路径。默认为./，即当前目录。
- * @param code 文本编码。默认是utf-8
- */
-RSSD.txtActs.getTxt = function(filename, src="./", code='utf-8') {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET',src+filename+'.txt', false);
-    xhr.overrideMimeType("text/html;charset="+code);
-    xhr.send(null);
-    // 获取文件信息 (String)
-    // console.log(xhr.responseText);
-    return xhr.responseText;
-};
-
 $(document).ready(()=>{
 
     var t = $("#txt");   // 包括段落的div元素节点
-    var link = window.location.href.replace(window.location.pathname,""); // 主站网址
+    var link = window.location.href.replace(window.location.pathname,""); // 主站网址 - Web
+    var home_link = Global._convertPathForApp('/');   // 主站路径 - APP & Web
     var curLocation = window.location.href;   // 当前网址
     var temp_arr = curLocation.split("/");   // 将当前路径以/分割
     var curChapter = temp_arr[temp_arr.length-2].trim(); // 返回字符串 当前章节html文件的名称 即 url_name
     var encodedName = $.md5(curChapter);
     var curArticle = temp_arr[temp_arr.length-3];   // 返回当前文章名称
-    var temp_str = RSSD.txtActs.getTxt(encodedName, "/data/contents/"+curArticle+"/");   // 获取文本 (当前章节html文件的名称.txt)
+    var temp_str = Global.getTxt(encodedName, "/data/contents/"+curArticle+"/");   // 获取文本 (当前章节html文件的名称.txt)
     var data = Base64.decode(temp_str);
 
     // 将文本输入div并格式化文本
@@ -428,7 +412,8 @@ $(document).ready(()=>{
         chapters.forEach((chapter, index)=>{
             var url = chapter.url_name;
             var name = chapter.name;
-            $("div.chapter-list ul.list").append('<li><a href="/article/'+curArticle+'/'+url+'/">'+name+'</a></li>');
+            var converted_url_prefix = Global._convertPathForApp('/article/')
+            $("div.chapter-list ul.list").append('<li><a href="'+converted_url_prefix+curArticle+'/'+url+'/index.html">'+name+'</a></li>');
             if(url == curChapter) $("div.chapter-list ul.list li").eq(-1).addClass('current-chapter');
         })
     })
@@ -541,9 +526,9 @@ $(document).ready(()=>{
                 chapters.forEach((c)=>{
                     if(c.url_name == curChapter) c_name = c.name;
                 })
-                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="javascript:;" onclick="'+'Global.goToArticle(\''+curArticle+'\')'+'"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+c_name)
+                $("div.index-struct").html('<a href="'+home_link+'"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="javascript:;" onclick="'+'Global.goToArticle(\''+curArticle+'\')'+'"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+c_name)
             } else {
-                $("div.index-struct").html('<a href="/"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="javascript:;" onclick="'+'Global.goToArticle(\''+curArticle+'\')'+'"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+'全文')
+                $("div.index-struct").html('<a href="'+home_link+'"><i class="fa fa-home"></i> 首页</a> &raquo; <a href="javascript:;" onclick="'+'Global.goToArticle(\''+curArticle+'\')'+'"><i class="fa fa-book"></i> '+a_title+'</a> &raquo; '+'全文')
             }
         })
     })

@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章/章节url查重工具</title>
-    <link rel="shortcut icon" href="/icons/favicon_2_sm.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/js/main.js"></script>
+    <link rel="shortcut icon" href="../../icons/favicon_2_sm.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/main.js"></script>
 </head>
 <style>
     textarea{
@@ -27,7 +27,6 @@
 </body>
 <script>
     $('button').click(()=>{
-        console.log('a')
         if(!$('textarea').val().trim()) {
             $('div.result').html('请先输入数据。');
         } else {
