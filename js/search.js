@@ -161,7 +161,9 @@ Global._appendResult = function() {
         }
         this._search_target_url.forEach((item, index)=>{
             var p = Math.floor(index / columns_in_one_page) + 1;
-            $('div#pg'+p).append('<div class="article-item">'+item+'</div>')
+            $('div#pg'+p).append('<div class="article-item">'+
+            item+
+            '</div>');
         })
         if(page_num > 1) this._generatePagination(page_num);
     } else {

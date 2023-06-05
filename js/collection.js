@@ -13,6 +13,7 @@ $(document).ready(()=>{
             var title = collection.title;
             var summary = collection.summary;
             var urls = collection.urls.split('&');
+            $("title").html(title);
             $(".index-struct").html('<a href="'+home_link+'"><i class="fa fa-home"></i> 主页</a> &raquo; '+ '<i class="fa fa-folder-open"></i>' + collection.title)
             $(".article-name span.title").html(title);
             $(".summary p").html(summary);

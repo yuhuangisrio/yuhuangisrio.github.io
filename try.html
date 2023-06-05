@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<style>
+    div.article-item{
+        padding: 15px 10px;
+    }
+    div.article-item:hover{
+        background-color: rgb(245, 245, 245);
+    }
+    div.article-item:hover span.a-author{
+        background-color: rgba(245, 245, 245, 0.777);
+    }
+    div.title-item{
+        position: relative;
+        border-bottom: 1px solid #2f80dc;
+        padding: 0 15px;
+        padding-bottom: 5px;
+    }
+    div.title-item div.a-title{
+        font-size: 18px;
+    }
+    div.title-item div.a-title:hover{
+        text-decoration: underline;
+    }
+    div.title-item div.a-title:hover i{
+        color: #05c0f8;
+    }
+    div.title-item div.a-title a{
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+    div.title-item span.a-author{
+        position: absolute;
+        right: 0;
+        bottom: 5px;
+        background-color: rgba(255, 255, 255, 0.777);
+        padding: 0 3px;
+    }
+    div.title-item span.a-author::before{
+        content: 'by ';
+    }
+    div.article-item div.summary{
+        padding: 0 15px;
+        margin-top: 10px;
+        color: gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    div.article-item div.summary::before{
+        content: '简介：';
+    }
+    div.article-item div.tags-list{
+        margin-top: 5px;
+        padding: 0 15px;
+    }
+    div.article-item div.tags-list span.tag{
+        color: gray;
+        padding: 0 3px;
+        margin: 5px 2px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    div.article-item div.tags-list span.tag:hover i{
+        color: #05c0f8;
+    }
+    div.article-item div.statistics{
+        padding: 0 15px;
+        margin-top: 5px;
+        color: gray;
+    }
+    div.article-item div.statistics span{
+        color: black;
+    }
+</style>
+<body>
+    <div class="article-item">
+        <div class="title-item">
+            <div class="a-title"><i class="fa fa-book"></i><a href="#" target="_blank">这是一个标题</a></div>
+            <span class="a-author">作者</span>
+        </div>
+        <div class="summary">这是这个合集的简介。简介可以帮助读者快速了解该文章的题材、内容，帮助读者进行筛选，极大地节约了时间成本。</div>
+        <div class="tags-list"><span class="tag"><i class="fa fa-tag"></i> TAG1</span><span class="tag"> <i class="fa fa-tag"></i> TAG2</span></div>
+        <div class="statistics">章节数：<span class="chapter-number"></span> | 字数：<span class="character-number"></span> | 状态：<span class="article-status"></span> | 结局：<span class="article-ending"></span></div>
+    </div>
+</body>
+</html>
