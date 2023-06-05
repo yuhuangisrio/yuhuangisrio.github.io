@@ -26,6 +26,7 @@ $(document).ready(()=>{
                 var ending = article.ending;
                 var is_yuhuangyu = article.is_yuhuangyu ? '是' : '否';
                 var extra_cp = article.extra_cp || '-无-';
+                var warning = article.warning || '';
                 var tags_list = article.tags.split(",").map((item, index)=>{return item.trim()});
 
                 $("title").html(title + " by " + author);
@@ -84,8 +85,7 @@ $(document).ready(()=>{
                 }
                 Global.getChapters(url_title, (chapters)=>{
                     chapters.forEach((item)=>{
-                        var temp_url = Global._convertPathForApp('/article/' + url_title + '/');
-                        $("div.chapter-list ul").append('<li><a href="'+ temp_url + item.url_name + '/index.html">'+item.short_name+'</a></li>')
+                        $("div.chapter-list ul").append('<li><a href="javascript:;" onclick="Global.goToArticle(\''+url_title + '/' + item.url_name+'\')">'+item.short_name+'</a></li>')
                     })
                 })
             }
@@ -96,6 +96,31 @@ $(document).ready(()=>{
                 if(a.url_title == url_title) a_title = a.title;
             })
             $("div.index-struct").html('<a href="'+home_link+'"><i class="fa fa-home"></i> 首页</a> &raquo; <i class="fa fa-book"></i> '+a_title)
+
+            // 注入预警
+            if(warning) {
+                $(".article-warning").css('display','block')
+                $(".article-warning p").html(warning);
+            }
+            // 注入合集
+            Global.getCollections((cl)=>{
+                var co_url = [];
+                var co_name = [];
+                cl.forEach((c)=>{
+                    if(c.urls.includes(url_title)) {
+                        co_url.push(c.url_title);
+                        co_name.push(c.title);
+                    }
+                })
+                if(co_url.length > 0) {
+                    $(".from-collection").css('display','block');
+                    co_url.forEach((url, i)=>{
+                        let title = co_name[i];
+                        let prefix = i > 0 ? ', ' : '';
+                        $(".from-collection span.cl").append('<span class="co-item"><a href="javascript:;" onclick="Global.goToCollection(\''+url+'\')">'+prefix+'<i class="fa fa-folder-open"></i> '+title+'</a></span>')
+                    })
+                }
+            })
         })
     });
 

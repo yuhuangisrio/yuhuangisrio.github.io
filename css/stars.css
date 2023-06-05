@@ -61,6 +61,10 @@ ul.starred-book-list li a:hover{
     text-decoration: underline;
 }
 
+ul.starred-book-list li a:hover i{
+    color: #05c0f8;
+}
+
 ul.starred-book-list li span{
     float: right;
     margin-right: 8px;

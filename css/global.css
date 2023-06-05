@@ -381,6 +381,24 @@ div.blank.line{
     border-top: 1px solid rgba(155, 155, 155, 0.542);
 }
 
+/* 通用警告框样式 */
+div.warning-box{
+    position: relative;
+    background-color: #ffefc3;
+    border-left: 5px solid orange;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    min-height: 40px;
+}
+
+div.warning-box i{
+    float: left;
+    font-size: 20px;
+    color: orange;
+    margin-right: 10px;
+    text-shadow: 1px 1px rgb(214, 214, 214);
+}
+
 div.no-js-warning{
     background-color: #ffeeb1;
     width: 100%;

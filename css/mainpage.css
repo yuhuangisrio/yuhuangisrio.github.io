@@ -47,8 +47,6 @@ div.article-name{
     letter-spacing: 3px;
 }
 
-/* rgba(170, 170, 170, 0.2) */
-
 div.article-name span.title{
     display: inline-block;
     max-width: 100%;
@@ -209,6 +207,49 @@ span.folder::before{
 
 span.folder::after{
     content: ']';
+}
+
+div.article-warning{
+    display: none;
+    padding: 10px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+div.from-collection{
+    display: none;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 10px 10px;
+    border-left: 5px solid gray;
+    background-color: rgb(245, 245, 245);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: rgb(82, 82, 82);
+}
+
+div.from-collection span.cl{
+    color: black;
+}
+
+span.co-item{
+    display: inline-block;
+    margin-right: 5px;
+}
+
+span.co-item a{
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+span.co-item a:hover{
+    text-decoration: underline;
+}
+
+span.co-item a:hover i{
+    color: #05c0f8;
 }
 
 /* 统计 */

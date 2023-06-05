@@ -1,6 +1,7 @@
 var Global = {};
 
 Global.encoded_cur_password = "e286f1f186225ea42a23c35a8db0e230";
+Global.collections_default_settings = {}
 Global.articles_default_settings = {
     title: "文章标题",
     url_title: "template-title",
@@ -298,6 +299,31 @@ Global.parseCSVString = function(str) {
 }
 
 /**
+ * 加载合集数据
+ * @param {function} callback 回调函数
+ */
+Global.getCollections = function(callback) {
+    Global.loadCSV('collections','/data/',function(csv){
+        var temp_arr = csv.split(/\r/);
+        var collections = [];
+        for(var i = 1; i < temp_arr.length; i++) {   //从表格第二行开始
+            if(!temp_arr[i]) continue;
+            var collection = Global.parseCSVString(temp_arr[i]);
+            // if(collection.length < 16) continue;
+            if(!collection[0].replace(/\n/,'')) continue;
+            var ds = Global.collections_default_settings;
+            collections.push({
+                title: collection[0].replace(/\n/,'') || ds.title,
+                url_title: collection[1] || ds.url_title,
+                urls: collection[2] || ds.urls,
+                summary: collection[3] || ds.summary
+            })
+        }
+        if(callback) callback(collections);
+    });
+}
+
+/**
  * 加载文章数据
  * @param {function} callback 回调函数。参数是文章数组。
  */
@@ -312,11 +338,11 @@ Global.getArticles = function(callback) {
             if(!article[0].replace(/\n/,'')) continue;
             var ds = Global.articles_default_settings;
             articles.push({
-                title: article[0].replace(/\n/,'') || ds.title,
+                title: article[0].replace(/\n/,'') || ds.title || '',
                 url_title: article[1] || ds.url_title,
                 author: article[2].includes('/') ? (article[2].split('/')[0] || ds.author || '') : (article[2] || ds.author || ''),
                 author_link: article[3] || ds.author_link || './',
-                summary: article[4] || ds.summary,
+                summary: article[4] || ds.summary || '',
                 type: article[5] || ds.type || '-',
                 number_of_characters: (function(){
                     switch(article[5] || ds.type || '-') {
@@ -330,17 +356,17 @@ Global.getArticles = function(callback) {
                             return ds.number_of_characters;
                     }
                 })(),
-                tags: article[6].replace('&',',') || ds.tags,
+                tags: article[6].replace('&',',') || ds.tags || '',
                 // subject: article[7] || ds.subject,
                 roles: article[7] || ds.roles,
                 status: article[8] || ds.status || '-',
                 ending: article[9] || ds.ending || '-',
-                // is_yuhuang_only: !article[10] ? ds.is_yuhuang_only : (article[10] == 'T' ? true : false),
-                is_yuhuang_only: !article[10] ? true : false,
-                extra_cp: article[10].replace('&',',') || ds.extra_cp,
+                is_yuhuang_only: !article[10] ? ds.is_yuhuang_only || true : article[10] == 'T' ? true : false,
+                extra_cp: article[10].replace('&',',') || ds.extra_cp || '',
                 is_yuhuangyu: !article[11] ? ds.is_yuhuangyu : (article[11] == 'T' ? true : false),
-                accessable_links: article[12] || ds.accessable_links || '',
-                is_redistributable: !article[13] ? ds.is_redistributable : (article[13] == 'T' ? true : false)
+                warning: article[12] || ds.warning || '',
+                accessable_links: article[13] || ds.accessable_links || '',
+                is_redistributable: !article[14] ? ds.is_redistributable : (article[13] == 'T' ? true : false)
             })
         }
         if(callback) callback(articles);
@@ -392,6 +418,15 @@ Global.getTags = function(callback){
 }
 
 /**
+ * 跳转到指定合集的主页
+ * @param {string} url_title 合集的 url 标题
+ */
+Global.goToCollection = function(url_title) {
+    var target_url = this._convertPathForApp('/collection/'+url_title+'/index.html');
+    window.location.assign(target_url);
+}
+
+/**
  * 跳转到指定文章的主页
  * @param {string} url_title 文章的 url 标题
  */
@@ -420,6 +455,21 @@ Global.goToChapter = function(url_title, url_name){
     var target_url = this._convertPathForApp('/article/'+url_title+'/'+url_name+'/index.html');
     window.location.assign(target_url);
     Global.setLastReadBook(url_title);
+}
+
+Global.isMobile = function() {
+    var ua = navigator.userAgent;
+    return /Android|iPhone|iPad|iPod|BlackBerry|webOS|Windows Phone|SymbianOS|IEMobile|Opera Mini/i.test(ua);
+}
+
+Global.isAndroid = function() {
+    var u = navigator.userAgent;
+    return u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+}
+
+Global.isiOS = function() {
+    var u = navigator.userAgent;
+    return !!u.match(/\(i[^;/]+;( U;)? CPU.+Mac OS X/);
 }
 
 $(document).ready(()=>{
