@@ -21,11 +21,6 @@ div.background{
     position: absolute;
 }
 
-::selection{
-    user-select: none;
-    -webkit-user-select: none;
-}
-
 .yu{
     color: #2f80dc;
 }

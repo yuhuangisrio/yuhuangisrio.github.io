@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/global.css">
+    <title>标题转 url 工具</title>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/pinyin4js.js"></script>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    textarea{
+        width: 100%;
+    }
+    button{
+        margin: 20px 0;
+    }
+</style>
+<body>
+    <div class="content">
+        <textarea rows="20" placeholder="请将CSV字符串数据粘贴到此处" class="input"></textarea>
+        <span>提示：转换过后记得使用 <a href="../url-duplication-checker/index.html">url 查重工具</a> 检查是否有重复的 url。</span>
+        <button>转换</button>
+        <textarea rows="20" class="output"></textarea>
+    </div>
+</body>
+<script>
+    $('button').click(()=>{
+        if(!$('textarea.input').val().trim()) {
+            $('.output').attr('placeholder','(请先输入数据)');
+        } else {
+            var str = $('textarea.input').val().trim();
+            var csv = str.split('\n');
+            var newcsv = [];
+            csv.forEach((item, index)=>{
+                if(index != 0) {
+                    var arr = Global.parseCSVString(item);
+                    var title = arr[0];
+                    var converted_url = PinyinHelper.convertToPinyinString(title, '-', PinyinFormat.WITHOUT_TONE);
+                    let newstr = item;
+                    if(arr.length < 2) {
+                        newstr = item + ',' + converted_url;
+                    } else if(item.charAt(title.length) == ',' && item.charAt(title.length + 1) == ',') {
+                        newstr = item.replace(',,',','+converted_url+',');
+                    }
+                    newcsv.push(newstr);
+                } else {
+                    let line1 = item;
+                    newcsv.splice(0, 1, line1);
+                }
+            });
+            if(newcsv && newcsv.length > 0) {
+                $('.output').val(newcsv.join('\r\n'));
+            } else {
+                $('.output').val($('textarea.input').val().trim());
+            }
+        }
+    })
+</script>
+</html>

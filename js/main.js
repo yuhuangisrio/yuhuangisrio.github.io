@@ -356,12 +356,12 @@ Global.getArticles = function(callback) {
                             return article[5] || ds.number_of_characters;  // 允许在“篇幅”那一栏中直接写字数的多少，例如 10w+ 。
                     }
                 })(),
-                tags: article[6].replace('&',',') || ds.tags || '',
+                tags: article[6].replace(/&/g,',') || ds.tags || '',
                 roles: article[7] || ds.roles,
                 status: article[8] || ds.status || '-',
                 ending: article[9] || ds.ending || '-',
                 is_yuhuang_only: !article[10] ? ds.is_yuhuang_only || true : article[10] == 'T' ? true : false,
-                extra_cp: article[10].replace('&',',') || ds.extra_cp || '',
+                extra_cp: article[10].replace(/&/g,',') || ds.extra_cp || '',
                 is_yuhuangyu: !article[11] ? ds.is_yuhuangyu : (article[11] == 'T' ? true : false),
                 warning: article[12] || ds.warning || '',
                 accessable_links: article[13] || ds.accessable_links || '',

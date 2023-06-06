@@ -49,6 +49,8 @@ $(document).ready(()=> {
         } else {
             $('div.advanced-settings').css('display','block');
         }
+        Global._clearPrevResult();
+        $(".initial-result").css('display','block');
     })
 
     // TAG 选择

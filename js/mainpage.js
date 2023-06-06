@@ -226,5 +226,28 @@ $(document).ready(()=>{
                 }
             })
         })
-    })
+    });
+    $.contextMenu({
+        selector: '.chapter-list ul li:not(:first-of-type)', 
+        callback: function(key, options) {
+            var m = "clicked: " + key;
+            // console.log(options.$trigger) // 获取被点击的元素
+        },
+        items: {
+            "copy": {"name": "复制链接", "icon": "fa-copy"},
+            "assign": {
+                "name": "转到...",
+                "icon": "fa-cut",
+                "items": {
+                    "assign-1": {"name": "LOFTER"},
+                    "assign-2": {"name": "喻黄ONLY论坛"},
+                    "assign-3": {"name": "AO3"},
+                    "assign-4": {"name": "未知网站"},
+                    "assign-5": {"name": "本站章节页面"}
+                }
+            },
+            "sep1": "---------",
+            "report": {"name": "找站长补档", "icon": "fa-book"}
+        }
+    });
 })

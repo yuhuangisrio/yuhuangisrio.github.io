@@ -253,7 +253,6 @@ Global._appendCollections = function(columns_in_one_page) {
 }
 
 Global._generatePagination = function(page_num) {
-    console.log(page_num)
     $('ul.pagination').css('display','block');
     $('ul.pagination').pagination({
         items: page_num,

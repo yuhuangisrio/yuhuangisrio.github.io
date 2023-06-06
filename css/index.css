@@ -145,7 +145,7 @@ div.search-result-box{
     width: 50%;
     margin: auto;
     margin-top: 10px;
-    margin-bottom: 150px;
+    margin-bottom: 80px;
     /* position: relative; */
     font-size: 14px;
     border: 1px solid rgb(190, 190, 190);
@@ -446,7 +446,7 @@ div.refresh{
         width: 80%;
         margin: auto;
         margin-top: 10px;
-        margin-bottom: 150px;
+        margin-bottom: 80px;
         position: relative;
         font-size: 16px;
         border: 1px solid rgb(190, 190, 190);
