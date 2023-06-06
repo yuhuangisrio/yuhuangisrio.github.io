@@ -256,6 +256,90 @@ span.shown-tag:hover i{
     color: #05c0f8;
 }
 
+div.article-item{
+    padding: 15px 10px;
+    border-bottom: 2px dotted grey;
+}
+
+div.result-pages div.article-item:last-of-type{
+    border-bottom: none;
+}
+div.article-item:hover{
+    background-color: rgb(245, 245, 245);
+}
+div.article-item:hover span.a-author{
+    background-color: rgba(245, 245, 245, 0.777);
+}
+div.title-item{
+    position: relative;
+    border-bottom: 1px solid #2f80dc;
+    padding: 0 15px;
+    padding-bottom: 5px;
+}
+div.title-item div.a-title{
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+div.title-item div.a-title:hover i{
+    color: #05c0f8;
+}
+div.title-item div.a-title a{
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 10px;
+}
+div.title-item div.a-title a:hover{
+    text-decoration: underline;
+}
+div.title-item span.a-author{
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.777);
+    padding: 0 3px;
+}
+div.title-item span.a-author::before{
+    content: 'by ';
+}
+div.article-item div.summary{
+    padding: 0 15px;
+    margin-top: 10px;
+    color: gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+div.article-item div.summary::before{
+    content: '简介：';
+}
+div.article-item div.tags-list{
+    margin-top: 5px;
+    padding: 0 15px;
+}
+div.article-item div.tags-list span.tag{
+    color: gray;
+    padding: 0 3px;
+    margin: 5px 2px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+div.article-item div.tags-list span.tag:hover i{
+    color: #05c0f8;
+}
+div.article-item div.statistics{
+    padding: 0 15px;
+    margin-top: 5px;
+    color: gray;
+}
+div.article-item div.statistics span{
+    color: black;
+}
+
 div.snippets-showcase{
     width: 50%;
     margin: auto;

@@ -56,7 +56,7 @@ $(document).ready(()=>{
                         else if(a_link.includes('yuhuangonly.com') || a_link.includes('yuhuangonly.cn')) type = '喻黄个站';
                         else if(a_link.includes('weibo')) type = 'weibo';
                         else {type = '未知网站';}
-                        var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').substr(-1) == '/' ? Global.getPreference('mirror-ao3-link').slice(0, -1) : Global.getPreference('mirror-ao3-link')) || 'https://1.ao3-cn.top';
+                        var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').charAt(0) == '/' ? Global.getPreference('mirror-ao3-link').slice(0, -1) : Global.getPreference('mirror-ao3-link')) || 'https://1.ao3-cn.top';
                         if(type == 'AO3') a_link = Global.getPreference('use-mirror-website') ? def_web + '/' + a_link : 'https://archiveofourown.org/' + a_link;
                         temp_str += '<a class="accessable-link" href="'+a_link+'" target="_blank">'+type+'</a>'+'<br>';
                     })
@@ -69,11 +69,8 @@ $(document).ready(()=>{
                             theme: 'light',
                             useBootstrap: false,
                             buttons: {
-                                submit: {
-                                    'text': '确定'
-                                },
-                                cancel: {
-                                    'text': '取消'
+                                ok: {
+                                    'text': '好的'
                                 }
                             }
                         })
@@ -107,10 +104,12 @@ $(document).ready(()=>{
                 var co_url = [];
                 var co_name = [];
                 cl.forEach((c)=>{
-                    if(c.urls.includes(url_title)) {
-                        co_url.push(c.url_title);
-                        co_name.push(c.title);
-                    }
+                    c.urls.split('&').forEach((u)=>{
+                        if(u == url_title) {
+                            co_url.push(c.url_title);
+                            co_name.push(c.title);
+                        }
+                    })
                 })
                 if(co_url.length > 0) {
                     $(".from-collection").css('display','block');

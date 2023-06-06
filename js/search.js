@@ -159,11 +159,36 @@ Global._appendResult = function() {
             var p = i + 1;
             $('div.result-pages').append('<div id="pg'+p+'"></div>');
         }
-        this._search_target_url.forEach((item, index)=>{
-            var p = Math.floor(index / columns_in_one_page) + 1;
-            $('div#pg'+p).append('<div class="article-item">'+
-            item+
-            '</div>');
+        var that = this;
+        Global.getArticles((articles)=>{
+            that._search_target_url.forEach((item, index)=>{
+                var a = {};
+                articles.forEach((aitem)=>{
+                    if(aitem.url_title == item) a = aitem;
+                })
+                let title = a.title;
+                let author = a.author;
+                let summary = a.summary;
+                let tags = a.tags.split(',');
+                let tags_html = '';
+                let length = a.number_of_characters;
+                let status = a.status;
+                let ending = a.ending;
+                let tar_url = that._convertPathForApp('/article/'+item+'/index.html');
+                tags.forEach((tag)=>{
+                    tags_html += '<span class="tag"><i class="fa fa-tag"></i> '+tag+'</span>';
+                })
+                var p = Math.floor(index / columns_in_one_page) + 1;
+                $('div#pg'+p).append('<div class="article-item">'+
+                    '<div class="title-item">'+
+                        '<div class="a-title"><i class="fa fa-book"></i><a href="'+tar_url+'" target="_blank">'+title+'</a></div>'+
+                        '<span class="a-author">'+author+'</span>'+
+                    '</div>'+
+                    '<div class="summary">'+summary+'</div>'+
+                    '<div class="tags-list">'+tags_html+'</div>'+
+                    '<div class="statistics">字数：<span class="character-number">'+length+'</span> | 状态：<span class="article-status">'+status+'</span> | 结局：<span class="article-ending">'+ending+'</span></div>'+
+                '</div>');
+            })
         })
         if(page_num > 1) this._generatePagination(page_num);
     } else {

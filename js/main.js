@@ -353,11 +353,10 @@ Global.getArticles = function(callback) {
                         case '短篇':
                             return '2w以下';
                         default: 
-                            return ds.number_of_characters;
+                            return article[5] || ds.number_of_characters;  // 允许在“篇幅”那一栏中直接写字数的多少，例如 10w+ 。
                     }
                 })(),
                 tags: article[6].replace('&',',') || ds.tags || '',
-                // subject: article[7] || ds.subject,
                 roles: article[7] || ds.roles,
                 status: article[8] || ds.status || '-',
                 ending: article[9] || ds.ending || '-',
