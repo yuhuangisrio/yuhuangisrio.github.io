@@ -65,6 +65,14 @@ span.search-executor:hover{
     color: #2f80dc;
 }
 
+div.search-target{
+    margin-top: 20px;
+}
+
+div.search-target label{
+    width: calc(50% / 2);
+}
+
 div.advanced-settings{
     width: 48%;
     margin: auto;
@@ -197,6 +205,13 @@ div.result-pages>div:first-of-type{
     position: relative;
     width: 100%;
     /* margin-bottom: 60px; */
+}
+
+.pagination-container{
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 ul.pagination{
@@ -413,6 +428,10 @@ div.refresh{
         cursor: pointer;
         vertical-align: middle;
         transition: 0.2s;
+    }
+
+    div.search-target label{
+        width: calc(80% / 2);
     }
 
     div.advanced-settings{

@@ -31,7 +31,8 @@ $(document).ready(()=> {
                 })
                 if(!is_banned) fitness = true;
             }
-            Global.goToArticle(article.url_title);
+            var tar_url = Global._convertPathForApp('/article/'+article.url_title+'/index.html');
+            window.open(tar_url);
         })
     });
 
@@ -39,6 +40,16 @@ $(document).ready(()=> {
     $('.search-executor').click(()=>{
         Global.search();
     });
+
+    // 获取搜索对象
+    $('div.search-target div div').click(()=>{
+        var value = $('div.search-target div div input[type="radio"]:checked').val();
+        if(value && value == 'c') {
+            $('div.advanced-settings').css('display','none');
+        } else {
+            $('div.advanced-settings').css('display','block');
+        }
+    })
 
     // TAG 选择
     $('span.tags-list-btn').click(()=>{

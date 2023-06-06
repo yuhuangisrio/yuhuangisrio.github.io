@@ -4,30 +4,146 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章目录 - 一个简约纯净的同人文库</title>
-    <!-- <meta name="description" content="一个简约纯净的同人文库。"> -->
+    <title>喻黄同人文目录 - 听说下雨天鱼丸粥和花生糖更配哦♡</title>
     <link rel="shortcut icon" href="./icons/favicon_2_sm.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/index-style.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/jquery.toast.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/jquery-confirm.min.css">
+    <link rel="stylesheet" href="./css/loader.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.simplePagination.js"></script>
+    <script src="./js/jquery-confirm.min.js"></script>
+    <script src="./js/jquery.toast.min.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/snippets.js"></script>
+    <script src="./js/tags-handler.js"></script>
+    <script src="./js/search.js"></script>
     <script src="./js/index.js"></script>
 </head>
-<body class="day">
-    <div class="main-logo">文章目录</div>
-    <br>
-    <ul class="columns">
-        <li><a href="./sort-by/template-2.html">按篇幅分类</a></li>
-        <li><a href="#">按作者分类</a></li>
-        <li><a href="#">按题材分类</a></li>
+<body>
+    <div class="header">
+        <div class="header-logo">
+            <img src="./icons/favicon_2_sm.png">
+            <a href="./index.html"><span class="yu">喻</span><span class="huang">黄</span>同人文目录</a>
+        </div>
+        <div class="menu-icon"><i class="fa fa-bars"></i></div>
+    </div>
+    <ul class="menu-columns">
+        <li class="stars"><a href="./stars/index.html">我的收藏</a></li>
+        <li class="last-read-book">最后看过的文章</li>
+        <li class="preferences"><a href="./preferences/index.html">偏好设置</a></li>
+        <li class="about"><a href="./about/index.html">关于该网站</a></li>
+        <li class="contact"><a href="./contact/index.html">联系</a></li>
     </ul>
-    <div class="blank"></div>
-    <p class="footer"><a href="./contact/index.html">联系</a> | <a href="javascript:void(0)" onclick="closeWindow()">退出</a></p>
-    <div class="blank footer-bottom"></div>
+    <div class="content">
+        <div class="main-logo"><span class="yu">喻</span><span class="huang">黄</span>同人文目录</div>
+        <div class="search-box">
+            <div class="search-input">
+                <input type="text" class="search-area" placeholder="请输入关键词...多个关键词可用空格来分隔">
+                <span class="clear-text"><i class="fa fa-close"></i></span>
+                <span class="search-executor"><i class="fa fa-search"></i></span>
+            </div>
+        </div>
+        <div class="search-target">
+            <div class="target-type common-radio">
+                <div>
+                    <label>
+                        <input type="radio" name="radio" checked="" value="a">
+                        <span><i class="fa fa-book"></i> 搜文章</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="radio" value="c">
+                        <span><i class="fa fa-folder-open"></i> 搜合集</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="advanced-settings">
+            <div class="row">
+                <span><i class="fa fa-gear"></i> 更多设置...</span>
+                <i class="fa fa-caret-down arrow-down"></i>
+            </div>
+            <ul class="settings-columns">
+                <!-- <li class="article-name">文名：<input type="text"></li> -->
+                <li class="author">作者：<input type="text"></li>
+                <li class="tags">TAG：<span class="tags-input-area"></span><span class="tags-list-btn">点我选择</span></li>
+                <!-- <li class="type">题材：<span class="type-area"></span><span class="type-list-btn">点我选择</span></li> -->
+                <li class="role">角色身份：<input type="text" class="role role-yu">喻 x <input type="text" class="role role-huang">黄</li>
+                <li class="length">篇幅：
+                    <select name="length" id="settings-length">
+                        <option value="unlimited">不限</option>
+                        <option value="long">长篇 (6w+)</option>
+                        <option value="medium">中篇 (2w ~ 6w)</option>
+                        <option value="short">短篇 (~ 2w)</option>
+                    </select>
+                </li>
+                <li class="status">状态：
+                    <select name="status" id="settings-status">
+                        <option value="unlimited">不限</option>
+                        <option value="completed">完结</option>
+                        <option value="incompleted">未完结</option>
+                    </select>
+                </li>
+                <li class="ending">结局：
+                    <select name="ending" id="settings-ending">
+                        <option value="*">不限</option>
+                        <option value="he">HE</option>
+                        <option value="be">BE</option>
+                        <option value="oe">OE</option>
+                        <option value="te">TE</option>
+                    </select>
+                </li>
+                <li class="is-yuhuang-only">不含副CP？：
+                    <select name="is-yuhuang-only" id="settings-is-yuhuang-only">
+                        <option value="unlimited">不限</option>
+                        <option value="yes">不含</option>
+                        <option value="no">仅含</option>
+                    </select>
+                </li>
+                <li class="is-yuhuangyu">包括无差？：
+                    <select name="is-yuhuangyu" id="settings-is-yuhuangyu">
+                        <option value="no">否</option>
+                        <option value="yes">是</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+        <div class="search-result-box">
+            <div class="search-text"><i class="fa fa-book"></i> 搜索结果：</div>
+            <div class="search-result-area">
+                <div class="initial-result">(<a href="javascript:" class="random-article">点我</a>可随机查看一篇文章)</div>
+                <div class="no-result">抱歉，似乎没有找到这样的文章...<br>您可以减少关键词，再重新搜索一次。</div>
+                <div class="searching-symbol loader">
+                    <div class="loader__bar"></div>
+                    <div class="loader__bar"></div>
+                    <div class="loader__bar"></div>
+                    <div class="loader__bar"></div>
+                    <div class="loader__bar"></div>
+                    <div class="loader__ball"></div>
+                </div>
+                <div class="result-pages"></div>
+                <!-- <div class="pagination-container"></div> -->
+                <ul class="pagination pagination-sm"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="snippets-showcase">
+        <span><i class="fa fa-quote-left fa-2x fa-pull-left fa-border"></i></span>
+        <div class="snippets">
+            <span class="snippets-area"></span>
+            <a>展开更多</a>
+        </div>
+        <div class="refresh"><i class="fa fa-refresh"></i> 刷新片段</div>
+    </div>
+    <div class="footer">
+        <div class="random-line">—— <span style="color: rgb(112, 20, 143); text-shadow: 0 0 2px rgb(112, 20, 143)">✡</span> - <span style="color: rgb(93, 179, 255); text-shadow: 0 0 2px rgb(93, 179, 255)">🗡</span> ——</div>
+    </div>
     <div class="no-js-warning">
         <div class="warnings"><i class="fa fa-warning"></i><br>本网站高度依赖 Javascript 运行。<br>请启用 JavaScript 。</div>
     </div>
-    <!-- <a href="javascript::" class="switch-theme"><i class="fa fa-sun-o"></i></a> -->
 </body>
 </html>
