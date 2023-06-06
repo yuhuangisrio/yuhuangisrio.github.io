@@ -335,6 +335,7 @@ div.article-item div.statistics{
     padding: 0 15px;
     margin-top: 5px;
     color: gray;
+    font-size: 14px;
 }
 div.article-item div.statistics span{
     color: black;
