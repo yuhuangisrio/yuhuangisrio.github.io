@@ -108,7 +108,7 @@ Global.getTagsForSelection = function(s, obj, is_banned_tags_selection) {
 }
 
 Global._removeBannedTags = function(dirt_list){
-    var banned_tags = Global.getPreference('banned-tags') || [];
+    var banned_tags = Global.getPreference('banned-tags') || Global.initial_preferences['banned-tags'];
     var clean_list = [];
     for(var i = 0; i < dirt_list.length; i++){
         var tag = dirt_list[i];

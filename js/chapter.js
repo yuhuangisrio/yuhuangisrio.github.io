@@ -9,20 +9,34 @@ $(document).ready(()=>{
     var curChapter = temp_arr[temp_arr.length-2].trim(); // 返回字符串 当前章节html文件的名称 即 url_name
     var encodedName = $.md5(curChapter);
     var curArticle = temp_arr[temp_arr.length-3];   // 返回当前文章名称
-    var temp_str = Global.getTxt(encodedName, "/data/contents/"+curArticle+"/");   // 获取文本 (当前章节html文件的名称.txt)
-    var data = Base64.decode(temp_str);
 
-    // 将文本输入div并格式化文本
-    var paragraph_list = [];
-    paragraph_list = data.split(/[(\r\n)\r\n]+/);
-    for(var i = 0; i < paragraph_list.length; i++) {
-        if(paragraph_list[i] == ''){
-            paragraph_list.remove(paragraph_list[i]);
-            i -= 1;
+    Global.getChapters(curArticle, (chapters)=>{
+        var temp_str = '';
+        var data = '';
+        if(curChapter != 'whole') {
+            temp_str = Global.getTxt(encodedName, "/data/contents/"+curArticle+"/");
+            data = Base64.decode(temp_str);
         } else {
-            $("#txt").append("<p id=\"p"+i+"\">"+paragraph_list[i].trim()+"</p>");
+            var contents = '';
+            chapters.forEach((c, i)=>{
+                contents += '<div class="subtitle">'+c.name+'</div>\r\n' + Base64.decode(Global.getTxt($.md5(c.url_name), '/data/contents/'+curArticle+'/'));
+            })
+            temp_str = contents;
+            data = temp_str;
         }
-    };
+    
+        // 将文本输入div并格式化文本
+        var paragraph_list = [];
+        paragraph_list = data.split(/[(\r\n)\r\n]+/);
+        for(var i = 0; i < paragraph_list.length; i++) {
+            if(paragraph_list[i] == ''){
+                paragraph_list.remove(paragraph_list[i]);
+                i -= 1;
+            } else {
+                $("#txt").append("<p id=\"p"+i+"\">"+paragraph_list[i].trim()+"</p>");
+            }
+        };
+    })
 
     // 获取当前文章名与作者
     RSSD.articleData = [];
@@ -49,10 +63,10 @@ $(document).ready(()=>{
             }
         })
         var title_and_author = "《"+curArticleRealName+"》 by "+curArticleAuthor;
-        var web_title = curChapterShortName + " - " + "《" + curArticleRealName + "》";
+        var web_title = curChapter != 'whole' ? curChapterShortName + " - " + "《" + curArticleRealName + "》" : '全文' + " - " + "《" + curArticleRealName + "》";
         $("title").html(web_title);
         $("div.header-title p.title-and-author").html(title_and_author);
-        $("div.header-title p.chapter").html(curChapterRealName);
+        $("div.header-title p.chapter").html(curChapter != 'whole' ? curChapterRealName : '全文');
         if(curLevel == "18+") $(".mature-warning").show();
         else $(".mature-warning").hide();
     });

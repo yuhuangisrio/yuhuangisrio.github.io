@@ -1,8 +1,8 @@
 $(document).ready(() => {
-    var banned_tags_list = Global.getPreference("banned-tags") || [];
-    var preferred_reading_website = Global.getPreference("preferred-reading-website") || "lofter";
-    var use_mirror_ao3_website = Global.getPreference("use-mirror-website") ? (Global.getPreference("use-mirror-website") == 'checked' ? true : JSON.parse(Global.getPreference("use-mirror-website"))) : true;
-    var mirror_ao3_link = Global.getPreference("mirror-ao3-link") || "https://1.ao3-cn.top";
+    var banned_tags_list = Global.getPreference("banned-tags") || Global.initial_preferences['banned-tags'];
+    var preferred_reading_website = Global.getPreference("preferred-reading-website") || Global.initial_preferences['preferred-reading-website'];
+    var use_mirror_ao3_website = Global.getPreference("use-mirror-website") ? (Global.getPreference("use-mirror-website") == 'checked' ? true : JSON.parse(Global.getPreference("use-mirror-website"))) : Global.initial_preferences['use-mirror-website'];
+    var mirror_ao3_link = Global.getPreference("mirror-ao3-link") || Global.initial_preferences['mirror-ao3-link'];
     if(banned_tags_list && JSON.stringify(banned_tags_list) != "[]") {
         banned_tags_list.forEach((item)=>{
             $("span.banned-tags-input-area").append('<span class="shown-tag"><i class="fa fa-tag"></i><span>'+item+'</span>');

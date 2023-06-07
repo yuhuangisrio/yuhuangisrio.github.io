@@ -16,6 +16,12 @@ Global.chapters_default_settings = {
     name: "章节的主标题",
     url_name: "短标题"
 }
+Global.initial_preferences = {
+    "banned-tags": [],
+    'preferred-reading-website': '喻黄ONLY论坛',
+    'use-mirror-website': true,
+    'mirror-ao3-link': 'https://1.ao3-cn.top'
+}
 
 Global.max_snippet_length = 300;  // 原著片段可见字数
 

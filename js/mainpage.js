@@ -46,43 +46,136 @@ $(document).ready(()=>{
                 })
                 if(article.accessable_links){
                     var a_links = article.accessable_links.split('$$');
-                    var temp_str = '';
-                    a_links.forEach((item2)=>{
+                    var tar_link = '';
+                    var yhonlyf_links = [], yhonlym_links = [], lof_links = [], ao3_links = [], chongya_links = [], weibo_links = [], other_links = [];
+                    for(var i = 0; i < a_links.length; i++){
+                        var item2 = a_links[i];
                         var type = '', a_link = item2;
-                        a_link.replace('https://archiveofourown.org/','');
-                        if(a_link.includes('lofter.com')) type = 'LOFTER';
-                        else if(a_link.includes('works/')) type = 'AO3';
-                        else if(a_link.includes('bbs.yuhuangonly.com') || a_link.includes('bbs3.yuhuangonly.cn')) type = '喻黄ONLY论坛';
-                        else if(a_link.includes('yuhuangonly.com') || a_link.includes('yuhuangonly.cn')) type = '喻黄个站';
-                        else if(a_link.includes('weibo')) type = 'weibo';
-                        else {type = '未知网站';}
-                        var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').charAt(0) == '/' ? Global.getPreference('mirror-ao3-link').slice(0, -1) : Global.getPreference('mirror-ao3-link')) || 'https://1.ao3-cn.top';
-                        if(type == 'AO3') a_link = Global.getPreference('use-mirror-website') ? def_web + '/' + a_link : 'https://archiveofourown.org/' + a_link;
-                        temp_str += '<a class="accessable-link" href="'+a_link+'" target="_blank">'+type+'</a>'+'<br>';
+                        a_link.replace('https://archiveofourown.org','');
+                        if(a_link.includes('lofter.com')) {type = 'LOFTER'; lof_links.push(a_link);}
+                        else if(a_link.includes('works/')) {type = 'AO3';}
+                        else if(a_link.includes('bbs.yuhuangonly.com') || a_link.includes('bbs3.yuhuangonly.cn')) {type = '喻黄ONLY论坛'; yhonlyf_links.push(a_link);}
+                        else if(a_link.includes('yuhuangonly.com') || a_link.includes('yuhuangonly.cn')) {type = '喻黄个站'; yhonlym_links.push(a_link);}
+                        else if(a_link.includes('chongya.com')) {type = '冲呀'; chongya_links.push(a_link);}
+                        else if(a_link.includes('weibo')) {type = 'weibo'; weibo_links.push(a_link);}
+                        else {type = '未知网站'; other_links.push(a_link);}
+                        a_link =  a_link.includes('/works') ? a_link.substring(a_link.indexOf('/works')) : a_link;
+                        var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').charAt(-1) == '/' ? Global.getPreference('mirror-ao3-link').substring(0, -2) : Global.getPreference('mirror-ao3-link')) || Global.initial_preferences['mirror-ao3-link'];
+                        if(type == 'AO3') {a_link = Global.getPreference('use-mirror-website') === true || Global.initial_preferences['use-mirror-website'] ? def_web + a_link : 'https://archiveofourown.org' + a_link; ao3_links.push(a_link);}
+                        var pref_web = Global.getPreference('preferred-reading-website') || Global.initial_preferences['preferred-reading-website'];
+                        if(pref_web.toLowerCase() == type.toLowerCase()) {
+                            tar_link = a_link;
+                            break;
+                        }
+                    }
+                    if(!tar_link) {
+                        var temp_arr = [];
+                        temp_arr = temp_arr.concat(yhonlyf_links, yhonlym_links, lof_links, ao3_links, chongya_links, weibo_links, other_links);
+                        tar_link = temp_arr[0] || Global._convertPathForApp('/article/'+url_title+'/'+'whole'+'/index.html');
+                    }
+                    var temp_obj = {};   // 上下文菜单
+                    yhonlyf_links.forEach((l, i)=>{
+                        if(yhonlyf_links.length > 1) {
+                            temp_obj['yhforum-' + (i+1)] = {name: '喻黄ONLY论坛-'+(i+1)};
+                        } else {
+                            temp_obj['yhforum-' + (i+1)] = {name: '喻黄ONLY论坛'};
+                        }
                     })
+                    if(yhonlyf_links.length) temp_obj['sep1'] = '---------'
+                    yhonlym_links.forEach((l, i)=>{
+                        if(yhonlym_links.length > 1) {
+                            temp_obj['yhmain-' + (i+1)] = {name: '喻黄ONLY主站-'+(i+1)};
+                        } else {
+                            temp_obj['yhmain-' + (i+1)] = {name: '喻黄ONLY主站'};
+                        }
+                    })
+                    if(yhonlym_links.length) temp_obj['sep2'] = '---------'
+                    lof_links.forEach((l, i)=>{
+                        if(lof_links.length > 1) {
+                            temp_obj['lofter-' + (i+1)] = {name: 'LOFTER-'+(i+1)};
+                        } else {
+                            temp_obj['lofter-' + (i+1)] = {name: 'LOFTER'};
+                        }
+                    })
+                    if(lof_links.length) temp_obj['sep3'] = '---------'
+                    ao3_links.forEach((l, i)=>{
+                        if(ao3_links.length > 1) {
+                            temp_obj['ao3-' + (i+1)] = {name: 'AO3-'+(i+1)};
+                        } else {
+                            temp_obj['ao3-' + (i+1)] = {name: 'AO3'};
+                        }
+                    })
+                    if(ao3_links.length) temp_obj['sep4'] = '---------'
+                    chongya_links.forEach((l, i)=>{
+                        if(chongya_links.length > 1) {
+                            temp_obj['chongya-' + (i+1)] = {name: '冲呀-'+(i+1)};
+                        } else {
+                            temp_obj['chongya-' + (i+1)] = {name: '冲呀'};
+                        }
+                    })
+                    if(chongya_links.length) temp_obj['sep5'] = '---------'
+                    weibo_links.forEach((l, i)=>{
+                        if(weibo_links.length > 1) {
+                            temp_obj['weibo-' + (i+1)] = {name: '微博-'+(i+1)};
+                        } else {
+                            temp_obj['weibo-' + (i+1)] = {name: '微博'};
+                        }
+                    })
+                    if(weibo_links.length) temp_obj['sep6'] = '---------'
+                    other_links.forEach((l, i)=>{
+                        if(other_links.length > 1) {
+                            temp_obj['unknown-' + (i+1)] = {name: '未知网站-'+(i+1)};
+                        } else {
+                            temp_obj['unknown-' + (i+1)] = {name: '未知网站'};
+                        }
+                    })
+                    if(other_links.length) temp_obj['sep7'] = '---------'
+                    temp_obj['local'] = {name: '本站章节网页'};
                     $("a.whole-article").click(()=>{
-                        $.confirm({
-                            title: '全文链接',
-                            content: temp_str+"若以上链接全部失效，请联系站长邮箱 ilikepotatoes@163.com 以补档。",
-                            boxWidth: '80%',
-                            type: 'blue',
-                            theme: 'light',
-                            useBootstrap: false,
-                            buttons: {
-                                ok: {
-                                    'text': '好的'
+                        window.open(tar_link);
+                    });
+                    $.contextMenu({
+                        selector: 'a.whole-article',
+                        build: function(ele, e){
+                            return {
+                                callback: function(k, opts) {
+                                    var curEle = opts.$target;
+                                    var tar_url = '';
+                                    if(k.includes('yhforum-')) {tar_url = yhonlyf_links[+k.replace('yhforum-','')-1]};
+                                    if(k.includes('yhmain-')) {tar_url = yhonlym_links[+k.replace('yhmain-','')-1]};
+                                    if(k.includes('lofter-')) {tar_url = lof_links[+k.replace('lofter-','')-1]};
+                                    if(k.includes('ao3-')) {tar_url = ao3_links[+k.replace('ao3-','')-1]};
+                                    if(k.includes('chongya-')) {tar_url = chongya_links[+k.replace('chongya-','')-1]};
+                                    if(k.includes('weibo-')) {tar_url = weibo_links[+k.replace('weibo-','')-1]};
+                                    if(k.includes('unknown-')) {tar_url = other_links[+k.replace('unknown-','')-1]};
+                                    if(k == 'local') {tar_url = Global._convertPathForApp('/article/'+url_title+'/'+'whole'+'/index.html')};
+                                    if(k == 'report') {
+                                        $("body").append("<a id='report-handler' href='mailto:ilikepotatoes@163.com' style='display: none'><span id='report'></span></a>");
+                                        $('#report').click();
+                                        $("#report-handler").remove();
+                                    }
+                                    window.open(tar_url);
+                                },
+                                items: {
+                                    "assign": {
+                                        "name": "转到...",
+                                        "icon": "fa-share-square-o",
+                                        "items": temp_obj
+                                    },
+                                    "sep1": "---------",
+                                    "report": {"name": "求补档/报告失效链接", "icon": "fa-book"}
                                 }
                             }
-                        })
+                        }
                     })
                 } else {
                     $("a.whole-article").click(()=>{
-                        Global.goToWholeChapter(url_title);
+                        Global.goToChapter(url_title, 'whole');
                     })
                 }
                 Global.getChapters(url_title, (chapters)=>{
-                    chapters.forEach((item)=>{
-                        $("div.chapter-list ul").append('<li><a href="javascript:;" onclick="Global.goToArticle(\''+url_title + '/' + item.url_name+'\')">'+item.short_name+'</a></li>')
+                    chapters.forEach((item, i)=>{
+                        $("div.chapter-list ul").append('<li><a id="ci-'+(i+1)+'" href="javascript:;">'+item.short_name+'</a></li>')
                     })
                 })
             }
@@ -227,27 +320,163 @@ $(document).ready(()=>{
             })
         })
     });
-    $.contextMenu({
-        selector: '.chapter-list ul li:not(:first-of-type)', 
-        callback: function(key, options) {
-            var m = "clicked: " + key;
-            // console.log(options.$trigger) // 获取被点击的元素
-        },
-        items: {
-            "copy": {"name": "复制链接", "icon": "fa-copy"},
-            "assign": {
-                "name": "转到...",
-                "icon": "fa-cut",
-                "items": {
-                    "assign-1": {"name": "LOFTER"},
-                    "assign-2": {"name": "喻黄ONLY论坛"},
-                    "assign-3": {"name": "AO3"},
-                    "assign-4": {"name": "未知网站"},
-                    "assign-5": {"name": "本站章节页面"}
+
+    $(".chapter-list ul li a:not(.whole-article)").click(function() {
+        var ele = $(this);
+        Global.getChapters(url_title, (chapters)=>{
+            var chapter_index = +ele.attr('id').replace('ci-','') - 1;
+            if (chapters[chapter_index].links) {
+                var c_links = chapters[chapter_index].links.split('$$');
+                var yhonlyf_links = [], yhonlym_links = [], lof_links = [], ao3_links = [], chongya_links = [], weibo_links = [], other_links = [];
+                for(var i = 0; i < c_links.length; i++){
+                    var item2 = c_links[i];
+                    var type = '', c_link = item2;
+                    var tar_link = '';
+                    if(c_link.includes('lofter.com')) {type = 'LOFTER'; lof_links.push(c_link);}
+                    else if(c_link.includes('works/')) {type = 'AO3';}
+                    else if(c_link.includes('bbs.yuhuangonly.com') || c_link.includes('bbs3.yuhuangonly.cn')) {type = '喻黄ONLY论坛'; yhonlyf_links.push(c_link);}
+                    else if(c_link.includes('yuhuangonly.com') || c_link.includes('yuhuangonly.cn')) {type = '喻黄个站'; yhonlym_links.push(c_link);}
+                    else if(c_link.includes('chongya.com')) {type = '冲呀'; chongya_links.push(c_link);}
+                    else if(c_link.includes('weibo')) {type = 'weibo'; weibo_links.push(c_link);}
+                    else {type = '未知网站'; other_links.push(c_link);}
+                    c_link =  c_link.includes('/works') ? c_link.substring(c_link.indexOf('/works')) : c_link;
+                    var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').charAt(-1) == '/' ? Global.getPreference('mirror-ao3-link').substring(0, -2) : Global.getPreference('mirror-ao3-link')) || Global.initial_preferences['mirror-ao3-link'];
+                    if(type == 'AO3') {c_link = typeof Global.getPreference('use-mirror-website') || Global.initial_preferences['use-mirror-website'] === true ? def_web + c_link : 'https://archiveofourown.org' + c_link; ao3_links.push(c_link);}
+                    var pref_web = Global.getPreference('preferred-reading-website') || Global.initial_preferences['preferred-reading-website'];
+                    if(pref_web.toLowerCase() == type.toLowerCase()) {
+                        tar_link = c_link;
+                        break;
+                    }
                 }
-            },
-            "sep1": "---------",
-            "report": {"name": "找站长补档", "icon": "fa-book"}
-        }
-    });
+                if(!tar_link) {
+                    var temp_arr = [];
+                    temp_arr = temp_arr.concat(yhonlyf_links, yhonlym_links, lof_links, ao3_links, chongya_links, weibo_links, other_links);
+                    tar_link = temp_arr[0] || Global._convertPathForApp('/article/'+url_title+'/'+chapters[chapter_index].url_name+'/index.html');
+                }
+                window.open(tar_link);
+            }
+        })
+    })
+
+    // 上下文菜单
+    Global.getChapters(url_title, (chapters)=>{
+        $.contextMenu({
+            selector: '.chapter-list ul li a:not(.whole-article)',
+            build: function(ele, e){
+                var chapter_index = +ele.attr('id').replace('ci-','') - 1;
+                if (chapters[chapter_index].links) {
+                    var c_links = chapters[chapter_index].links.split('$$');
+                    var yhonlyf_links = [], yhonlym_links = [], lof_links = [], ao3_links = [], chongya_links = [], weibo_links = [], other_links = [];
+                    for(var i = 0; i < c_links.length; i++){
+                        var item2 = c_links[i];
+                        var type = '', c_link = item2;
+                        c_link.replace('https://archiveofourown.org','');
+                        if(c_link.includes('lofter.com')) {type = 'LOFTER'; lof_links.push(c_link);}
+                        else if(c_link.includes('works/')) {type = 'AO3';}
+                        else if(c_link.includes('bbs.yuhuangonly.com') || c_link.includes('bbs3.yuhuangonly.cn')) {type = '喻黄ONLY论坛'; yhonlyf_links.push(c_link);}
+                        else if(c_link.includes('yuhuangonly.com') || c_link.includes('yuhuangonly.cn')) {type = '喻黄个站'; yhonlym_links.push(c_link);}
+                        else if(c_link.includes('chongya.com')) {type = '冲呀'; chongya_links.push(c_link);}
+                        else if(c_link.includes('weibo')) {type = 'weibo'; weibo_links.push(c_link);}
+                        else {type = '未知网站'; other_links.push(c_link);}
+                        var def_web = (Global.getPreference('mirror-ao3-link') && Global.getPreference('mirror-ao3-link').charAt(0) == '/' ? Global.getPreference('mirror-ao3-link').slice(0, -1) : Global.getPreference('mirror-ao3-link')) || 'https://1.ao3-cn.top';
+                        if(type == 'AO3') {c_link = Global.getPreference('use-mirror-website') ? def_web + '/' + c_link : 'https://archiveofourown.org/' + c_link; ao3_links.push(c_link);}
+                    }
+                    var temp_obj = {};   // 上下文菜单
+                    yhonlyf_links.forEach((l, i)=>{
+                        if(yhonlyf_links.length > 1) {
+                            temp_obj['yhforum-' + (i+1)] = {name: '喻黄ONLY论坛-'+(i+1)};
+                        } else {
+                            temp_obj['yhforum-' + (i+1)] = {name: '喻黄ONLY论坛'};
+                        }
+                    })
+                    if(yhonlyf_links.length) temp_obj['sep1'] = '---------'
+                    yhonlym_links.forEach((l, i)=>{
+                        if(yhonlym_links.length > 1) {
+                            temp_obj['yhmain-' + (i+1)] = {name: '喻黄ONLY主站-'+(i+1)};
+                        } else {
+                            temp_obj['yhmain-' + (i+1)] = {name: '喻黄ONLY主站'};
+                        }
+                    })
+                    if(yhonlym_links.length) temp_obj['sep2'] = '---------'
+                    lof_links.forEach((l, i)=>{
+                        if(lof_links.length > 1) {
+                            temp_obj['lofter-' + (i+1)] = {name: 'LOFTER-'+(i+1)};
+                        } else {
+                            temp_obj['lofter-' + (i+1)] = {name: 'LOFTER'};
+                        }
+                    })
+                    if(lof_links.length) temp_obj['sep3'] = '---------'
+                    ao3_links.forEach((l, i)=>{
+                        if(ao3_links.length > 1) {
+                            temp_obj['ao3-' + (i+1)] = {name: 'AO3-'+(i+1)};
+                        } else {
+                            temp_obj['ao3-' + (i+1)] = {name: 'AO3'};
+                        }
+                    })
+                    if(ao3_links.length) temp_obj['sep4'] = '---------'
+                    chongya_links.forEach((l, i)=>{
+                        if(chongya_links.length > 1) {
+                            temp_obj['chongya-' + (i+1)] = {name: '冲呀-'+(i+1)};
+                        } else {
+                            temp_obj['chongya-' + (i+1)] = {name: '冲呀'};
+                        }
+                    })
+                    if(chongya_links.length) temp_obj['sep5'] = '---------'
+                    weibo_links.forEach((l, i)=>{
+                        if(weibo_links.length > 1) {
+                            temp_obj['weibo-' + (i+1)] = {name: '微博-'+(i+1)};
+                        } else {
+                            temp_obj['weibo-' + (i+1)] = {name: '微博'};
+                        }
+                    })
+                    if(weibo_links.length) temp_obj['sep6'] = '---------'
+                    other_links.forEach((l, i)=>{
+                        if(other_links.length > 1) {
+                            temp_obj['unknown-' + (i+1)] = {name: '未知网站-'+(i+1)};
+                        } else {
+                            temp_obj['unknown-' + (i+1)] = {name: '未知网站'};
+                        }
+                    })
+                    if(other_links.length) temp_obj['sep7'] = '---------'
+                    temp_obj['local'] = {name: '本站章节网页'};
+                } else {
+                    var temp_obj = {};
+                    temp_obj['local'] = {name: '本站章节网页'};
+                }
+                return {
+                    callback: function(k, opts) {
+                        var curEle = opts.$target;
+                        var tar_url = '';
+                        var chapter_index = +ele.attr('id').replace('ci-','') - 1;
+                        Global.getChapters(url_title, (chapters)=>{
+                            var url_name = chapters[chapter_index].url_name;
+                            if(k.includes('yhforum-')) {tar_url = yhonlyf_links[+k.replace('yhforum-','')-1]};
+                            if(k.includes('yhmain-')) {tar_url = yhonlym_links[+k.replace('yhmain-','')-1]};
+                            if(k.includes('lofter-')) {tar_url = lof_links[+k.replace('lofter-','')-1]};
+                            if(k.includes('ao3-')) {tar_url = ao3_links[+k.replace('ao3-','')-1]};
+                            if(k.includes('chongya-')) {tar_url = chongya_links[+k.replace('chongya-','')-1]};
+                            if(k.includes('weibo-')) {tar_url = weibo_links[+k.replace('weibo-','')-1]};
+                            if(k.includes('unknown-')) {tar_url = other_links[+k.replace('unknown-','')-1]};
+                            if(k == 'local') {tar_url = Global._convertPathForApp('/article/'+url_title+'/'+url_name+'/index.html');}
+                            if(k == 'report') {
+                                $("body").append("<a id='report-handler' href='mailto:ilikepotatoes@163.com' style='display: none'><span id='report'></span></a>");
+                                $('#report').click();
+                                $("#report-handler").remove();
+                            }
+                        })
+                        if(tar_url) window.open(tar_url);
+                    },
+                    items: {
+                        "assign": {
+                            "name": "转到...",
+                            "icon": "fa-share-square-o",
+                            "items": temp_obj
+                        },
+                        "sep1": "---------",
+                        "report": {"name": "求补档/报告失效链接", "icon": "fa-book"}
+                    }
+                }
+            }
+        })
+    })
 })

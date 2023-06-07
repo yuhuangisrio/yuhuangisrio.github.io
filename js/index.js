@@ -24,7 +24,7 @@ $(document).ready(()=> {
             while (!fitness) {
                 var index = Math.floor(Math.random() * articles.length);
                 var article = articles[index];
-                var banned_tags = Global.getPreference('banned-tags') || [];
+                var banned_tags = Global.getPreference('banned-tags') || Global.initial_preferences['banned-tags'];
                 var is_banned = false;
                 banned_tags.forEach((item)=>{
                     if(article.tags.toLowerCase().includes(item)) is_banned = true;
@@ -127,6 +127,8 @@ $(document).ready(()=> {
         Global._snippet = snippet;
         Global._snippet_chapter = chapter;
         $("div.snippets-showcase a").css('display','none');
+        $("div.snippets-showcase a").html('展开更多');
+        $("span.snippets-area").removeClass('unfolded');
         if(snippet.length > Global.max_snippet_length) {
             $("div.snippets-showcase a").css('display','inline');
             snippet = snippet.substring(0, Global.max_snippet_length + 1);

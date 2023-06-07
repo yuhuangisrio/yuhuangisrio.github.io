@@ -71,6 +71,15 @@ body.day .title-and-author{
     content: '　　';
 }
 
+div.subtitle{
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 /* #txt p:first-of-type{
     width: 100%;
     text-align: center;
