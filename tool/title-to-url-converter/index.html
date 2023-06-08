@@ -42,12 +42,15 @@
             csv.forEach((item, index)=>{
                 if(index != 0) {
                     var arr = Global.parseCSVString(item);
-                    var title = arr[0];
-                    var converted_url = PinyinHelper.convertToPinyinString(title, '-', PinyinFormat.WITHOUT_TONE);
+                    var ori_title = arr[0];
+                    var t = ori_title.replace('【喻黄】','').replace('(未完结)','').trim();
+                    var title = replaceSpace(removePunc(((ori_title.split('】')).length > 1 ? ori_title.split('】').slice(1) : [ori_title]).join('')));
                     let newstr = item;
+                    var converted_url = PinyinHelper.convertToPinyinString(title, '-', PinyinFormat.WITHOUT_TONE);
+                    converted_url = converted_url.split('-').slice(0, 10).join('-').toLowerCase();
                     if(arr.length < 2) {
                         newstr = item + ',' + converted_url;
-                    } else if(item.charAt(title.length) == ',' && item.charAt(title.length + 1) == ',') {
+                    } else if(item.charAt(ori_title.length) == ',' && item.charAt(ori_title.length + 1) == ',') {
                         newstr = item.replace(',,',','+converted_url+',');
                     }
                     newcsv.push(newstr);
@@ -62,6 +65,27 @@
                 $('.output').val($('textarea.input').val().trim());
             }
         }
-    })
+    });
+    function replaceSpace(str) {
+        if(!isAllEnglish(str)) {
+            return str.replace(/\s/g,'');
+        } else {
+            return str.replace(/\s/g,'-');
+        }
+    };
+    function isAllEnglish(str) {
+        var temp_str = str.replace(/[A-Za-z0-9\s]+/g, '');
+        if(temp_str == '') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function removePunc(str) {
+        var re = /[^\u4e00-\u9fa5a-zA-Z0-9\s]/g;
+        var res = str.replace(re, '');
+        return res;
+        // return str.replace(/[,.:;'"\[\]{}<>\/?\\-_=\+`~!@#\$%\^&*\(\)\|，。？：；“‘”’【】《》！—…（）~·]+/g,'')
+    }
 </script>
 </html>

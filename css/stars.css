@@ -74,6 +74,15 @@ ul.starred-book-list li span::before{
     content: "by ";
 }
 
+div.iOS-warning{
+    width: 50%;
+    display: none;
+    padding: 10px 10px;
+    font-size: 14px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
 @media only screen and (max-width: 768px){
     div.contents{
         width: 80%;
@@ -84,5 +93,9 @@ ul.starred-book-list li span::before{
         /* box-shadow: 0 0 5px 0 rgb(190, 190, 190); */
         border-radius: 5px;
         padding: 10px;
+    }
+
+    div.iOS-warning{
+        width: 80%;
     }
 }

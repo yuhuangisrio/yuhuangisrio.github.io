@@ -35,7 +35,8 @@
             $('div.result').html('请先输入数据。');
         } else {
             var str = $('textarea').val().trim();
-            var csv = str.split('\r');
+            var csv = str.split(/\n/);
+            console.log(csv)
             var url_list = [];
             csv.forEach((item, index)=>{
                 if(index != 0) {
@@ -44,6 +45,7 @@
                     url_list.push(url);
                 }
             });
+            console.log(url_list)
             var dup = url_list.getDuplication();
             if(dup && dup.length > 0) {
                 $('div.result').html('重复url：'+dup.join(', '));

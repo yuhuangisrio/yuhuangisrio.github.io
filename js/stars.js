@@ -15,5 +15,6 @@ $(document).ready(() => {
                 $("ul.starred-book-list").append("<li class=\"starred-book-item\"><a href=\"javaScript:;\" onclick=\"Global.goToArticle(\'" + url_title + "\')\"><i class=\"fa fa-book\"></i> " + book.title + "</a>" + "<span>" + book.author + "</span></li>");
             }
         }
+        if(Global.isiOS()) $("div.iOS-warning").css('display','block');
     });
 })
