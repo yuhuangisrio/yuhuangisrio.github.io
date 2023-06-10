@@ -26,7 +26,7 @@
 <body>
     <div class="content">
         <textarea rows="20" placeholder="请将CSV字符串数据粘贴到此处" class="input"></textarea>
-        <span>提示：转换过后记得使用 <a href="../url-duplication-checker/index.html">url 查重工具</a> 检查是否有重复的 url。</span>
+        <span>提示：只能转换文章和合集csv数据；转换过后记得使用 <a href="../url-duplication-checker/index.html">url 查重工具</a> 检查是否有重复的 url。</span>
         <button>转换</button>
         <textarea rows="20" class="output"></textarea>
     </div>
@@ -43,7 +43,7 @@
                 if(index != 0) {
                     var arr = Global.parseCSVString(item);
                     var ori_title = arr[0];
-                    var t = ori_title.replace('【喻黄】','').replace('(未完结)','').trim();
+                    var t = ori_title.replace('【喻黄】','').replace('[喻黄]','').replace('(未完结)','').trim();
                     var title = replaceSpace(removePunc(((ori_title.split('】')).length > 1 ? ori_title.split('】').slice(1) : [ori_title]).join('')));
                     let newstr = item;
                     var converted_url = PinyinHelper.convertToPinyinString(title, '-', PinyinFormat.WITHOUT_TONE);

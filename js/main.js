@@ -5,10 +5,11 @@ Global.collections_default_settings = {}
 Global.articles_default_settings = {
     title: "文章标题",
     url_title: "template-title",
-    summary: "(无)",
+    summary: "-无-",
     type: "短篇",
     number_of_characters: "-",
-    is_redistributable: true,
+    roles: '？喻x？黄',
+    is_redistributable: false,
     is_yuhuang_only: true,
     is_yuhuangyu: false
 }
@@ -21,6 +22,9 @@ Global.initial_preferences = {
     'preferred-reading-website': '喻黄ONLY论坛',
     'use-mirror-website': true,
     'mirror-ao3-link': 'https://1.ao3-cn.top'
+}
+Global.author_links_list = {
+    '米洛': 'http://bbs.yuhuangonly.com/?3346'
 }
 
 Global.max_snippet_length = 300;  // 原著片段可见字数
@@ -347,7 +351,7 @@ Global.getArticles = function(callback) {
                 title: article[0].replace(/\n/,'') || ds.title || '',
                 url_title: article[1] || ds.url_title,
                 author: article[2].includes('/') ? (article[2].split('/')[0] || ds.author || '') : (article[2] || ds.author || ''),
-                author_link: article[3] || ds.author_link || './',
+                author_link: article[3] || Global.author_links_list[this.author] || ds.author_link || './',
                 summary: article[4] || ds.summary || '',
                 type: article[5] || ds.type || '-',
                 number_of_characters: (function(){
@@ -359,7 +363,7 @@ Global.getArticles = function(callback) {
                         case '短篇':
                             return '2w以下';
                         default: 
-                            return article[5] || ds.number_of_characters;  // 允许在“篇幅”那一栏中直接写字数的多少，例如 10w+ 。
+                            return ds.number_of_characters;
                     }
                 })(),
                 tags: article[6].replace(/&/g,',') || ds.tags || '',
@@ -394,7 +398,7 @@ Global.getChapters = function(url_title, callback) {
             if(!chapter[0].replace(/\n/,'')) continue;
             var ds = Global.chapters_default_settings;
             chapters.push({
-                name: chapter[0].replace(/\n/,'') || ds.name,
+                name: chapter[0].replace(/\n/,'') || ds.name || ds.short_name,
                 short_name: chapter[1] || ds.short_name,
                 url_name: chapter[2] || ds.url_name || i, // 如果不写则默认是1,2,3,4...按照顺序排列。
                 links: chapter[3] || ds.links || '',

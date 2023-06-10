@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    if(Global.isMobile()) {
+        $('.preferred-reading-website').css('display', 'none')
+    }
     var banned_tags_list = Global.getPreference("banned-tags") || Global.initial_preferences['banned-tags'];
     var preferred_reading_website = Global.getPreference("preferred-reading-website") || Global.initial_preferences['preferred-reading-website'];
     var use_mirror_ao3_website = Global.getPreference("use-mirror-website") ? (Global.getPreference("use-mirror-website") == 'checked' ? true : JSON.parse(Global.getPreference("use-mirror-website"))) : Global.initial_preferences['use-mirror-website'];

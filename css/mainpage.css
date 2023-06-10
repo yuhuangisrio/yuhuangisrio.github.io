@@ -209,6 +209,17 @@ span.folder::after{
     content: ']';
 }
 
+div.link-to a{
+    color: #2f80dc;
+    text-decoration: none;
+}
+
+div.link-to a:hover{
+    color: #f5df15;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 div.article-warning{
     display: none;
     padding: 10px 10px;

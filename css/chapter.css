@@ -67,6 +67,17 @@ body.day .title-and-author{
     vertical-align: middle;
 }
 
+#txt p a{
+    color: #2f80dc;
+    text-decoration: none;
+}
+
+#txt p a:hover{
+    color: #f5df15;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 #txt p::before{
     content: '　　';
 }

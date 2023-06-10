@@ -12,17 +12,23 @@
 </head>
 <style>
     *{
-        margin: 0;
+        margin: 1px;
         padding: 0;
     }
     textarea{
         width: 100%;
     }
+    button{
+        width: 100%;
+        text-align: center;
+    }
 </style>
 <body>
     <div class="content">
-        <textarea rows="20" placeholder="请将CSV字符串数据粘贴到此处"></textarea>
-        <button>查重</button>
+        <textarea id="import" rows="20" placeholder="请将CSV字符串数据粘贴到此处"></textarea>
+        <button class="processer">去重</button>
+        <div>提示：只能对文章和合集csv数据去重</div>
+        <textarea id="output" rows="20"></textarea>
         <div class="result"></div>
     </div>
     <div class="no-js-warning">
@@ -31,12 +37,12 @@
 </body>
 <script>
     $('button').click(()=>{
-        if(!$('textarea').val().trim()) {
+        if(!$('#import').val().trim()) {
             $('div.result').html('请先输入数据。');
         } else {
-            var str = $('textarea').val().trim();
+            Global.__dup_url_index = {};
+            var str = $('#import').val().trim();
             var csv = str.split(/\n/);
-            console.log(csv)
             var url_list = [];
             csv.forEach((item, index)=>{
                 if(index != 0) {
@@ -45,13 +51,43 @@
                     url_list.push(url);
                 }
             });
-            console.log(url_list)
             var dup = url_list.getDuplication();
             if(dup && dup.length > 0) {
                 $('div.result').html('重复url：'+dup.join(', '));
             } else {
                 $('div.result').html('无重复url标题。')
             }
+            dup.forEach((u, i)=>{
+                Global.__dup_url_index[u] = 0;
+            });
+            var new_csv = '文章标题,url标题,作者,作者主页链接,简介,篇幅,tags,角色身份,状态,结局,副CP,是否为无差？,全文预警,可看到全文的链接,是否可供下载';
+            csv.forEach((c, i)=>{
+                if(i > 0) {
+                    var csv_arr = Global.parseCSVString(c);
+                    var url = csv_arr[1]
+                    var new_str = '';
+                    csv_arr.forEach((c, i)=>{
+                        if(i > 0) {
+                            new_str += c.includes(',') ? ',"'+c+'"' : ','+c
+                        } else {
+                            new_str += c.includes(',') ? '"'+c+'"' : c
+                        }
+                    })
+                    if(dup.contains(url)){
+                        if(Global.__dup_url_index[url] > 0) {
+                            new_str = new_str.replace(','+url+',', ','+url+'-'+Global.__dup_url_index[url]+',')
+                        }
+                        Global.__dup_url_index[url]++;
+                    } else if (dup.contains(url.split('-').slice(0, url.split('-').length-1).join('-')) && typeof +url.split('-')[url.split('-').length-1] == 'number') {
+                        var k = url.split('-').slice(0, url.split('-').length-1).join('-');
+                        Global.__dup_url_index[k] = +(url.split('-')[url.split('-').length-1])
+                        Global.__dup_url_index[k]++;
+                    }
+                    new_csv += '\n'+new_str;
+                }
+            })
+            $('#output').val(new_csv)
+            Global.__dup_url_index = null;
         }
     })
 </script>

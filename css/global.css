@@ -46,7 +46,7 @@ div.header{
 }
 
 div.header-logo{
-    position: fixed;
+    position: absolute;
     top: 0;
     height: 50px;
     line-height: 50px;
