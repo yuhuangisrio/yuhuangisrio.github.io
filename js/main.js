@@ -371,7 +371,7 @@ Global.getArticles = function(callback) {
                 status: article[8] || ds.status || '-',
                 ending: article[9] || ds.ending || '-',
                 is_yuhuang_only: !article[10] ? ds.is_yuhuang_only || true : article[10] == 'T' ? true : false,
-                extra_cp: article[10].replace(/&/g,',') || ds.extra_cp || '',
+                extra_cp: (article[10] ? article[10] : '').replace(/&/g,',') || ds.extra_cp || '',
                 is_yuhuangyu: !article[11] ? ds.is_yuhuangyu : (article[11] == 'T' ? true : false),
                 warning: article[12] || ds.warning || '',
                 accessable_links: article[13] || ds.accessable_links || '',

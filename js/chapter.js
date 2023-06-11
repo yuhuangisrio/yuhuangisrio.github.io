@@ -41,6 +41,7 @@ $(document).ready(()=>{
             if(((JSON.stringify(c) != '{}' && c.links) || a.accessable_links) && !Global.is_app) {
                 data = '检测到本章节暂时无需补档，您可以返回主页，右键或长按章节块弹出上下文菜单，选择“转到...”选项继续阅读。\n如果所有可达链接全部失效，请向站长 <a href="mailto:ilikepotatoes@163.com">ilikepotatoes@163.com</a> 报告。'
             }
+            data = data.replace(/\n\n/g,'\n<br>\n').replace(/\n\s\n/g,'\n<br>\n')
             // 将文本输入div并格式化文本
             var paragraph_list = [];
             paragraph_list = data.split(/[(\r\n)\r\n]+/);
@@ -56,7 +57,7 @@ $(document).ready(()=>{
             // 获取当前文章名与作者
             RSSD.articleData = [];
             articles.forEach((item, index)=>{
-                if(item.url_title = curArticle) {
+                if(item.url_title == curArticle) {
                     RSSD.articleData[0] = item.title;
                     RSSD.articleData[1] = item.author;
                 }
