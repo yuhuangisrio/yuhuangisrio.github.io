@@ -44,7 +44,7 @@
                     var arr = Global.parseCSVString(item);
                     var ori_title = arr[0];
                     var t = ori_title.replace('【喻黄】','').replace('[喻黄]','').replace('(未完结)','').trim();
-                    var title = replaceSpace(removePunc(((ori_title.split('】')).length > 1 ? ori_title.split('】').slice(1) : [ori_title]).join('')));
+                    var title = replaceSpace(removePunc(((t.split('】')).length > 1 ? t.split('】').slice(1) : [t]).join('')));
                     let newstr = item;
                     var converted_url = PinyinHelper.convertToPinyinString(title, '-', PinyinFormat.WITHOUT_TONE);
                     converted_url = converted_url.split('-').slice(0, 10).join('-').toLowerCase();

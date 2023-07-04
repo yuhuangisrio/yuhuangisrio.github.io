@@ -320,7 +320,6 @@ body.day .chapter-list{
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 5px 2px;
-    cursor: pointer;
 }
 
 .chapter-list ul.list li a{

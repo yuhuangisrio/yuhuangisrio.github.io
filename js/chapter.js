@@ -403,6 +403,12 @@ $(document).ready(()=>{
                 });
             });
 
+            // 不分章节（只有一章）时隐藏章节选择
+            var number_of_chapters = chapters.length;
+            if(!number_of_chapters) {
+                $('.jump-to-chapter').css('display','none');
+            }
+
             //章节选择
             $("a.jump-to-chapter").click(()=>{
                 if($('div.chapter-list').css('width') == '0px') {

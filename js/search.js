@@ -131,17 +131,18 @@ Global._searchArticles = function() {
                 });
                 if(!f && target_keywords.length > 0) fitness = false;
                 target_tags.forEach((tag)=>{
-                    var is_multi_named_tag = false;
-                    if(tag.includes(':') && tag.includes('/')) {
+                    if(tag.includes(':') && tag.includes(',')) {
                         var parent = tag.split(':')[0];
                         var children = tag.split(':')[1].split(',');
                         var tag_list = [parent].concat(children);
+                        var num = 0;
                         tag_list.forEach((random_tag)=>{
-                            if(ori_tags.toLowerCase().includes(random_tag.toLowerCase())) fitness = true;
+                            if(ori_tags.toLowerCase().includes(random_tag.toLowerCase())) num++;
+                            else num--;
                         })
-                        is_multi_named_tag = true;
-                    }
-                    if(!is_multi_named_tag) {
+                        if(num > 0) fitness = true;
+                        else if(num == -tag_list.length) fitness = false;
+                    } else {
                         if(!ori_tags.toLowerCase().includes(tag.toLowerCase())) fitness = false;
                     }
                 });
@@ -180,7 +181,7 @@ Global._searchCollections = function() {
 Global._appendResult = function() {
     if(this._existsSearchResult()) {
         var columns_in_one_page = 10;
-        var page_num = Math.floor(this._search_target_url.length / columns_in_one_page) + 1;
+        var page_num = Math.ceil(this._search_target_url.length / columns_in_one_page);
         for(var i = 0; i < page_num; i++) {
             var p = i + 1;
             $('div.result-pages').append('<div id="pg'+p+'"></div>');

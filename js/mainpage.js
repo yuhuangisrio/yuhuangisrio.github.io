@@ -20,7 +20,7 @@ $(document).ready(()=>{
                     var author_link = article.author_link;
                     var summary = article.summary;
                     var number_of_characters = article.number_of_characters;
-                    var number_of_chapters = chapters.length;
+                    var number_of_chapters = chapters.length || 1;
                     var roles = article.roles;
                     var status = article.status;
                     var ending = article.ending;
@@ -396,7 +396,7 @@ $(document).ready(()=>{
             });
 
             $('.question').click(()=>{
-                var q = '对于电脑端，如果点进章节后发现链接失效，可以右键单击/长按章节块弹出上下文菜单，在“转到...”选项中转到其他网站以继续阅读。<br>如果发现链接全部失效/不想让自己的文章被别人看到/不想让自己文章的补档被下载等等，同样可以通过上下文菜单向站长报告。';
+                var q = '对于电脑端，如果点进章节后发现链接失效，可以右键单击章节块弹出上下文菜单，在“转到...”选项中转到其他网站以继续阅读。<br>如果发现链接全部失效/不想让自己的文章被别人看到/不想让自己文章的补档被下载等等，同样可以通过上下文菜单向站长报告。';
                 if(Global.isMobile() && !Global.is_app) {
                     q = '对于手机端，如果链接全部失效/不想让自己的文章被别人看到/不想让自己文章的补档被下载等等，请点击章节块，在弹出的对话框中联系站长邮箱。'
                 }

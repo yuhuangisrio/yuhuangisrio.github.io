@@ -39,6 +39,14 @@ $(document).ready(()=> {
     // 执行搜索
     $('.search-executor').click(()=>{
         Global.search();
+        $('.search-input input').blur();
+    });
+    $('.search-input input').on('keyup', function(e){
+        e.preventDefault();
+        if(e.keyCode===13) {
+            Global.search();
+            $(this).blur();
+        }
     });
 
     // 获取搜索对象
